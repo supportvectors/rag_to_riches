@@ -1,0 +1,12 @@
+numpy
+scipy
+pandas
+scikit-learn
+matplotlib
+seaborn
+altair
+plotly
+pandas_bokeh
+streamlit
+ipyplot
+jupyter_contrib_nbextensions

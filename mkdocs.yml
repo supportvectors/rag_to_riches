@@ -1,0 +1,83 @@
+site_name: SupportVectors Rag to Riches
+site_description: An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)
+site_author: SupportVectors
+site_url: https://supportvectors.ai/rag-to-riches
+
+# -----------------------------------------------------------------------------
+# Theme configuration
+# -----------------------------------------------------------------------------
+theme:
+  name: material
+  logo: images/overlapping_logo.png
+  favicon: images/favicon.ico
+
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: 'light blue'
+      accent: 'gray'
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  font:
+    text: 'Lora'
+    code: 'Roboto Mono'
+    code_title: 'Roboto Mono'
+    code_block: 'Roboto Mono'
+    code_font_size: 0.9rem
+    heading: 'Merriweather'
+    heading_weight: 300
+    heading_line_height: 1.5
+
+# -----------------------------------------------------------------------------
+# Plugins configuration
+# -----------------------------------------------------------------------------
+
+plugins:
+  - search
+  - mknotebooks:
+      # Configure mknotebooks to avoid template deprecation warnings
+      enable_default_jupyter_cell_styling: true
+      execute: false
+  - mkdocstrings:
+      handlers:
+        python:
+          rendering:
+            show_source: true
+  - awesome-pages
+  - mermaid2
+  - include-markdown:
+      comments: false #This stops the include-markdown plugin comments from being displayed
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.superfences:
+      # make exceptions to highlighting of code:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid
+
+extra_css:
+  - stylesheets/supportvectors.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  #- https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+extra:
+  PYTHONPATH: src
+

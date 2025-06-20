@@ -1,0 +1,38 @@
+[project]
+name = "rag-to-riches"
+version = "0.1.0"
+description = "An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "icontract>=2.7.1",
+    "ipyplot>=1.1.2",
+    "llama-index>=0.12.43",
+    "open-clip-torch>=2.32.0",
+    "qdrant-client[fastembed]>=1.14.3",
+    "sentence-transformers>=4.1.0",
+    "svlearn-bootcamp>=0.1.7",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+# If you also build sdists and want data included:
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    # ... other includes like README, pyproject.toml, etc.
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rag_to_riches"]
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=6.2.1",
+]

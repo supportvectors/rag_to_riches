@@ -1,0 +1,24 @@
+h1 {
+    color: blueviolet;
+    font-size: 5em;
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+h2 {
+    color: indianred;
+    font-size: 4em;
+    font-weight: 600;
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Shrink the font size of code blocks */
+/*code, pre {*/
+/*    font-size: 0.8em;  /* Adjust this value to your preference */
+/*}*/
+
