@@ -1,0 +1,42 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.env
+.venv
+
+# Project specific ignores
+data/
+
+# Ignore the .cursor directory
+.cursor/
+
+# Ignore the .vscode directory
+.vscode/
+
+# Ignore the .idea directory
+.idea/
+
+# Ignore the .env file
+.env
+
+# Ignore the .DS_Store file
+.DS_Store
+
+# Ignore the photos directory
+photos/
+
+# Ignore specific photo directories
+docs/notebooks/nlp/photos/
+
+# Ignore the videos directory
+videos/
+
+# Ignore the audio directory
+audio/
+
