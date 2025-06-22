@@ -23,7 +23,7 @@ index = VectorStoreIndex.from_documents(documents)
 # Make sure that the index is persisted for later use!
 
 query_engine = index.as_query_engine()
-response = query_engine.query("What are some key features of ancient Western civilization?")
+response = query_engine.query("What are some key features of ancient Greek civilization?")
 
 print('\n'*10)
 print('*'*100, '\n'*3, response.response, '\n'*3, '*'*100)

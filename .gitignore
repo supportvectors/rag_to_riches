@@ -34,6 +34,8 @@ photos/
 # Ignore specific photo directories
 docs/notebooks/nlp/photos/
 docs/notebooks/nlp/unsplash-25k-photos.zip
+docs/notebooks/examples/unsplash*
+docs/notebooks/nlp/unsplash*
 
 # Ignore the videos directory
 videos/
