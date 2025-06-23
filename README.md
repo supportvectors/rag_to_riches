@@ -1,31 +1,15 @@
-# Good code with AI
+# Rag to Riches
 
-This is a tutorial that helps develop a good codebase to implement RAG on a directory of documents.
+A simple tutorial introducing RAG (Retrieval Augmented Generation) to a broader audience.
 
-### Resources
+This tutorial comprises a small corpus of animal quotes, over which we build an RAG application. In the process, we learn about:
 
-* <a href="https://glhssocialstudies.weebly.com/world-history-textbook---pdf-copy.html"> World History </a>
-* <a href="https://glhssocialstudies.weebly.com/economics-textbook---pdf-copy.html"> Economics </a>
+- Embedder to convert the text to a vector
+- VectorDB (Qdrant) to index the vectors for approximate k-nn search
+- A generator (LLM with a system prompt) to create a coherent answer to the user's question with the given search results
 
-## Steps for the project
+## Tips
 
-### Download the textbooks
+Start by studying the `animals.py` -- it contains, among other things, the `Animals` class, which includes the entire RAG implementation.
 
-There are pdf files at the resources above, each corresponding to a chapter of the textbook; download each of the pdfs and store it in the data/ directory. Write a python script that will do this, whose functionality should be general enough to download all the pdf links from a webpage.
-
-### Simple RAG with Llama-Index
-
-Now, create a simple RAG application over the documents.
-
-### Evolve!
-
-Gradually, evolve this application into something more elaborate.
-
-### Steps
-
-We will build the following components, step by step.
-
-* A pdf-downloader to scrape PDF from an open-access textbooks website (legally)
-* An indexing pipeline
-* A Vector-embedding store
-* The RAG pipeline
+Remember, as we mentioned in the session -- this is a basic outline of a complete RAG implementation. To learn RAG deeply, register for our course at https://supportvectors.ai/courses/
