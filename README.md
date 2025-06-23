@@ -12,4 +12,4 @@ This tutorial comprises a small corpus of animal quotes, over which we build an 
 
 Start by studying the `animals.py` -- it contains, among other things, the `Animals` class, which includes the entire RAG implementation.
 
-Remember, as we mentioned in the session -- this is a basic outline of a complete RAG implementation. To learn RAG deeply, register for our course at https://supportvectors.ai/courses/
+Remember, as we mentioned in the session -- this is a basic outline of a complete RAG implementation. To learn RAG deeply, register for our course at https://supportvectors.ai/courses/rag-and-ai-search-bootcamp/
