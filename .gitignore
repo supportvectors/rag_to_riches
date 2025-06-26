@@ -10,8 +10,7 @@ wheels/
 .env
 .venv
 
-# Project specific ignores
-data/
+
 
 # Ignore the .cursor directory
 .cursor/
