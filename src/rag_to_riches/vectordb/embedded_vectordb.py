@@ -397,14 +397,19 @@ class EmbeddedVectorDB:
         
         search_params = {
             "collection_name": collection_name,
-            "query": query_vector,
-            "limit": limit
+            "query_vector": query_vector,
+            "limit": limit,
         }
-        
+
         if score_threshold is not None:
             search_params["score_threshold"] = score_threshold
-        
-        results = self.client.query_points(**search_params).points
+
+        # `qdrant_client` returns a list of `ScoredPoint` objects when using the
+        # `search` method.  Previous implementation incorrectly used
+        # `query_points`, which is not part of the public API and would raise an
+        # `AttributeError` at runtime.  Switching to `search` ensures
+        # compatibility with supported versions of the client.
+        results = self.client.search(**search_params)
         logger.info(f"Found {len(results)} points in collection '{collection_name}'")
         return results
 
