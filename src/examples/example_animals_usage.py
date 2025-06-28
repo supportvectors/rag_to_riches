@@ -71,32 +71,31 @@ def main():
     print("=" * 50)
     
     # Search 1: Basic semantic search
-    print("\n🔍 Search 1: Basic semantic search for 'dogs and loyalty'")
-    results = animals_loader.search("dogs and loyalty", limit=3)
+    print("\n🔍 Search 1: Basic semantic search for 'a friendship with animals'")
+    results = animals_loader.search("a friendship with animals", limit=3)
     print_search_results(results, "Basic Search")
     
     # Search 2: Search with author filter
-    print("\n🔍 Search 2: Search for 'animals' by 'Mark Twain'")
-    results = animals_loader.search("animals", limit=3, author="Mark Twain")
+    print("\n🔍 Search 2: Search for 'a dog is a gentleman who deserves heaven' by 'Mark Twain'")
+    results = animals_loader.search("a dog is a gentleman who deserves heaven", limit=3, author="Mark Twain")
     print_search_results(results, "Author Filter")
     
     # Search 3: Search with category filter
-    print("\n🔍 Search 3: Search for 'wisdom' in 'Wisdom and Philosophy' category")
-    results = animals_loader.search("wisdom", limit=3, category="Wisdom and Philosophy")
+    print("\n🔍 Search 3: Search for 'loving an animal awakens the soul' in 'Wisdom and Philosophy' category")
+    results = animals_loader.search("loving an animal awakens the soul", limit=3, category="Wisdom and Philosophy")
     print_search_results(results, "Category Filter")
     
     # Search 4: Search with score threshold
-    print("\n🔍 Search 4: High-confidence search for 'cats' (score > 0.7)")
-    results = animals_loader.search("cats and felines", limit=3, score_threshold=0.7)
+    print("\n🔍 Search 4: High-confidence search for 'cats are graceful creatures' (score > 0.5)")
+    results = animals_loader.search("cats are graceful creatures", limit=3, score_threshold=0.5)
     print_search_results(results, "Score Threshold")
     
     # Search 5: Combined filters
-    print("\n🔍 Search 5: Search for 'nature' by specific author and category")
+    print("\n🔍 Search 5: Search for 'the greatness of a nation is judged by how it treats animals' by Mahatma Gandhi")
     results = animals_loader.search(
-        "nature", 
+        "the greatness of a nation is judged by how it treats animals", 
         limit=2, 
-        author="Mahatma Gandhi", 
-        category="Wisdom and Philosophy"
+        author="Mahatma Gandhi"
     )
     print_search_results(results, "Combined Filters")
     

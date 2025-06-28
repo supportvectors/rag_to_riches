@@ -1,4 +1,5 @@
 from qdrant_client import QdrantClient, models
+from rich import print
 
 # 1️⃣  Launch an embedded instance (on-disk)
 client = QdrantClient(path="qdrant_db")
@@ -63,6 +64,7 @@ print(f"Collection '{collection_name}' now contains {collection_info.points_coun
 # 5️⃣  Now, let us search for the most similar text to "The cows were grazing in the meadow "
 
 query_text = "The cows were grazing in the meadow"
+print(f"Query text: {query_text}")
 query_embedding = model.encode(query_text)
 print(query_embedding.shape)
 results = client.search(
