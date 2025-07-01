@@ -1,0 +1,1620 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)" name="description"/>
+<meta content="SupportVectors" name="author"/>
+<link href="https://supportvectors.ai/rag-to-riches/utils/" rel="canonical"/>
+<link href="../start_simply/" rel="prev"/>
+<link href="../vectordb/" rel="next"/>
+<link href="../images/favicon.ico" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.14" name="generator"/>
+<title>Utils Package - SupportVectors Rag to Riches</title>
+<link href="../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Lora:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Lora";--md-code-font:"Roboto Mono"}</style>
+<link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../stylesheets/supportvectors.css" rel="stylesheet"/>
+<link href="../css/ansi-colours.css" rel="stylesheet"/>
+<link href="../css/jupyter-cells.css" rel="stylesheet"/>
+<link href="../css/pandas-dataframe.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="gray" data-md-color-primary="light-blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#utils-package">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SupportVectors Rag to Riches" class="md-header__button md-logo" data-md-component="logo" href=".." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../images/overlapping_logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SupportVectors Rag to Riches
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Utils Package
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="gray" data-md-color-media="" data-md-color-primary="light-blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SupportVectors Rag to Riches" class="md-nav__button md-logo" data-md-component="logo" href=".." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../images/overlapping_logo.png"/>
+</a>
+    SupportVectors Rag to Riches
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    RAG to Riches: Advanced Retrieval-Augmented Generation Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Apidocs
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Apidocs
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/animals/">
+<span class="md-ellipsis">
+    Animals
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/embedded_vectordb/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/semantic_search/">
+<span class="md-ellipsis">
+    SemanticSearch
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/simple_text_embedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Corpus
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Corpus
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/">
+<span class="md-ellipsis">
+    Corpus Package: Data Models and Content Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/AnimalQuote/">
+<span class="md-ellipsis">
+    AnimalQuote Class: Individual Quote Data Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/AnimalWisdom/">
+<span class="md-ellipsis">
+    AnimalWisdom Class: Quote Collection Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/Animals/">
+<span class="md-ellipsis">
+    Animals Class: Complete RAG System
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../examples/">
+<span class="md-ellipsis">
+    Examples Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Exceptions
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Exceptions
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exceptions/">
+<span class="md-ellipsis">
+    Exceptions Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Notebooks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Notebooks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/">
+<span class="md-ellipsis">
+    Interactive Notebooks
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/lesson-1/">
+<span class="md-ellipsis">
+    Lesson 1
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/lesson-2/">
+<span class="md-ellipsis">
+    Lesson 2
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/search-corpus/">
+<span class="md-ellipsis">
+    Search corpus
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/semantic-search/">
+<span class="md-ellipsis">
+    Semantic search
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/supportvectors-common/">
+<span class="md-ellipsis">
+    Supportvectors common
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Project guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Project guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Tips and tricks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_1">
+<span class="md-nav__icon md-icon"></span>
+            Tips and tricks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../project-guide/tips-and-tricks/cuda-hell/">
+<span class="md-ellipsis">
+    Some tips and tricks to deal with the CUDA hell
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    Search
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            Search
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../search/">
+<span class="md-ellipsis">
+    Search Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    Search basics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            Search basics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../search_basics/">
+<span class="md-ellipsis">
+    Search Basics Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    Start simply
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            Start simply
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../start_simply/">
+<span class="md-ellipsis">
+    Start Simply Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+<span class="md-ellipsis">
+    Utils
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_11_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_11">
+<span class="md-nav__icon md-icon"></span>
+            Utils
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Utils Package
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Utils Package
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-components">
+<span class="md-ellipsis">
+      Key Components
+    </span>
+</a>
+<nav aria-label="Key Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logging-configuration">
+<span class="md-ellipsis">
+      Logging Configuration
+    </span>
+</a>
+<nav aria-label="Logging Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#features">
+<span class="md-ellipsis">
+      Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+<span class="md-ellipsis">
+      Architecture
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-started">
+<span class="md-ellipsis">
+      Getting Started
+    </span>
+</a>
+<nav aria-label="Getting Started" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-logging-setup">
+<span class="md-ellipsis">
+      Basic Logging Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-specific-configuration">
+<span class="md-ellipsis">
+      Environment-Specific Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logging-configuration-features">
+<span class="md-ellipsis">
+      Logging Configuration Features
+    </span>
+</a>
+<nav aria-label="Logging Configuration Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rich-console-logging">
+<span class="md-ellipsis">
+      Rich Console Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#structured-json-logging">
+<span class="md-ellipsis">
+      Structured JSON Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-monitoring">
+<span class="md-ellipsis">
+      Performance Monitoring
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-tracking-and-context">
+<span class="md-ellipsis">
+      Error Tracking and Context
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-logging-patterns">
+<span class="md-ellipsis">
+      Advanced Logging Patterns
+    </span>
+</a>
+<nav aria-label="Advanced Logging Patterns" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#contextual-logging">
+<span class="md-ellipsis">
+      Contextual Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#correlation-ids">
+<span class="md-ellipsis">
+      Correlation IDs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-log-filters">
+<span class="md-ellipsis">
+      Custom Log Filters
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-management">
+<span class="md-ellipsis">
+      Configuration Management
+    </span>
+</a>
+<nav aria-label="Configuration Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-level-configuration">
+<span class="md-ellipsis">
+      Log Level Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dynamic-configuration">
+<span class="md-ellipsis">
+      Dynamic Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-with-rag-components">
+<span class="md-ellipsis">
+      Integration with RAG Components
+    </span>
+</a>
+<nav aria-label="Integration with RAG Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-database-logging">
+<span class="md-ellipsis">
+      Vector Database Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#search-operation-logging">
+<span class="md-ellipsis">
+      Search Operation Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#corpus-management-logging">
+<span class="md-ellipsis">
+      Corpus Management Logging
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-considerations">
+<span class="md-ellipsis">
+      Production Considerations
+    </span>
+</a>
+<nav aria-label="Production Considerations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-rotation-and-management">
+<span class="md-ellipsis">
+      Log Rotation and Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-and-alerting-integration">
+<span class="md-ellipsis">
+      Monitoring and Alerting Integration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-and-compliance">
+<span class="md-ellipsis">
+      Security and Compliance
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      Usage Examples
+    </span>
+</a>
+<nav aria-label="Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-workflow">
+<span class="md-ellipsis">
+      Development Workflow
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-deployment">
+<span class="md-ellipsis">
+      Production Deployment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#testing-environment">
+<span class="md-ellipsis">
+      Testing Environment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#related-components">
+<span class="md-ellipsis">
+      Related Components
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_12" type="checkbox"/>
+<label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+<span class="md-ellipsis">
+    Vectordb
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_12_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_12">
+<span class="md-nav__icon md-icon"></span>
+            Vectordb
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../vectordb/">
+<span class="md-ellipsis">
+    Vector Database Package: Embeddings and Storage
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../vectordb/EmbeddedVectorDB/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB Class
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../vectordb/SimpleTextEmbedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder Class
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-components">
+<span class="md-ellipsis">
+      Key Components
+    </span>
+</a>
+<nav aria-label="Key Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logging-configuration">
+<span class="md-ellipsis">
+      Logging Configuration
+    </span>
+</a>
+<nav aria-label="Logging Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#features">
+<span class="md-ellipsis">
+      Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+<span class="md-ellipsis">
+      Architecture
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-started">
+<span class="md-ellipsis">
+      Getting Started
+    </span>
+</a>
+<nav aria-label="Getting Started" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-logging-setup">
+<span class="md-ellipsis">
+      Basic Logging Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-specific-configuration">
+<span class="md-ellipsis">
+      Environment-Specific Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#logging-configuration-features">
+<span class="md-ellipsis">
+      Logging Configuration Features
+    </span>
+</a>
+<nav aria-label="Logging Configuration Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rich-console-logging">
+<span class="md-ellipsis">
+      Rich Console Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#structured-json-logging">
+<span class="md-ellipsis">
+      Structured JSON Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-monitoring">
+<span class="md-ellipsis">
+      Performance Monitoring
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-tracking-and-context">
+<span class="md-ellipsis">
+      Error Tracking and Context
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-logging-patterns">
+<span class="md-ellipsis">
+      Advanced Logging Patterns
+    </span>
+</a>
+<nav aria-label="Advanced Logging Patterns" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#contextual-logging">
+<span class="md-ellipsis">
+      Contextual Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#correlation-ids">
+<span class="md-ellipsis">
+      Correlation IDs
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-log-filters">
+<span class="md-ellipsis">
+      Custom Log Filters
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-management">
+<span class="md-ellipsis">
+      Configuration Management
+    </span>
+</a>
+<nav aria-label="Configuration Management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-level-configuration">
+<span class="md-ellipsis">
+      Log Level Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dynamic-configuration">
+<span class="md-ellipsis">
+      Dynamic Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-with-rag-components">
+<span class="md-ellipsis">
+      Integration with RAG Components
+    </span>
+</a>
+<nav aria-label="Integration with RAG Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-database-logging">
+<span class="md-ellipsis">
+      Vector Database Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#search-operation-logging">
+<span class="md-ellipsis">
+      Search Operation Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#corpus-management-logging">
+<span class="md-ellipsis">
+      Corpus Management Logging
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-considerations">
+<span class="md-ellipsis">
+      Production Considerations
+    </span>
+</a>
+<nav aria-label="Production Considerations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#log-rotation-and-management">
+<span class="md-ellipsis">
+      Log Rotation and Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#monitoring-and-alerting-integration">
+<span class="md-ellipsis">
+      Monitoring and Alerting Integration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-and-compliance">
+<span class="md-ellipsis">
+      Security and Compliance
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      Usage Examples
+    </span>
+</a>
+<nav aria-label="Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#development-workflow">
+<span class="md-ellipsis">
+      Development Workflow
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#production-deployment">
+<span class="md-ellipsis">
+      Production Deployment
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#testing-environment">
+<span class="md-ellipsis">
+      Testing Environment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#related-components">
+<span class="md-ellipsis">
+      Related Components
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="utils-package">Utils Package<a class="headerlink" href="#utils-package" title="Permanent link">¶</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>The <code>utils</code> package provides essential utility functions and configurations that support the entire RAG to Riches framework. This package focuses on cross-cutting concerns like logging, configuration management, and shared utilities that enhance the development and operational experience.</p>
+<h2 id="key-components">Key Components<a class="headerlink" href="#key-components" title="Permanent link">¶</a></h2>
+<h3 id="logging-configuration">Logging Configuration<a class="headerlink" href="#logging-configuration" title="Permanent link">¶</a></h3>
+<p><strong>File</strong>: <code>logging_config.py</code></p>
+<p>A comprehensive logging system designed for both development and production environments, providing structured, configurable logging throughout the RAG pipeline.</p>
+<h4 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>Structured Logging</strong>: Consistent log format across all components</li>
+<li><strong>Multiple Output Formats</strong>: Console, file, and structured JSON logging</li>
+<li><strong>Log Level Management</strong>: Configurable verbosity for different environments</li>
+<li><strong>Performance Monitoring</strong>: Built-in timing and performance metrics</li>
+<li><strong>Error Tracking</strong>: Enhanced error logging with context and stack traces</li>
+<li><strong>Rich Console Output</strong>: Beautiful, colored console logs for development</li>
+</ul>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h2>
+<div class="mermaid">graph TB
+    subgraph "Logging System"
+        Config[Logging Config] --&gt; Console[Console Handler]
+        Config --&gt; File[File Handler]
+        Config --&gt; JSON[JSON Handler]
+        Config --&gt; Metrics[Metrics Handler]
+    end
+
+    subgraph "Log Levels"
+        DEBUG[DEBUG<br/>Development]
+        INFO[INFO<br/>General Info]
+        WARNING[WARNING<br/>Warnings]
+        ERROR[ERROR<br/>Errors]
+        CRITICAL[CRITICAL<br/>Critical Issues]
+    end
+
+    subgraph "Components Using Logging"
+        VectorDB[Vector Database]
+        Search[Semantic Search]
+        Corpus[Corpus Management]
+        Examples[Example Scripts]
+    end
+
+    Console --&gt; DEBUG
+    Console --&gt; INFO
+    File --&gt; WARNING
+    File --&gt; ERROR
+    JSON --&gt; CRITICAL
+
+    VectorDB --&gt; Config
+    Search --&gt; Config
+    Corpus --&gt; Config
+    Examples --&gt; Config
+
+    style Config fill:#e1f5fe
+    style Console fill:#e8f5e8
+    style File fill:#f3e5f5
+    style JSON fill:#fff3e0
+</div>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h2>
+<h3 id="basic-logging-setup">Basic Logging Setup<a class="headerlink" href="#basic-logging-setup" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="c1"># Initialize logging system</span>
+<span class="n">setup_logging</span><span class="p">()</span>
+
+<span class="c1"># Get a logger for your module</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Use structured logging</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Starting RAG pipeline"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">"operation"</span><span class="p">:</span> <span class="s2">"initialization"</span><span class="p">,</span>
+    <span class="s2">"component"</span><span class="p">:</span> <span class="s2">"rag_system"</span><span class="p">,</span>
+    <span class="s2">"collection_name"</span><span class="p">:</span> <span class="s2">"my_collection"</span>
+<span class="p">})</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Processing document"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">"document_id"</span><span class="p">:</span> <span class="s2">"doc_123"</span><span class="p">,</span>
+    <span class="s2">"document_length"</span><span class="p">:</span> <span class="mi">1500</span><span class="p">,</span>
+    <span class="s2">"processing_stage"</span><span class="p">:</span> <span class="s2">"embedding"</span>
+<span class="p">})</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">"Failed to connect to vector database"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">"error_type"</span><span class="p">:</span> <span class="s2">"connection_error"</span><span class="p">,</span>
+    <span class="s2">"database_url"</span><span class="p">:</span> <span class="s2">"localhost:6333"</span><span class="p">,</span>
+    <span class="s2">"retry_count"</span><span class="p">:</span> <span class="mi">3</span>
+<span class="p">})</span>
+</code></pre></div>
+<h3 id="environment-specific-configuration">Environment-Specific Configuration<a class="headerlink" href="#environment-specific-configuration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_logging</span>
+
+<span class="c1"># Development environment - verbose console logging</span>
+<span class="n">setup_logging</span><span class="p">(</span>
+    <span class="n">level</span><span class="o">=</span><span class="s2">"DEBUG"</span><span class="p">,</span>
+    <span class="n">format_style</span><span class="o">=</span><span class="s2">"rich"</span><span class="p">,</span>  <span class="c1"># Colored, formatted console output</span>
+    <span class="n">enable_file_logging</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">enable_metrics</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Production environment - structured file logging</span>
+<span class="n">setup_logging</span><span class="p">(</span>
+    <span class="n">level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">,</span>
+    <span class="n">format_style</span><span class="o">=</span><span class="s2">"json"</span><span class="p">,</span>  <span class="c1"># Structured JSON for log aggregation</span>
+    <span class="n">enable_file_logging</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">log_file</span><span class="o">=</span><span class="s2">"rag_system.log"</span><span class="p">,</span>
+    <span class="n">enable_metrics</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">enable_error_tracking</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Testing environment - minimal logging</span>
+<span class="n">setup_logging</span><span class="p">(</span>
+    <span class="n">level</span><span class="o">=</span><span class="s2">"WARNING"</span><span class="p">,</span>
+    <span class="n">format_style</span><span class="o">=</span><span class="s2">"simple"</span><span class="p">,</span>
+    <span class="n">enable_file_logging</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">enable_metrics</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="logging-configuration-features">Logging Configuration Features<a class="headerlink" href="#logging-configuration-features" title="Permanent link">¶</a></h2>
+<h3 id="rich-console-logging">Rich Console Logging<a class="headerlink" href="#rich-console-logging" title="Permanent link">¶</a></h3>
+<p>Perfect for development and debugging:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_rich_logging</span>
+
+<span class="c1"># Enable beautiful console logging</span>
+<span class="n">setup_rich_logging</span><span class="p">()</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Rich formatting automatically handles complex data</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Search results"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">"query"</span><span class="p">:</span> <span class="s2">"machine learning"</span><span class="p">,</span>
+    <span class="s2">"results_count"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="s2">"avg_score"</span><span class="p">:</span> <span class="mf">0.847</span><span class="p">,</span>
+    <span class="s2">"processing_time"</span><span class="p">:</span> <span class="mf">0.245</span><span class="p">,</span>
+    <span class="s2">"metadata"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"collection"</span><span class="p">:</span> <span class="s2">"research_papers"</span><span class="p">,</span>
+        <span class="s2">"embedding_model"</span><span class="p">:</span> <span class="s2">"all-MiniLM-L6-v2"</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="c1"># Output will be beautifully formatted with:</span>
+<span class="c1"># - Color coding by log level</span>
+<span class="c1"># - Structured display of complex data</span>
+<span class="c1"># - Timestamps and context information</span>
+<span class="c1"># - Easy-to-read hierarchical data</span>
+</code></pre></div>
+<h3 id="structured-json-logging">Structured JSON Logging<a class="headerlink" href="#structured-json-logging" title="Permanent link">¶</a></h3>
+<p>Ideal for production systems and log aggregation:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_json_logging</span>
+
+<span class="c1"># Enable JSON structured logging</span>
+<span class="n">setup_json_logging</span><span class="p">(</span><span class="n">log_file</span><span class="o">=</span><span class="s2">"rag_system.jsonl"</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Document indexed successfully"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">"event_type"</span><span class="p">:</span> <span class="s2">"document_indexed"</span><span class="p">,</span>
+    <span class="s2">"document_id"</span><span class="p">:</span> <span class="s2">"doc_456"</span><span class="p">,</span>
+    <span class="s2">"collection_name"</span><span class="p">:</span> <span class="s2">"knowledge_base"</span><span class="p">,</span>
+    <span class="s2">"vector_dimensions"</span><span class="p">:</span> <span class="mi">384</span><span class="p">,</span>
+    <span class="s2">"indexing_time_ms"</span><span class="p">:</span> <span class="mi">125</span><span class="p">,</span>
+    <span class="s2">"success"</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">})</span>
+
+<span class="c1"># JSON output:</span>
+<span class="c1"># {</span>
+<span class="c1">#   "timestamp": "2024-01-15T10:30:45.123Z",</span>
+<span class="c1">#   "level": "INFO",</span>
+<span class="c1">#   "logger": "rag_to_riches.corpus.animals",</span>
+<span class="c1">#   "message": "Document indexed successfully",</span>
+<span class="c1">#   "event_type": "document_indexed",</span>
+<span class="c1">#   "document_id": "doc_456",</span>
+<span class="c1">#   "collection_name": "knowledge_base",</span>
+<span class="c1">#   "vector_dimensions": 384,</span>
+<span class="c1">#   "indexing_time_ms": 125,</span>
+<span class="c1">#   "success": true</span>
+<span class="c1"># }</span>
+</code></pre></div>
+<h3 id="performance-monitoring">Performance Monitoring<a class="headerlink" href="#performance-monitoring" title="Permanent link">¶</a></h3>
+<p>Built-in performance tracking and metrics:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_performance_logger</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+
+<span class="n">perf_logger</span> <span class="o">=</span> <span class="n">get_performance_logger</span><span class="p">()</span>
+
+<span class="c1"># Method 1: Context manager for timing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_performance</span>
+
+<span class="nd">@log_performance</span><span class="p">(</span><span class="s2">"embedding_generation"</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_embeddings</span><span class="p">(</span><span class="n">texts</span><span class="p">):</span>
+    <span class="c1"># Your embedding logic here</span>
+    <span class="k">return</span> <span class="n">embeddings</span>
+
+<span class="c1"># Method 2: Manual timing</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">search_engine</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"query"</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+<span class="n">perf_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Search completed"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+    <span class="s2">"operation"</span><span class="p">:</span> <span class="s2">"semantic_search"</span><span class="p">,</span>
+    <span class="s2">"query_length"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="s2">"query"</span><span class="p">),</span>
+    <span class="s2">"results_count"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">),</span>
+    <span class="s2">"duration_ms"</span><span class="p">:</span> <span class="n">duration</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span>
+    <span class="s2">"avg_score"</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">'score'</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1"># Method 3: Decorator with context</span>
+<span class="nd">@log_performance</span><span class="p">(</span><span class="s2">"document_processing"</span><span class="p">,</span> <span class="n">include_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">):</span>
+    <span class="c1"># Processing logic</span>
+    <span class="k">return</span> <span class="n">processed_docs</span>
+</code></pre></div>
+<h3 id="error-tracking-and-context">Error Tracking and Context<a class="headerlink" href="#error-tracking-and-context" title="Permanent link">¶</a></h3>
+<p>Enhanced error logging with full context:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_error_logger</span>
+
+<span class="n">error_logger</span> <span class="o">=</span> <span class="n">get_error_logger</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Some RAG operation</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query_vector</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">error_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+        <span class="s2">"Vector search failed"</span><span class="p">,</span>
+        <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">"error_type"</span><span class="p">:</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="s2">"error_message"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+            <span class="s2">"query_dimensions"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">query_vector</span><span class="p">),</span>
+            <span class="s2">"collection_name"</span><span class="p">:</span> <span class="s2">"my_collection"</span><span class="p">,</span>
+            <span class="s2">"operation_context"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"function"</span><span class="p">:</span> <span class="s2">"semantic_search"</span><span class="p">,</span>
+                <span class="s2">"step"</span><span class="p">:</span> <span class="s2">"vector_query"</span><span class="p">,</span>
+                <span class="s2">"parameters"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">"limit"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                    <span class="s2">"score_threshold"</span><span class="p">:</span> <span class="mf">0.7</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># Include full stack trace</span>
+    <span class="p">)</span>
+    <span class="k">raise</span>
+</code></pre></div>
+<h2 id="advanced-logging-patterns">Advanced Logging Patterns<a class="headerlink" href="#advanced-logging-patterns" title="Permanent link">¶</a></h2>
+<h3 id="contextual-logging">Contextual Logging<a class="headerlink" href="#contextual-logging" title="Permanent link">¶</a></h3>
+<p>Maintain context across related operations:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoggingContext</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># Create a logging context for a RAG session</span>
+<span class="k">with</span> <span class="n">LoggingContext</span><span class="p">(</span>
+    <span class="n">session_id</span><span class="o">=</span><span class="s2">"session_123"</span><span class="p">,</span>
+    <span class="n">user_id</span><span class="o">=</span><span class="s2">"user_456"</span><span class="p">,</span>
+    <span class="n">operation</span><span class="o">=</span><span class="s2">"rag_query"</span>
+<span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Starting RAG query"</span><span class="p">)</span>
+
+    <span class="c1"># All logs within this context will include session info</span>
+    <span class="n">search_results</span> <span class="o">=</span> <span class="n">search_engine</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Retrieved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">search_results</span><span class="p">)</span><span class="si">}</span><span class="s2"> results"</span><span class="p">)</span>
+
+    <span class="n">llm_response</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">search_results</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Generated LLM response"</span><span class="p">)</span>
+
+    <span class="c1"># Context information is automatically included in all logs</span>
+</code></pre></div>
+<h3 id="correlation-ids">Correlation IDs<a class="headerlink" href="#correlation-ids" title="Permanent link">¶</a></h3>
+<p>Track operations across the entire pipeline:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">with_correlation_id</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+
+<span class="nd">@with_correlation_id</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_rag_request</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Process a RAG request with full traceability."""</span>
+
+    <span class="n">correlation_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Processing RAG request"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">"correlation_id"</span><span class="p">:</span> <span class="n">correlation_id</span><span class="p">,</span>
+        <span class="s2">"query_preview"</span><span class="p">:</span> <span class="n">query</span><span class="p">[:</span><span class="mi">50</span><span class="p">]</span>
+    <span class="p">})</span>
+
+    <span class="c1"># All subsequent operations will include the correlation ID</span>
+    <span class="n">search_results</span> <span class="o">=</span> <span class="n">search_documents</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">llm_response</span> <span class="o">=</span> <span class="n">generate_response</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">search_results</span><span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"RAG request completed"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">"correlation_id"</span><span class="p">:</span> <span class="n">correlation_id</span><span class="p">,</span>
+        <span class="s2">"response_length"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">llm_response</span><span class="p">)</span>
+    <span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">llm_response</span>
+</code></pre></div>
+<h3 id="custom-log-filters">Custom Log Filters<a class="headerlink" href="#custom-log-filters" title="Permanent link">¶</a></h3>
+<p>Filter logs based on context or content:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_log_filter</span>
+
+<span class="c1"># Filter out low-priority debug messages</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">development_filter</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">levelno</span> <span class="o">==</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"performance"</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="n">getMessage</span><span class="p">()</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="n">add_log_filter</span><span class="p">(</span><span class="s2">"development_filter"</span><span class="p">,</span> <span class="n">development_filter</span><span class="p">)</span>
+
+<span class="c1"># Filter sensitive information</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">security_filter</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+    <span class="c1"># Remove or mask sensitive data from logs</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s1">'api_key'</span><span class="p">):</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="s2">"***masked***"</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s1">'user_email'</span><span class="p">):</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">user_email</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">user_email</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'@'</span><span class="p">,</span> <span class="s1">'@***'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="n">add_log_filter</span><span class="p">(</span><span class="s2">"security_filter"</span><span class="p">,</span> <span class="n">security_filter</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="configuration-management">Configuration Management<a class="headerlink" href="#configuration-management" title="Permanent link">¶</a></h2>
+<h3 id="log-level-configuration">Log Level Configuration<a class="headerlink" href="#log-level-configuration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">configure_log_levels</span>
+
+<span class="c1"># Set different levels for different components</span>
+<span class="n">configure_log_levels</span><span class="p">({</span>
+    <span class="s2">"rag_to_riches.vectordb"</span><span class="p">:</span> <span class="s2">"DEBUG"</span><span class="p">,</span>
+    <span class="s2">"rag_to_riches.search"</span><span class="p">:</span> <span class="s2">"INFO"</span><span class="p">,</span> 
+    <span class="s2">"rag_to_riches.corpus"</span><span class="p">:</span> <span class="s2">"INFO"</span><span class="p">,</span>
+    <span class="s2">"rag_to_riches.examples"</span><span class="p">:</span> <span class="s2">"WARNING"</span><span class="p">,</span>
+    <span class="s2">"requests"</span><span class="p">:</span> <span class="s2">"WARNING"</span><span class="p">,</span>  <span class="c1"># Reduce third-party library noise</span>
+    <span class="s2">"urllib3"</span><span class="p">:</span> <span class="s2">"ERROR"</span>
+<span class="p">})</span>
+</code></pre></div>
+<h3 id="dynamic-configuration">Dynamic Configuration<a class="headerlink" href="#dynamic-configuration" title="Permanent link">¶</a></h3>
+<p>Update logging configuration at runtime:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">update_logging_config</span>
+
+<span class="c1"># Switch to debug mode dynamically</span>
+<span class="n">update_logging_config</span><span class="p">({</span>
+    <span class="s2">"level"</span><span class="p">:</span> <span class="s2">"DEBUG"</span><span class="p">,</span>
+    <span class="s2">"enable_performance_logging"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">"add_memory_metrics"</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">})</span>
+
+<span class="c1"># Switch to production mode</span>
+<span class="n">update_logging_config</span><span class="p">({</span>
+    <span class="s2">"level"</span><span class="p">:</span> <span class="s2">"INFO"</span><span class="p">,</span>
+    <span class="s2">"format_style"</span><span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span>
+    <span class="s2">"enable_file_logging"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">"log_rotation"</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">})</span>
+</code></pre></div>
+<h2 id="integration-with-rag-components">Integration with RAG Components<a class="headerlink" href="#integration-with-rag-components" title="Permanent link">¶</a></h2>
+<h3 id="vector-database-logging">Vector Database Logging<a class="headerlink" href="#vector-database-logging" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.vectordb.embedded_vectordb</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmbeddedVectorDB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_logging</span>
+
+<span class="n">setup_logging</span><span class="p">()</span>
+<span class="n">vector_db</span> <span class="o">=</span> <span class="n">EmbeddedVectorDB</span><span class="p">()</span>
+
+<span class="c1"># Automatic logging of database operations</span>
+<span class="n">vector_db</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span><span class="s2">"my_collection"</span><span class="p">)</span>  <span class="c1"># Logs: Collection created</span>
+<span class="n">vector_db</span><span class="o">.</span><span class="n">add_vectors</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>       <span class="c1"># Logs: Vectors added (count, dimensions)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query_vector</span><span class="p">)</span>       <span class="c1"># Logs: Search completed (results, time)</span>
+</code></pre></div>
+<h3 id="search-operation-logging">Search Operation Logging<a class="headerlink" href="#search-operation-logging" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.search.semantic_search</span><span class="w"> </span><span class="kn">import</span> <span class="n">SemanticSearch</span>
+
+<span class="n">search_engine</span> <span class="o">=</span> <span class="n">SemanticSearch</span><span class="p">(</span><span class="n">vector_db</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="s2">"docs"</span><span class="p">)</span>
+
+<span class="c1"># Automatic logging includes:</span>
+<span class="c1"># - Query processing time</span>
+<span class="c1"># - Number of results found</span>
+<span class="c1"># - Average relevance scores</span>
+<span class="c1"># - Performance metrics</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">search_engine</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"machine learning applications"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="corpus-management-logging">Corpus Management Logging<a class="headerlink" href="#corpus-management-logging" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.corpus.animals</span><span class="w"> </span><span class="kn">import</span> <span class="n">Animals</span>
+
+<span class="n">animals</span> <span class="o">=</span> <span class="n">Animals</span><span class="p">(</span><span class="n">vector_db</span><span class="p">,</span> <span class="n">collection_name</span><span class="o">=</span><span class="s2">"animal_wisdom"</span><span class="p">)</span>
+
+<span class="c1"># Comprehensive logging of corpus operations:</span>
+<span class="c1"># - Data loading progress</span>
+<span class="c1"># - Indexing performance</span>
+<span class="c1"># - Search analytics</span>
+<span class="c1"># - Error recovery</span>
+<span class="n">wisdom_data</span><span class="p">,</span> <span class="n">point_ids</span> <span class="o">=</span> <span class="n">animals</span><span class="o">.</span><span class="n">load_and_index</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="production-considerations">Production Considerations<a class="headerlink" href="#production-considerations" title="Permanent link">¶</a></h2>
+<h3 id="log-rotation-and-management">Log Rotation and Management<a class="headerlink" href="#log-rotation-and-management" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_production_logging</span>
+
+<span class="n">setup_production_logging</span><span class="p">(</span>
+    <span class="n">log_file</span><span class="o">=</span><span class="s2">"rag_system.log"</span><span class="p">,</span>
+    <span class="n">max_file_size</span><span class="o">=</span><span class="s2">"100MB"</span><span class="p">,</span>
+    <span class="n">backup_count</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">compression</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">rotation_schedule</span><span class="o">=</span><span class="s2">"daily"</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="monitoring-and-alerting-integration">Monitoring and Alerting Integration<a class="headerlink" href="#monitoring-and-alerting-integration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">enable_monitoring_hooks</span>
+
+<span class="c1"># Integration with monitoring systems</span>
+<span class="n">enable_monitoring_hooks</span><span class="p">(</span>
+    <span class="n">error_webhook</span><span class="o">=</span><span class="s2">"https://alerts.example.com/webhook"</span><span class="p">,</span>
+    <span class="n">metrics_endpoint</span><span class="o">=</span><span class="s2">"https://metrics.example.com/api/logs"</span><span class="p">,</span>
+    <span class="n">alert_on_error_rate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">performance_threshold_ms</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="security-and-compliance">Security and Compliance<a class="headerlink" href="#security-and-compliance" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">enable_security_logging</span>
+
+<span class="n">enable_security_logging</span><span class="p">(</span>
+    <span class="n">mask_sensitive_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">audit_access_logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">comply_with_gdpr</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">retention_period_days</span><span class="o">=</span><span class="mi">90</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">¶</a></h2>
+<h3 id="development-workflow">Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_development_logging</span>
+
+<span class="c1"># Perfect for debugging and development</span>
+<span class="n">setup_development_logging</span><span class="p">()</span>
+
+<span class="c1"># Your development code here</span>
+<span class="c1"># Logs will be colorful, detailed, and easy to read</span>
+</code></pre></div>
+<h3 id="production-deployment">Production Deployment<a class="headerlink" href="#production-deployment" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_production_logging</span>
+
+<span class="c1"># Optimized for production environments</span>
+<span class="n">setup_production_logging</span><span class="p">(</span>
+    <span class="n">log_level</span><span class="o">=</span><span class="s2">"INFO"</span><span class="p">,</span>
+    <span class="n">structured_format</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">enable_metrics</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">enable_alerting</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="testing-environment">Testing Environment<a class="headerlink" href="#testing-environment" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.utils.logging_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_testing_logging</span>
+
+<span class="c1"># Minimal logging for tests</span>
+<span class="n">setup_testing_logging</span><span class="p">(</span>
+    <span class="n">capture_logs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Capture for test assertions</span>
+    <span class="n">suppress_external_logs</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="related-components">Related Components<a class="headerlink" href="#related-components" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="../exceptions/"><code>exceptions/</code></a>: Error logging integrates with the exception system</li>
+<li><a href="../vectordb/"><code>vectordb/</code></a>: Database operations are logged for monitoring</li>
+<li><a href="../search/"><code>search/</code></a>: Search performance and results are logged</li>
+<li><a href="../corpus/"><code>corpus/</code></a>: Corpus operations include comprehensive logging</li>
+</ul>
+<hr/>
+<p><em>Part of the RAG to Riches framework - essential utilities for robust, observable applications.</em> </p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+<script src="../javascripts/mathjax.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

@@ -1,0 +1,3207 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)">
+      
+      
+        <meta name="author" content="SupportVectors">
+      
+      
+        <link rel="canonical" href="https://supportvectors.ai/rag-to-riches/notebooks/examples/lesson-1/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../lesson-2/">
+      
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Lesson 1 - SupportVectors Rag to Riches</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Lora";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/supportvectors.css">
+    
+      <link rel="stylesheet" href="../../../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../../../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../../../css/pandas-dataframe.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="gray">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rag-to-riches-lesson-1-the-power-of-semantic-search" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="SupportVectors Rag to Riches" class="md-header__button md-logo" aria-label="SupportVectors Rag to Riches" data-md-component="logo">
+      
+  <img src="../../../images/overlapping_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SupportVectors Rag to Riches
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lesson 1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="light-blue" data-md-color-accent="gray"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SupportVectors Rag to Riches" class="md-nav__button md-logo" aria-label="SupportVectors Rag to Riches" data-md-component="logo">
+      
+  <img src="../../../images/overlapping_logo.png" alt="logo">
+
+    </a>
+    SupportVectors Rag to Riches
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RAG to Riches: Advanced Retrieval-Augmented Generation Framework
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Apidocs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Apidocs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../apidocs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../apidocs/animals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Animals
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../apidocs/embedded_vectordb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EmbeddedVectorDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../apidocs/semantic_search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SemanticSearch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../apidocs/simple_text_embedder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SimpleTextEmbedder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Corpus
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Corpus
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Corpus Package: Data Models and Content Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../corpus/AnimalQuote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AnimalQuote Class: Individual Quote Data Model
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../corpus/AnimalWisdom/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AnimalWisdom Class: Quote Collection Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../corpus/Animals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Animals Class: Complete RAG System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Examples Package
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Exceptions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Exceptions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../exceptions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Exceptions Package
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Notebooks
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Notebooks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Interactive Notebooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Lesson 1
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lesson 1
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Learning Objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-intuition-behind-semantic-search-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Intuition Behind Semantic Search {#intuition}
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lesson-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lesson 2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../search-corpus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Search corpus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../semantic-search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Semantic search
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../supportvectors-common/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Supportvectors common
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Project guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Project guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tips and tricks
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            Tips and tricks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../project-guide/tips-and-tricks/cuda-hell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Some tips and tricks to deal with the CUDA hell
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Search
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Search
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Search Package
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Search basics
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Search basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../search_basics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Search Basics Package
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Start simply
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Start simply
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start_simply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Start Simply Package
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Utils
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Utils
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utils Package
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Vectordb
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Vectordb
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../vectordb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Vector Database Package: Embeddings and Storage
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../vectordb/EmbeddedVectorDB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EmbeddedVectorDB Class
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../vectordb/SimpleTextEmbedder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SimpleTextEmbedder Class
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Learning Objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      📚 Table of Contents
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-intuition-behind-semantic-search-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Intuition Behind Semantic Search {#intuition}
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var requireJsScript = document.createElement('script');
+    requireJsScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js';
+
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var jupyterWidgetsScript = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
+
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    jupyterWidgetsScript.src = widgetRendererSrc;
+
+    document.body.appendChild(requireJsScript);
+    document.body.appendChild(jupyterWidgetsScript);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">run</span> <span class="n">supportvectors</span><span class="o">-</span><span class="n">common</span><span class="o">.</span><span class="n">ipynb</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_html rendered_html output_subarea">
+
+<!-- Many of the styles here are inspired by: 
+    https://towardsdatascience.com/10-practical-tips-you-need-to-know-to-personalize-jupyter-notebook-fbd202777e20 
+
+
+    On the author's local machine, these exist in the custom.css file. However, in order to keep uniform look and feel, 
+    and at the request of participants, I have added it to this common import-file here.
+
+    -->
+
+
+<link href="https://fonts.googleapis.com/css?family=Lora:400,700|Montserrat:300" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&amp;family=Literata&amp;display=swap" rel="stylesheet"/>
+<style>
+
+
+#ipython_notebook::before{
+ content:"Rag to Riches";
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-family: 'Lora',serif;
+        font-size:16pt;
+        margin-bottom:15px;
+        margin-top:15px;
+
+}
+body > #header {
+    #background: #D15555;
+    background: linear-gradient(to bottom, indianred 0%, #fff 100%);
+    opacity: 0.8;
+
+}
+
+
+.navbar-default .navbar-nav > li > a, #kernel_indicator {
+    color: white;
+    transition: all 0.25s;
+    font-size:10pt;
+    font-family: sans-serif;
+    font-weight:normal;
+}
+.navbar-default {
+    padding-left:100px;
+    background: none;
+    border: none;
+}
+
+
+body > menubar-container {
+    background-color: wheat;
+}
+#ipython_notebook img{                                                                                        
+    display:block; 
+
+    background: url("images/logo-poster-transparent.png") no-repeat;
+    background-size: contain;
+
+    padding-left: 600px;
+    padding-right: 100px;
+
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+
+body {
+ #font-family:  'Literata', serif;
+    font-family:'Lora', san-serif;
+    text-align: justify;
+    font-weight: 400;
+    font-size: 12pt;
+}
+
+iframe{
+    width:100%;
+    min-height:600px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+# font-family: 'Montserrat', sans-serif;
+ font-family:'Lora', serif;
+ font-weight: 200;
+ text-transform: uppercase;
+ color: #EC7063 ;
+}
+
+h2 {
+    color: #000080;
+}
+
+.checkpoint_status, .autosave_status {
+    color:wheat;
+}
+
+#notebook_name {
+    font-weight: 600;
+    font-size:20pt;
+    text-variant:uppercase;
+    color: wheat; 
+    margin-right:20px;
+    margin-left:-500px;
+}
+#notebook_name:hover {
+background-color: salmon;
+}
+
+
+.dataframe { /* dataframe atau table */
+    background: white;
+    box-shadow: 0px 1px 2px #bbb;
+}
+.dataframe thead th, .dataframe tbody td {
+    text-align: center;
+    padding: 1em;
+}
+
+.checkpoint_status, .autosave_status {
+    color:wheat;
+}
+
+.output {
+    align-items: center;
+}
+
+div.cell {
+    transition: all 0.25s;
+    border: none;
+    position: relative;
+    top: 0;
+}
+div.cell.selected, div.cell.selected.jupyter-soft-selected {
+    border: none;
+    background: transparent;
+    box-shadow: 0 6px 18px #aaa;
+    z-index: 10;
+    top: -10px;
+}
+.CodeMirror pre, .CodeMirror-dialog, .CodeMirror-dialog .CodeMirror-search-field, .terminal-app .terminal {
+    font-family: 'Hack' , serif; 
+    font-weight: 500;
+    font-size: 14pt;
+}
+
+
+
+</style>
+</div>
+</div>
+<div class="output_area">
+<center><img alt="No description has been provided for this image" src="images/logo-poster-transparent.png" width="400"/> </center>
+<div style="color:#aaa;font-size:8pt">
+
+<hr/>
+
+
+© SupportVectors. All rights reserved. <blockquote>This notebook is the intellectual property of SupportVectors, and part of its training material. 
+Only the participants in SupportVectors workshops are allowed to study the notebooks for educational purposes currently, but is prohibited from copying or using it for any other purposes without written permission.
+
+<p><b> These notebooks are chapters and sections from Asif Qamar's textbook that he is writing on Data Science. So we request you to not circulate the material to others.</b></p>
+</blockquote>
+
+<hr/>
+
+
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 Project root: /Users/asifqamar/github/rag_to_riches
+📁 Working directory: /Users/asifqamar/github/rag_to_riches
+✅ Ready to import rag_to_riches modules!
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="rag-to-riches-lesson-1-the-power-of-semantic-search">RAG to Riches: Lesson 1 - The Power of Semantic Search<a class="headerlink" href="#rag-to-riches-lesson-1-the-power-of-semantic-search" title="Permanent link">&para;</a></h1>
+<h2 id="learning-objectives">🎯 Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
+<p>By the end of this lesson, you will understand:</p>
+<ol>
+<li><strong>What</strong> semantic search is and how it differs from traditional keyword search</li>
+<li><strong>Why</strong> semantic search is revolutionary for information retrieval</li>
+<li><strong>Where</strong> semantic search excels and its best use cases</li>
+<li><strong>How</strong> to implement semantic search with embeddings and vector databases</li>
+</ol>
+<hr />
+<h2 id="table-of-contents">📚 Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><a href="#intuition">The Intuition Behind Semantic Search</a></p>
+</li>
+<li>
+<p><a href="#the-three-ws">The Three W's of Semantic Search</a></p>
+</li>
+<li><a href="#what">What is Semantic Search?</a></li>
+<li><a href="#why">Why Semantic Search?</a> </li>
+<li>
+<p><a href="#where">Where to Use Semantic Search?</a></p>
+</li>
+<li>
+<p><a href="#implementation">The HOW: Implementation Deep Dive</a></p>
+</li>
+<li><a href="#data-structure">Data Structure: AnimalQuote Examples</a></li>
+<li><a href="#indexing-pipeline">The Indexing Pipeline</a></li>
+<li><a href="#search-process">The Search Process</a></li>
+<li>
+<p><a href="#examples">Hands-on Examples</a></p>
+</li>
+<li>
+<p><a href="#takeaways">Key Takeaways</a></p>
+</li>
+</ol>
+<hr />
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="the-intuition-behind-semantic-search-intuition">The Intuition Behind Semantic Search {#intuition}<a class="headerlink" href="#the-intuition-behind-semantic-search-intuition" title="Permanent link">&para;</a></h2>
+<h1 id="semantic-search">Semantic search<a class="headerlink" href="#semantic-search" title="Permanent link">&para;</a></h1>
+<p>Traditionally, one would search through a corpus of documents using a keywords-based search engine like Lucene, Solr, ElasticSearch, etc. While the technology has matured, the basic underlying approach behind keyword search engines is to maintain an <em>inverted-index</em> mapping keywords to a list of documents that contain them, with associated relevances.</p>
+<p>In general, the keywords-based search approach has been quite successful over the years, and have matured with added features and linguistic capabilities.</p>
+<p>However, this approach has had its limitations. The principal cause of it goes to the fact that when we enter keywords, it is a human tendency to describe the intent of what we are looking for. For example, if we enter "breakfast places", we implicitly also mean restaurants, cafe, etc that serve items appropriate for breakfast. There may be a restaurant described as a shop for expresso, or crepe, that a keywords-search will likely miss, since its keywords do not match the query terms. And yet, we would hope to see it near the top of the search results.</p>
+<p>Semantic search is an NLP approach largely relying on deep-neural networks, and in particular, the transformers that make it possible to more closely infer the human intent behind the search terms, the relationship between the words, and the underlying context. It allows for entire sentences -- and even paragraphs -- describing what the searcher's intent is, and retrieves results more relevant or aligned to it.</p>
+<h2 id="how-would-we-do-this-nlp-task-with-ai">How would we do this NLP task with AI?<a class="headerlink" href="#how-would-we-do-this-nlp-task-with-ai" title="Permanent link">&para;</a></h2>
+<p>Let us represent the functional behavior we expect: </p>
+<p><img alt="" src="../images/semantic-search-functionality.png" /></p>
+<h3 id="magic-happens-breaking-it-down-into-steps">Magic happens: breaking it down into steps<a class="headerlink" href="#magic-happens-breaking-it-down-into-steps" title="Permanent link">&para;</a></h3>
+<p>We recall that machine-learning algorithms work with vectors (<span class="arithmatex">\(\mathbf{X}\)</span>) representation of data.</p>
+<p>So the first order of business would be to map each of the document texts <span class="arithmatex">\(D_i\)</span> to its corresponding vector <span class="arithmatex">\(X_i\)</span> in an appropriate <span class="arithmatex">\(d\)</span>-dimensional space, <span class="arithmatex">\(\mathbb{R}^d\)</span>, i.e.</p>
+<div class="arithmatex">\[\begin{equation}
+D_i \longrightarrow X_i \in \mathbb{R}^d
+\end{equation}\]</div>
+<p>This resulting vectors are called <strong>sentence embeddings</strong>. Once these embeddings are for each of the documents, we can store the collection of tuples <span class="arithmatex">\([&lt;d_1, x_1=""&gt;, &lt;d_2, x_2=""&gt;, ..., &lt;d_n, x_n=""&gt;]\)</span>. Here each tuple corresponds to a document and its sentence embedding.</p>
+<p>This collection of tuples, therefore, becomes our <strong>search index</strong>.</p>
+<h3 id="search">Search<a class="headerlink" href="#search" title="Permanent link">&para;</a></h3>
+<p>Now, when the user described what she is looking for, we consider the entire text as a "sentence".</p>
+<p>
+</p>
+<div class="alert-box alert-warning" style="padding-top:30px">
+<b>Caveat Emptor</b>
+
+&gt; Note that we have a rather relaxed definition of a *sentence* in NLP: it diverges from a grammmatical definition of a sentence somewhat.  For example, in the English language, we would consider a sentence to be terminated with a punctuation, such as a period, question-mark or exclamation. However, in NLP, we loosely consider the entire text -- whether it is just a word, or a few keywords, or an english sentence, or a few sentences together -- as one **sentence** for the purposes of natual language processing task.
+
+<p>
+</p>
+</div>
+<p>Therefore, it is common to consider an entire document text as a <em>sentence</em> if the text is relatively short. Alternatively, it is partitioned into smaller chunks (of say 512-tokens each), and each such chunk is considered an NLP <em>sentence</em>.</p>
+<p>Since we consider the entire query text as a sentence, we can map it to its <strong>sentence embedding vector</strong>, <span class="arithmatex">\({Q}\)</span>.</p>
+<h4 id="vector-similarity">Vector Similarity<a class="headerlink" href="#vector-similarity" title="Permanent link">&para;</a></h4>
+<p>Once we have this, we simply need to compare the query vector <span class="arithmatex">\({Q}\)</span> with each of the document vectors <span class="arithmatex">\(X_i\)</span>, and sort the document vectors in descending order of similarity.</p>
+<p>The rest is trivial: pick the top-k  in the sorted document vectors list. Then for each vector, look up its corresponding document, and return the list as sorted search result of relevant document.</p>
+<p>We expect that these documents will exhibit high semantic similarity with the search query, assuming that the search index did contain such documents.</p>
+<figure>
+<img alt="No description has been provided for this image" src="https://raw.githubusercontent.com/UKPLab/sentence-transformers/master/docs/img/SemanticSearch.png"/>
+<caption> Semantic similarity as vector proximity in the embedding space. <br/>
+    (Figure source: Sbert.net documentation).
+    </caption>
+</figure>
+<h4 id="similarity-measures">Similarity measures<a class="headerlink" href="#similarity-measures" title="Permanent link">&para;</a></h4>
+<p>The sentence embedding vectors typically exist in very large dimensional space (e.g., 300 dimensions). In such large dimensional spaces, the notion of euclidean distance is not as effective. Therefore, it is far more common to use one of the two below measures for vector similarity:</p>
+<ul>
+<li><strong>dot-product</strong>, the (inner) dot-product between the embedding vectors.</li>
+</ul>
+<div class="arithmatex">\[\begin{equation}
+\text{dot-similarity} = \langle X_i, X_j \rangle
+\end{equation}\]</div>
+<ul>
+<li><strong>cosine-similarity</strong>, the <span class="arithmatex">\(\cos \left(\theta_{ij}\right)\)</span> gives degree of directional alignment between the vectors, but ignores their magnitudes. Here, <span class="arithmatex">\(\theta_{ij}\)</span> is the angle between <span class="arithmatex">\(X_i\)</span> and <span class="arithmatex">\(X_j\)</span> (embedding) vectors.</li>
+</ul>
+<div class="arithmatex">\[\begin{equation} 
+\text{cosine-similarity} = \frac{\langle X_i, X_j \rangle} {\| X_i \| \| X_j \|}
+\end{equation}\]</div>
+<div class="alert-box alert-info" style="padding-top:30px">
+
+**Important**
+
+&gt;  Sentence transformer models trained with cosine-similarity tend to favor the shorter document texts in the search results, whereas the models trained on the dot-product similarity tend to favor longer texts.
+</div>
+<p></p></d_n,></d_2,></d_1,></p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="the-three-ws-of-semantic-search-the-three-ws">🔍 The Three W's of Semantic Search {#the-three-ws}<a class="headerlink" href="#the-three-ws-of-semantic-search-the-three-ws" title="Permanent link">&para;</a></h2>
+<h3 id="what-is-semantic-search-what">What is Semantic Search? {#what}<a class="headerlink" href="#what-is-semantic-search-what" title="Permanent link">&para;</a></h3>
+<p><strong>Semantic search</strong> is an information retrieval technique that understands the <strong>meaning</strong> and <strong>context</strong> of queries and documents, rather than just matching exact keywords.</p>
+<h4 id="traditional-keyword-search-vs-semantic-search">Traditional Keyword Search vs. Semantic Search<a class="headerlink" href="#traditional-keyword-search-vs-semantic-search" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Keyword Search</th>
+<th>Semantic Search</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Matching</strong></td>
+<td>Exact text matches</td>
+<td>Conceptual similarity</td>
+</tr>
+<tr>
+<td><strong>Understanding</strong></td>
+<td>Lexical (word-level)</td>
+<td>Semantic (meaning-level)</td>
+</tr>
+<tr>
+<td><strong>Query</strong></td>
+<td>"dog loyalty"</td>
+<td>"dog loyalty"</td>
+</tr>
+<tr>
+<td><strong>Finds</strong></td>
+<td>Documents containing "dog" AND "loyalty"</td>
+<td>Documents about faithful pets, even without exact words</td>
+</tr>
+<tr>
+<td><strong>Technology</strong></td>
+<td>TF-IDF, BM25, Boolean logic</td>
+<td>Neural embeddings, vector similarity</td>
+</tr>
+</tbody>
+</table>
+<h4 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Embeddings</strong>: Dense vector representations of text that capture semantic meaning</li>
+<li><strong>Vector Space</strong>: High-dimensional space where similar concepts are positioned close together</li>
+<li><strong>Cosine Similarity</strong>: Mathematical measure of how similar two vectors (meanings) are</li>
+<li><strong>Dense Retrieval</strong>: Finding relevant information based on semantic similarity rather than keyword overlap</li>
+</ul>
+<h3 id="why-semantic-search-why">Why Semantic Search? {#why}<a class="headerlink" href="#why-semantic-search-why" title="Permanent link">&para;</a></h3>
+<p>Semantic search has <strong>revolutionized</strong> information retrieval in several fundamental ways:</p>
+<h4 id="1-intent-understanding">🎯 <strong>1. Intent Understanding</strong><a class="headerlink" href="#1-intent-understanding" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Problem</strong>: User searches "best friend" but documents say "loyal companion"</li>
+<li><strong>Solution</strong>: Semantic search understands these concepts are related</li>
+<li><strong>Impact</strong>: 40-60% improvement in search relevance</li>
+</ul>
+<h4 id="2-language-flexibility">🌐 <strong>2. Language Flexibility</strong><a class="headerlink" href="#2-language-flexibility" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Synonyms</strong>: "automobile" matches "car", "vehicle", "auto"</li>
+<li><strong>Paraphrasing</strong>: "How to cook pasta" matches "pasta preparation methods"</li>
+<li><strong>Multilingual</strong>: Can work across languages with multilingual embeddings</li>
+</ul>
+<h4 id="3-context-awareness">🧠 <strong>3. Context Awareness</strong><a class="headerlink" href="#3-context-awareness" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Polysemy</strong>: "bank" (financial) vs "bank" (river) - context determines meaning</li>
+<li><strong>Nuanced queries</strong>: "sad movie that makes you cry" vs "sad movie with bad reviews"</li>
+<li><strong>Conceptual search</strong>: Find documents about concepts, not just keywords</li>
+</ul>
+<h4 id="4-transformational-impact-on-industries">📈 <strong>4. Transformational Impact on Industries</strong><a class="headerlink" href="#4-transformational-impact-on-industries" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Search Engines</strong>: Google's BERT (2019) improved 10% of search queries</li>
+<li><strong>E-commerce</strong>: Amazon's semantic search increased conversion rates by 15-25%</li>
+<li><strong>Enterprise</strong>: Microsoft's semantic search in Office 365 improved productivity</li>
+<li><strong>Legal</strong>: Semantic search helps lawyers find relevant case law beyond keyword matches</li>
+</ul>
+<h3 id="where-to-use-semantic-search-where">Where to Use Semantic Search? {#where}<a class="headerlink" href="#where-to-use-semantic-search-where" title="Permanent link">&para;</a></h3>
+<h4 id="best-use-cases">🏆 <strong>Best Use Cases</strong><a class="headerlink" href="#best-use-cases" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Document Collections with Rich Content</strong></li>
+<li>Research papers, articles, books</li>
+<li>Legal documents, contracts</li>
+<li>Medical records, patient notes</li>
+<li>
+<p><strong>Our use case</strong>: Animal wisdom quotes</p>
+</li>
+<li>
+<p><strong>Customer Support &amp; FAQ</strong></p>
+</li>
+<li>Users ask questions in natural language</li>
+<li>Need to find relevant answers regardless of exact wording</li>
+<li>
+<p>Example: "My order is late" → finds "delivery delays" content</p>
+</li>
+<li>
+<p><strong>Product Discovery</strong></p>
+</li>
+<li>E-commerce: "comfortable running shoes for flat feet"</li>
+<li>Real estate: "cozy family home near good schools"</li>
+<li>
+<p>Content: "funny movies for date night"</p>
+</li>
+<li>
+<p><strong>Knowledge Management</strong></p>
+</li>
+<li>Corporate wikis and documentation</li>
+<li>Research databases</li>
+<li>Personal note-taking systems (Obsidian, Notion)</li>
+</ol>
+<h4 id="when-not-to-use-semantic-search">⚠️ <strong>When NOT to Use Semantic Search</strong><a class="headerlink" href="#when-not-to-use-semantic-search" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Exact Match Requirements</strong></li>
+<li>Legal document numbers, product SKUs</li>
+<li>Code search (variable names, function signatures)</li>
+<li>
+<p>Database queries with specific criteria</p>
+</li>
+<li>
+<p><strong>Very Small Datasets</strong></p>
+</li>
+<li>&lt; 100 documents: keyword search may be sufficient</li>
+<li>
+<p>Overhead of embeddings not justified</p>
+</li>
+<li>
+<p><strong>Highly Technical/Domain-Specific</strong></p>
+</li>
+<li>Without domain-specific embeddings</li>
+<li>Very specialized jargon that general models don't understand</li>
+</ol>
+<hr />
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="the-how-implementation-deep-dive-implementation">🛠️ The HOW: Implementation Deep Dive {#implementation}<a class="headerlink" href="#the-how-implementation-deep-dive-implementation" title="Permanent link">&para;</a></h2>
+<p>Now that we understand the <strong>what</strong>, <strong>why</strong>, and <strong>where</strong> of semantic search, let's dive into the <strong>how</strong>. We'll use our <strong>Animals Wisdom Quotes</strong> corpus to demonstrate a complete semantic search implementation.</p>
+<h3 id="data-structure-animalquote-examples-data-structure">📊 Data Structure: AnimalQuote Examples {#data-structure}<a class="headerlink" href="#data-structure-animalquote-examples-data-structure" title="Permanent link">&para;</a></h3>
+<p>Let's first examine the structure of our data and see some example quotes to understand what we're working with.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Import required modules</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.corpus.animals</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnimalQuote</span><span class="p">,</span> <span class="n">AnimalWisdom</span><span class="p">,</span> <span class="n">Animals</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.vectordb.embedded_vectordb</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmbeddedVectorDB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.vectordb.embedder</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleTextEmbedder</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🐾 Modules imported successfully!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📁 Current working directory:&quot;</span><span class="p">,</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">())</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code>WARNING:root:No configuration file specified. Trying the default location
+WARNING:root:Loading configuration from /Users/asifqamar/github/rag_to_riches/config.yaml if it exists
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🐾 Modules imported successfully!
+📁 Current working directory: /Users/asifqamar/github/rag_to_riches
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># 🚀 Initialize Shared Components (Vector Database &amp;amp; Embedder)</span>
+<span class="c1"># ============================================================================</span>
+<span class="c1"># We initialize these components ONCE at the beginning to avoid database lock issues</span>
+<span class="c1"># and reuse them throughout the notebook for efficiency and consistency.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔧 Initializing Shared Components for the Entire Notebook&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Initialize Vector Database (shared instance)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1️⃣ Initializing Vector Database (Qdrant)...&quot;</span><span class="p">)</span>
+<span class="n">vector_db</span> <span class="o">=</span> <span class="n">EmbeddedVectorDB</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ✅ Vector database connected and ready for reuse&quot;</span><span class="p">)</span>
+
+<span class="c1"># Initialize Text Embedder (shared instance)  </span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">2️⃣ Initializing Text Embedder (Sentence Transformers)...&quot;</span><span class="p">)</span>
+<span class="n">embedder</span> <span class="o">=</span> <span class="n">SimpleTextEmbedder</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;sentence-transformers/all-MiniLM-L6-v2&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✅ Embedder loaded: </span><span class="si">{</span><span class="n">embedder</span><span class="o">.</span><span class="n">model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   📐 Vector dimensions: </span><span class="si">{</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_vector_size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   📏 Distance metric: </span><span class="si">{</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_distance_metric</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎯 Shared components ready! These will be reused throughout the notebook.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 This prevents database lock issues and improves performance.&quot;</span><span class="p">)</span>
+
+<span class="c1"># Set the data path</span>
+<span class="n">jsonl_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/corpus/animals/animals.jsonl&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📝 Note: If you encounter a database lock error, restart the notebook kernel.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   This ensures a clean start and releases any existing database connections.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:47</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">__init__</span>:<span class="ansi-cyan-fg">58</span> - <span class="ansi-bold">Connected to embedded vector database at qdrant_db</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🔧 Initializing Shared Components for the Entire Notebook
+============================================================
+1️⃣ Initializing Vector Database (Qdrant)...
+   ✅ Vector database connected and ready for reuse
+
+2️⃣ Initializing Text Embedder (Sentence Transformers)...
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedder</span>:<span class="ansi-cyan-fg">__init__</span>:<span class="ansi-cyan-fg">115</span> - <span class="ansi-bold">Initialized SimpleTextEmbedder with model 'sentence-transformers/all-MiniLM-L6-v2', vector size: 384</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>   ✅ Embedder loaded: sentence-transformers/all-MiniLM-L6-v2
+   📐 Vector dimensions: 384
+   📏 Distance metric: Cosine
+
+🎯 Shared components ready! These will be reused throughout the notebook.
+💡 This prevents database lock issues and improves performance.
+
+📝 Note: If you encounter a database lock error, restart the notebook kernel.
+   This ensures a clean start and releases any existing database connections.
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Let&#39;s examine the structure of our animal quotes data</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📂 Reading from: </span><span class="si">{</span><span class="n">jsonl_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📄 File exists: </span><span class="si">{</span><span class="n">jsonl_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>📂 Reading from: data/corpus/animals/animals.jsonl
+📄 File exists: True
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># 📚 Load and Index Animal Quotes Using Shared Components</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔧 Creating Animals corpus loader using shared components...&quot;</span><span class="p">)</span>
+<span class="n">animals_loader</span> <span class="o">=</span> <span class="n">Animals</span><span class="p">(</span>
+    <span class="n">vector_db</span><span class="o">=</span><span class="n">vector_db</span><span class="p">,</span>  <span class="c1"># Reusing shared vector_db instance</span>
+    <span class="n">embedder</span><span class="o">=</span><span class="n">embedder</span><span class="p">,</span>    <span class="c1"># Reusing shared embedder instance</span>
+<span class="p">)</span>
+
+<span class="n">animals_loader</span><span class="o">.</span><span class="n">recreate_collection</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 Loading and indexing animal quotes...&quot;</span><span class="p">)</span>
+<span class="n">wisdom</span><span class="p">,</span> <span class="n">point_ids</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">load_and_index</span><span class="p">(</span><span class="n">jsonl_path</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">_ensure_existing_collection_matches</span>:<span class="ansi-cyan-fg">469</span> - <span class="ansi-bold">Collection 'animals' exists with correct parameters</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">get_collection_info</span>:<span class="ansi-cyan-fg">295</span> - <span class="ansi-bold">Retrieved info for collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">consistency_check</span>:<span class="ansi-cyan-fg">233</span> - <span class="ansi-bold">Consistency check passed for collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">__init__</span>:<span class="ansi-cyan-fg">182</span> - <span class="ansi-bold">Initialized SemanticSearch for collection 'animals' with SimpleTextEmbedder</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">__init__</span>:<span class="ansi-cyan-fg">208</span> - <span class="ansi-bold">Initialized Animals corpus loader for collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">recreate_collection</span>:<span class="ansi-cyan-fg">336</span> - <span class="ansi-bold">Deleting existing collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">delete_collection</span>:<span class="ansi-cyan-fg">185</span> - <span class="ansi-bold">Deleted collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">recreate_collection</span>:<span class="ansi-cyan-fg">340</span> - <span class="ansi-bold">Creating new empty collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">create_collection</span>:<span class="ansi-cyan-fg">154</span> - <span class="ansi-bold">Created collection 'animals' with vector size 384</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">recreate_collection</span>:<span class="ansi-cyan-fg">350</span> - <span class="ansi-bold">Successfully recreated empty collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:48</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">load_from_jsonl</span>:<span class="ansi-cyan-fg">268</span> - <span class="ansi-bold">Loaded 100 animal quotes from data/corpus/animals/animals.jsonl</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🔧 Creating Animals corpus loader using shared components...
+📊 Loading and indexing animal quotes...
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">upsert_points</span>:<span class="ansi-cyan-fg">450</span> - <span class="ansi-bold">Upserted 100 points to collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">index_all_text</span>:<span class="ansi-cyan-fg">457</span> - <span class="ansi-bold">Indexed 100 texts into collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">index_all_quotes</span>:<span class="ansi-cyan-fg">311</span> - <span class="ansi-bold">Successfully indexed 100 animal quotes into collection 'animals'</span>
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Display information about what was loaded and indexed</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Successfully loaded and indexed animal quotes!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes from </span><span class="si">{</span><span class="n">wisdom</span><span class="o">.</span><span class="n">source_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔗 Indexed </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">point_ids</span><span class="p">)</span><span class="si">}</span><span class="s2"> points into collection &#39;</span><span class="si">{</span><span class="n">animals_loader</span><span class="o">.</span><span class="n">collection_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+<span class="c1"># Show some statistics</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">get_collection_stats</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📈 Collection Statistics:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Collection Name: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;collection_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Points in Database: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;point_count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Unique Categories: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Unique Authors: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;authors&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🏷️ Sample Categories: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">][:</span><span class="mi">3</span><span class="p">])</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✍️ Sample Authors: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;authors&#39;</span><span class="p">][:</span><span class="mi">5</span><span class="p">])</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎯 Ready for semantic search!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">count_points</span>:<span class="ansi-cyan-fg">105</span> - <span class="ansi-bold">Collection 'animals' contains 100 points</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>✅ Successfully loaded and indexed animal quotes!
+📊 Loaded 100 quotes from data/corpus/animals/animals.jsonl
+🔗 Indexed 100 points into collection 'animals'
+
+📈 Collection Statistics:
+   • Collection Name: animals
+   • Points in Database: 100
+   • Unique Categories: 20
+   • Unique Authors: 85
+
+🏷️ Sample Categories: Animal Morality, Animals as Reflections, Animals in Narrative...
+✍️ Sample Authors: A.A. Milne, A.P.J. Abdul Kalam, Abraham Lincoln, African proverb, Albert Schweitzer...
+
+🎯 Ready for semantic search!
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="the-indexing-pipeline-indexing-pipeline">🔧 The Indexing Pipeline {#indexing-pipeline}<a class="headerlink" href="#the-indexing-pipeline-indexing-pipeline" title="Permanent link">&para;</a></h3>
+<p>The semantic search indexing pipeline consists of several key steps:</p>
+<div class="highlight"><pre><span></span><code>Raw Data (JSONL) → AnimalQuote Objects → AnimalWisdom Collection → Embeddings → Vector Database
+</code></pre></div>
+<h4 id="step-by-step-process">Step-by-Step Process:<a class="headerlink" href="#step-by-step-process" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Data Loading</strong>: Parse JSONL into validated <code>AnimalQuote</code> objects</li>
+<li><strong>Collection Creation</strong>: Group quotes into <code>AnimalWisdom</code> container</li>
+<li><strong>Embedding Generation</strong>: Convert text to dense vectors using neural models</li>
+<li><strong>Vector Storage</strong>: Store embeddings + metadata in Qdrant vector database</li>
+<li><strong>Indexing</strong>: Create efficient search indices for fast retrieval</li>
+</ol>
+<h4 id="key-components">Key Components:<a class="headerlink" href="#key-components" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>📝 AnimalQuote</strong>: Individual quote with validation</li>
+<li><strong>📚 AnimalWisdom</strong>: Collection of quotes with analysis methods  </li>
+<li><strong>🧠 Embedder</strong>: Neural model that converts text → vectors</li>
+<li><strong>🗄️ VectorDB</strong>: Qdrant database for storing and searching vectors</li>
+<li><strong>🔍 Animals</strong>: Orchestrator class that manages the entire pipeline</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="understanding-embeddings-the-magic-behind-semantic-search">🔍 Understanding Embeddings: The Magic Behind Semantic Search<a class="headerlink" href="#understanding-embeddings-the-magic-behind-semantic-search" title="Permanent link">&para;</a></h3>
+<p>Before we dive into search examples, let's understand what happens when we convert text to embeddings.</p>
+<h4 id="what-are-embeddings">What are Embeddings?<a class="headerlink" href="#what-are-embeddings" title="Permanent link">&para;</a></h4>
+<p><strong>Embeddings</strong> are dense vector representations of text that capture semantic meaning in a high-dimensional space. Each dimension represents some aspect of meaning that the neural model has learned.</p>
+<h4 id="key-properties">Key Properties:<a class="headerlink" href="#key-properties" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Dense</strong>: Every dimension has a meaningful value (vs sparse keyword vectors)</li>
+<li><strong>Semantic</strong>: Similar meanings → similar vectors  </li>
+<li><strong>High-dimensional</strong>: Our model uses 384 dimensions</li>
+<li><strong>Learned</strong>: Trained on massive text corpora to understand language</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="the-search-process-search-process">🎯 The Search Process {#search-process}<a class="headerlink" href="#the-search-process-search-process" title="Permanent link">&para;</a></h3>
+<p>Now let's explore how semantic search works in practice. The search process involves:</p>
+<ol>
+<li><strong>Query Embedding</strong>: Convert the search query into a vector</li>
+<li><strong>Similarity Calculation</strong>: Compare query vector with all stored vectors  </li>
+<li><strong>Ranking</strong>: Sort results by similarity score (cosine similarity)</li>
+<li><strong>Filtering</strong>: Apply metadata filters (author, category, score threshold)</li>
+<li><strong>Return Results</strong>: Present top-k most similar documents</li>
+</ol>
+<h4 id="search-types-well-demonstrate">Search Types We'll Demonstrate:<a class="headerlink" href="#search-types-well-demonstrate" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Basic Semantic Search</strong>: Find conceptually similar quotes</li>
+<li><strong>Author-Filtered Search</strong>: Search within specific author's quotes  </li>
+<li><strong>Category-Filtered Search</strong>: Search within specific categories</li>
+<li><strong>High-Confidence Search</strong>: Only return very similar results</li>
+<li><strong>Combined Filters</strong>: Multiple criteria simultaneously</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Helper function to display search results nicely</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">search_description</span><span class="p">,</span> <span class="n">max_text_length</span><span class="o">=</span><span class="mi">120</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Display search results in a formatted way.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔍 </span><span class="si">{</span><span class="n">search_description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔍 </span><span class="si">{</span><span class="n">search_description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">results</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ❌ No results found.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   📊 Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> results&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">author</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;author&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">payload</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Truncate long quotes for readability</span>
+        <span class="n">display_content</span> <span class="o">=</span> <span class="n">content</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">max_text_length</span> <span class="k">else</span> <span class="n">content</span><span class="p">[:</span><span class="n">max_text_length</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">. 📊 Score: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      💬 Quote: </span><span class="se">\&quot;</span><span class="si">{</span><span class="n">display_content</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      ✍️  Author: </span><span class="si">{</span><span class="n">author</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      🏷️  Category: </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🛠️ Search helper function defined!&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🛠️ Search helper function defined!
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="hands-on-search-examples-examples">🎪 Hands-on Search Examples {#examples}<a class="headerlink" href="#hands-on-search-examples-examples" title="Permanent link">&para;</a></h3>
+<p>Now for the exciting part! Let's demonstrate the power of semantic search with various examples that showcase different capabilities.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Example 1: Basic Semantic Search - The Power of Meaning</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 EXAMPLE 0: Basic Semantic Search&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query: &#39;a friendship with animals&#39;&quot;</span><span class="p">)</span>
+
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;a friendship with animals&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;Basic Semantic Search Results&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 4 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'a friendship with animals...' returned 4 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'a friendship with animals...' returned 4 results</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 EXAMPLE 0: Basic Semantic Search
+==================================================
+Query: 'a friendship with animals'
+
+🔍 Basic Semantic Search Results
+===============================
+   📊 Found 4 results
+
+   1. 📊 Score: 0.625
+      💬 Quote: "Animals are such agreeable friends—they ask no questions; they pass no criticisms."
+      ✍️  Author: George Eliot
+      🏷️  Category: Famous Literary Passages
+
+   2. 📊 Score: 0.586
+      💬 Quote: "The best thing about animals is that they don't talk much."
+      ✍️  Author: Thornton Wilder
+      🏷️  Category: Famous Literary Passages
+
+   3. 📊 Score: 0.548
+      💬 Quote: "Some people talk to animals. Not many listen though. That's the problem."
+      ✍️  Author: A.A. Milne
+      🏷️  Category: Proverbs and Sayings
+
+   4. 📊 Score: 0.535
+      💬 Quote: "Animals are reliable, many full of love, true in their affections, predictable in their actions, grateful and loyal. ..."
+      ✍️  Author: Alfred A. Montapert
+      🏷️  Category: Reflections and Lessons
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Example 1: Basic Semantic Search - The Power of Meaning</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 EXAMPLE 1: Basic Semantic Search&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query: &#39;loyal companions and friendship&#39;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 This should find quotes about loyalty, friendship, and companionship&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   even if they don&#39;t contain these exact words!&quot;</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;loyal companions and friendship&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;Basic Semantic Search Results&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 4 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'loyal companions and friendship...' returned 4 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'loyal companions and friendship...' returned 4 results</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 EXAMPLE 1: Basic Semantic Search
+==================================================
+Query: 'loyal companions and friendship'
+🔍 This should find quotes about loyalty, friendship, and companionship
+   even if they don't contain these exact words!
+
+🔍 Basic Semantic Search Results
+===============================
+   📊 Found 4 results
+
+   1. 📊 Score: 0.476
+      💬 Quote: "If you want loyalty, get a dog. If you want loyalty and attention, get a smart dog."
+      ✍️  Author: Grant Fairley
+      🏷️  Category: Animal Morality
+
+   2. 📊 Score: 0.428
+      💬 Quote: "Animals are reliable, many full of love, true in their affections, predictable in their actions, grateful and loyal. ..."
+      ✍️  Author: Alfred A. Montapert
+      🏷️  Category: Reflections and Lessons
+
+   3. 📊 Score: 0.368
+      💬 Quote: "Animals share with us the privilege of having a soul."
+      ✍️  Author: Pythagoras
+      🏷️  Category: Literary and Poetic Imagery
+
+   4. 📊 Score: 0.359
+      💬 Quote: "Animals are such agreeable friends—they ask no questions; they pass no criticisms."
+      ✍️  Author: George Eliot
+      🏷️  Category: Famous Literary Passages
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Example 2: Concept-Based Search - Abstract Ideas</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 EXAMPLE 2: Concept-Based Search&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query: &#39;wisdom and life lessons&#39;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Searching for philosophical insights and wisdom&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Notice how we find deep concepts, not just keyword matches!&quot;</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;wisdom and life lessons&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;Concept-Based Search Results&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 4 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'wisdom and life lessons...' returned 4 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'wisdom and life lessons...' returned 4 results</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 EXAMPLE 2: Concept-Based Search
+==================================================
+Query: 'wisdom and life lessons'
+🔍 Searching for philosophical insights and wisdom
+   Notice how we find deep concepts, not just keyword matches!
+
+🔍 Concept-Based Search Results
+==============================
+   📊 Found 4 results
+
+   1. 📊 Score: 0.297
+      💬 Quote: "Animals share with us the privilege of having a soul."
+      ✍️  Author: Pythagoras
+      🏷️  Category: Literary and Poetic Imagery
+
+   2. 📊 Score: 0.296
+      💬 Quote: "To my mind, the life of a lamb is no less precious than that of a human being."
+      ✍️  Author: Mahatma Gandhi
+      🏷️  Category: Literary Masterpieces
+
+   3. 📊 Score: 0.293
+      💬 Quote: "Hold fast to dreams, for if dreams die, life is a broken-winged bird that cannot fly."
+      ✍️  Author: Langston Hughes
+      🏷️  Category: Symbolism and Allegory
+
+   4. 📊 Score: 0.288
+      💬 Quote: "Dogs teach us a very important lesson in life: The mailman is not to be trusted."
+      ✍️  Author: Sian Ford
+      🏷️  Category: Literary Masterpieces
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Example 3: Emotional Search - Finding Feelings</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 EXAMPLE 3: Emotional Search&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query: &#39;sadness and loss&#39;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Searching for quotes that deal with sad emotions&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Semantic search can understand emotional concepts!&quot;</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;sadness and loss&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;Emotional Search Results&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 4 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'sadness and loss...' returned 4 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'sadness and loss...' returned 4 results</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 EXAMPLE 3: Emotional Search
+==================================================
+Query: 'sadness and loss'
+🔍 Searching for quotes that deal with sad emotions
+   Semantic search can understand emotional concepts!
+
+🔍 Emotional Search Results
+==========================
+   📊 Found 4 results
+
+   1. 📊 Score: 0.472
+      💬 Quote: "There are two means of refuge from the misery of life—music and cats."
+      ✍️  Author: Albert Schweitzer
+      🏷️  Category: Powerful Analogies
+
+   2. 📊 Score: 0.462
+      💬 Quote: "Like a bird singing in the rain, let grateful memories survive in time of sorrow."
+      ✍️  Author: Robert Louis Stevenson
+      🏷️  Category: Symbolism and Allegory
+
+   3. 📊 Score: 0.342
+      💬 Quote: "Until one has loved an animal, a part of one's soul remains unawakened."
+      ✍️  Author: Anatole France
+      🏷️  Category: Wisdom and Philosophy
+
+   4. 📊 Score: 0.342
+      💬 Quote: "Until one has loved an animal, a part of one's soul remains unawakened."
+      ✍️  Author: Anatole France
+      🏷️  Category: Famous Literary Passages
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Example 4: Filtered Search - Author-Specific</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 EXAMPLE 4: Author-Filtered Search&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query: &#39;animals&#39; filtered by author: &#39;Mark Twain&#39;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 This combines semantic search with metadata filtering&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   We&#39;re looking for Mark Twain&#39;s thoughts on animals specifically&quot;</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;animals&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Mark Twain&quot;</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;Author-Filtered Search Results&quot;</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s also try a different author</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;🎯 BONUS: Same query, different author&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query: &#39;animals&#39; filtered by author: &#39;Albert Schweitzer&#39;&quot;</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;animals&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Albert Schweitzer&quot;</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;Albert Schweitzer&#39;s Animal Quotes&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 12 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'animals...' returned 12 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'animals...' returned 1 results (filtered by author)</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 9 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'animals...' returned 9 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'animals...' returned 0 results (filtered by author)</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 EXAMPLE 4: Author-Filtered Search
+==================================================
+Query: 'animals' filtered by author: 'Mark Twain'
+🔍 This combines semantic search with metadata filtering
+   We're looking for Mark Twain's thoughts on animals specifically
+
+🔍 Author-Filtered Search Results
+================================
+   📊 Found 1 results
+
+   1. 📊 Score: 0.459
+      💬 Quote: "If animals could speak, the dog would be a blundering outspoken fellow; but the cat would have the rare grace of neve..."
+      ✍️  Author: Mark Twain
+      🏷️  Category: Literary and Poetic Imagery
+
+
+🎯 BONUS: Same query, different author
+Query: 'animals' filtered by author: 'Albert Schweitzer'
+
+🔍 Albert Schweitzer's Animal Quotes
+===================================
+   ❌ No results found.
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Example 5: Category-Filtered Search</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 EXAMPLE 5: Category-Filtered Search&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query: &#39;love and compassion&#39; in category: &#39;Wisdom and Philosophy&#39;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Finding philosophical quotes about love and compassion&quot;</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;love and compassion&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">&quot;Wisdom and Philosophy&quot;</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;Philosophy Category Search Results&quot;</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s see what categories we have available</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📚 Available categories in our corpus:&quot;</span><span class="p">)</span>
+<span class="n">all_categories</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">get_collection_stats</span><span class="p">()[</span><span class="s1">&#39;categories&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">category</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">all_categories</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">2d</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">=</span> <span class="mi">10</span><span class="p">:</span>  <span class="c1"># Show first 10 categories</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ... and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_categories</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span><span class="si">}</span><span class="s2"> more&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 12 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'love and compassion...' returned 12 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'love and compassion...' returned 1 results (filtered by category)</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">count_points</span>:<span class="ansi-cyan-fg">105</span> - <span class="ansi-bold">Collection 'animals' contains 100 points</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 EXAMPLE 5: Category-Filtered Search
+==================================================
+Query: 'love and compassion' in category: 'Wisdom and Philosophy'
+🔍 Finding philosophical quotes about love and compassion
+
+🔍 Philosophy Category Search Results
+====================================
+   📊 Found 1 results
+
+   1. 📊 Score: 0.398
+      💬 Quote: "Until one has loved an animal, a part of one's soul remains unawakened."
+      ✍️  Author: Anatole France
+      🏷️  Category: Wisdom and Philosophy
+
+
+📚 Available categories in our corpus:
+    1. Animal Morality
+    2. Animals as Reflections
+    3. Animals in Narrative
+    4. Evocative Descriptions
+    5. Famous Literary Passages
+    6. Humorous Quotes
+    7. Humorous Yet Profound
+    8. Insightful Observations
+    9. Literary Classics
+   10. Literary Masterpieces
+   ... and 10 more
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Example 6: High-Confidence Search with Score Threshold</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 EXAMPLE 6: High-Confidence Search&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Query: &#39;faithful dogs&#39; with score threshold &amp;gt; 0.6&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Only returning results with high semantic similarity&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   This filters out loosely related results&quot;</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;faithful dogs&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">score_threshold</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;High-Confidence Search Results&quot;</span><span class="p">)</span>
+
+<span class="c1"># Compare with no threshold</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔄 COMPARISON: Same query without score threshold&quot;</span><span class="p">)</span>
+<span class="n">results_all</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;faithful dogs&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results_all</span><span class="p">,</span> <span class="s2">&quot;All Results (No Threshold)&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Insight: Threshold filtering removed </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results_all</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> lower-quality results&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 0 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'faithful dogs...' returned 0 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'faithful dogs...' returned 0 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 5 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'faithful dogs...' returned 5 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'faithful dogs...' returned 5 results</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 EXAMPLE 6: High-Confidence Search
+==================================================
+Query: 'faithful dogs' with score threshold &gt; 0.6
+🔍 Only returning results with high semantic similarity
+   This filters out loosely related results
+
+🔍 High-Confidence Search Results
+================================
+   ❌ No results found.
+
+🔄 COMPARISON: Same query without score threshold
+
+🔍 All Results (No Threshold)
+============================
+   📊 Found 5 results
+
+   1. 📊 Score: 0.513
+      💬 Quote: "Dogs are our link to paradise."
+      ✍️  Author: Milan Kundera
+      🏷️  Category: Proverbs and Sayings
+
+   2. 📊 Score: 0.502
+      💬 Quote: "Every dog has his day."
+      ✍️  Author: Jonathan Swift
+      🏷️  Category: Symbolism and Allegory
+
+   3. 📊 Score: 0.492
+      💬 Quote: "Animals are reliable, many full of love, true in their affections, predictable in their actions, grateful and loyal. ..."
+      ✍️  Author: Alfred A. Montapert
+      🏷️  Category: Reflections and Lessons
+
+   4. 📊 Score: 0.480
+      💬 Quote: "I wonder if other dogs think poodles are members of a weird religious cult."
+      ✍️  Author: Rita Rudner
+      🏷️  Category: Humorous Quotes
+
+   5. 📊 Score: 0.475
+      💬 Quote: "Dogs have boundless enthusiasm but no sense of shame. I should have a dog as a life coach."
+      ✍️  Author: Moby
+      🏷️  Category: Animal Morality
+
+
+📊 Insight: Threshold filtering removed 5 lower-quality results
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Example 7: Demonstrating Semantic vs Keyword Search</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 EXAMPLE 7: Semantic vs Keyword Search Comparison&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">55</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Let&#39;s compare semantic search with what keyword search would find&quot;</span><span class="p">)</span>
+
+<span class="c1"># Semantic search for concepts</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;creatures that bring joy and happiness&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Query: &#39;</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧠 SEMANTIC SEARCH: Finds quotes about the CONCEPT of joy from animals&quot;</span><span class="p">)</span>
+
+<span class="n">semantic_results</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">semantic_results</span><span class="p">,</span> <span class="s2">&quot;Semantic Search Results&quot;</span><span class="p">)</span>
+
+<span class="c1"># Simulate what keyword search might miss</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🔑 KEYWORD SEARCH would look for:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Documents containing &#39;creatures&#39; AND &#39;joy&#39; AND &#39;happiness&#39;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Would miss quotes about &#39;pets&#39;, &#39;animals&#39;, &#39;delight&#39;, &#39;bliss&#39;, etc.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   - Would miss conceptually related but differently worded content&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">💡 SEMANTIC ADVANTAGE:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ✅ Understands synonyms and related concepts&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ✅ Captures intent, not just keywords&quot;</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ✅ Finds relevant content with different vocabulary&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ✅ More natural, human-like understanding&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">search_points</span>:<span class="ansi-cyan-fg">413</span> - <span class="ansi-bold">Found 3 points in collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">search_with_text</span>:<span class="ansi-cyan-fg">347</span> - <span class="ansi-bold">Text search for 'creatures that bring joy and happiness...' returned 3 results</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.corpus.animals</span>:<span class="ansi-cyan-fg">search</span>:<span class="ansi-cyan-fg">426</span> - <span class="ansi-bold">Animal quotes search for 'creatures that bring joy and happiness...' returned 3 results</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 EXAMPLE 7: Semantic vs Keyword Search Comparison
+=======================================================
+🔍 Let's compare semantic search with what keyword search would find
+
+Query: 'creatures that bring joy and happiness'
+🧠 SEMANTIC SEARCH: Finds quotes about the CONCEPT of joy from animals
+
+🔍 Semantic Search Results
+=========================
+   📊 Found 3 results
+
+   1. 📊 Score: 0.505
+      💬 Quote: "Whoever said you can’t buy happiness forgot little puppies."
+      ✍️  Author: Gene Hill
+      🏷️  Category: Animals as Reflections
+
+   2. 📊 Score: 0.498
+      💬 Quote: "The only creatures that are evolved enough to convey pure love are dogs and infants."
+      ✍️  Author: Johnny Depp
+      🏷️  Category: Proverbs and Sayings
+
+   3. 📊 Score: 0.468
+      💬 Quote: "Animals share with us the privilege of having a soul."
+      ✍️  Author: Pythagoras
+      🏷️  Category: Literary and Poetic Imagery
+
+
+🔑 KEYWORD SEARCH would look for:
+   - Documents containing 'creatures' AND 'joy' AND 'happiness'
+   - Would miss quotes about 'pets', 'animals', 'delight', 'bliss', etc.
+   - Would miss conceptually related but differently worded content
+
+💡 SEMANTIC ADVANTAGE:
+   ✅ Understands synonyms and related concepts
+   ✅ Captures intent, not just keywords
+   ✅ Finds relevant content with different vocabulary
+   ✅ More natural, human-like understanding
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># BONUS: Exploring the Enhanced Animals Class</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 BONUS: Enhanced Animals Class Features&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔧 The Animals class now leverages SemanticSearch internally!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Show the new consistency check feature</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">1️⃣ Collection Consistency Check:&quot;</span><span class="p">)</span>
+<span class="n">is_consistent</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">consistency_check</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✅ Collection parameters consistent with embedder: </span><span class="si">{</span><span class="n">is_consistent</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Show access to the underlying semantic search engine</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">2️⃣ Access to Underlying SemanticSearch:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   🔍 SemanticSearch instance: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">animals_loader</span><span class="o">.</span><span class="n">semantic_search</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   📊 Embedder type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">animals_loader</span><span class="o">.</span><span class="n">semantic_search</span><span class="o">.</span><span class="n">embedder</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   🗄️ Vector DB type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">animals_loader</span><span class="o">.</span><span class="n">semantic_search</span><span class="o">.</span><span class="n">vector_db</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Demonstrate single quote indexing</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">3️⃣ Single Quote Indexing (New Feature):&quot;</span><span class="p">)</span>
+<span class="n">sample_quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s2">&quot;The greatness of a nation can be judged by the way its animals are treated.&quot;</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Mahatma Gandhi&quot;</span><span class="p">,</span> 
+    <span class="n">category</span><span class="o">=</span><span class="s2">&quot;Wisdom and Philosophy&quot;</span>
+<span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">point_id</span> <span class="o">=</span> <span class="n">animals_loader</span><span class="o">.</span><span class="n">index_single_quote</span><span class="p">(</span><span class="n">sample_quote</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ✅ Successfully indexed single quote with ID: </span><span class="si">{</span><span class="n">point_id</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   ℹ️ Single quote indexing: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">💡 Benefits of the Refactoring:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   🚀 Reduced code duplication by ~60 lines&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   🛠️ Better maintainability and consistency&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   🔧 Access to full SemanticSearch capabilities&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   ✨ Enhanced functionality while keeping the same API&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   🎯 Composition over duplication design pattern&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code><span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">get_collection_info</span>:<span class="ansi-cyan-fg">295</span> - <span class="ansi-bold">Retrieved info for collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.search.semantic_search</span>:<span class="ansi-cyan-fg">consistency_check</span>:<span class="ansi-cyan-fg">233</span> - <span class="ansi-bold">Consistency check passed for collection 'animals'</span>
+<span class="ansi-green-fg">2025-06-28 12:44:49</span> | <span class="ansi-bold">INFO    </span> | <span class="ansi-cyan-fg">rag_to_riches.vectordb.embedded_vectordb</span>:<span class="ansi-cyan-fg">upsert_points</span>:<span class="ansi-cyan-fg">450</span> - <span class="ansi-bold">Upserted 1 points to collection 'animals'</span>
+</code>
+</pre>
+</div>
+</div>
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>🎯 BONUS: Enhanced Animals Class Features
+==================================================
+🔧 The Animals class now leverages SemanticSearch internally!
+
+1️⃣ Collection Consistency Check:
+   ✅ Collection parameters consistent with embedder: True
+
+2️⃣ Access to Underlying SemanticSearch:
+   🔍 SemanticSearch instance: SemanticSearch
+   📊 Embedder type: SimpleTextEmbedder
+   🗄️ Vector DB type: EmbeddedVectorDB
+
+3️⃣ Single Quote Indexing (New Feature):
+   ✅ Successfully indexed single quote with ID: 8117cdf3...
+
+💡 Benefits of the Refactoring:
+   🚀 Reduced code duplication by ~60 lines
+   🛠️ Better maintainability and consistency
+   🔧 Access to full SemanticSearch capabilities
+   ✨ Enhanced functionality while keeping the same API
+   🎯 Composition over duplication design pattern
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="key-takeaways-takeaways">🎯 Key Takeaways {#takeaways}<a class="headerlink" href="#key-takeaways-takeaways" title="Permanent link">&para;</a></h2>
+<h3 id="what-weve-learned">🔑 What We've Learned<a class="headerlink" href="#what-weve-learned" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Semantic Search Revolution</strong></li>
+<li>Goes beyond keyword matching to understand <strong>meaning</strong></li>
+<li>Uses neural embeddings to capture semantic relationships</li>
+<li>
+<p>Transforms how we find and discover information</p>
+</li>
+<li>
+<p><strong>Technical Implementation</strong></p>
+</li>
+<li><strong>Embeddings</strong>: Dense vectors that represent semantic meaning</li>
+<li><strong>Vector Database</strong>: Efficient storage and similarity search</li>
+<li><strong>Pipeline</strong>: Data → Validation → Embeddings → Indexing → Search</li>
+<li>
+<p><strong>Architecture</strong>: Composition pattern with SemanticSearch for code reuse</p>
+</li>
+<li>
+<p><strong>Practical Benefits</strong></p>
+</li>
+<li><strong>Intent Understanding</strong>: Finds what you mean, not just what you say</li>
+<li><strong>Language Flexibility</strong>: Works with synonyms, paraphrases, concepts</li>
+<li><strong>Better Relevance</strong>: 40-60% improvement over keyword search</li>
+<li>
+<p><strong>Natural Queries</strong>: Search like you think and speak</p>
+</li>
+<li>
+<p><strong>Real-World Applications</strong></p>
+</li>
+<li>Document search and knowledge management</li>
+<li>E-commerce product discovery  </li>
+<li>Customer support and FAQ systems</li>
+<li>Research and academic databases</li>
+</ol>
+<h3 id="next-steps">🚀 Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h3>
+<p>In future lessons, we'll explore:
+- <strong>RAG (Retrieval-Augmented Generation)</strong>: Combining search with LLMs
+- <strong>Advanced Embeddings</strong>: Domain-specific and multimodal models
+- <strong>Vector Database Optimization</strong>: Performance and scaling
+- <strong>Evaluation Metrics</strong>: Measuring search quality and relevance</p>
+<h3 id="remember">💡 Remember<a class="headerlink" href="#remember" title="Permanent link">&para;</a></h3>
+<p>&gt; <strong>"Semantic search doesn't just find documents that match your keywords—it finds documents that match your thoughts."</strong></p>
+<p>The power of semantic search lies in its ability to bridge the gap between human intent and information retrieval, making search more intuitive, effective, and intelligent.</p>
+<hr />
+<p><strong>🎉 Congratulations!</strong> You've completed Lesson 1 and now understand the fundamentals of semantic search. You're ready to build more sophisticated RAG applications!</p>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1487 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)" name="description"/>
+<meta content="SupportVectors" name="author"/>
+<link href="https://supportvectors.ai/rag-to-riches/search_basics/" rel="canonical"/>
+<link href="../search/" rel="prev"/>
+<link href="../start_simply/" rel="next"/>
+<link href="../images/favicon.ico" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.14" name="generator"/>
+<title>Search Basics Package - SupportVectors Rag to Riches</title>
+<link href="../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Lora:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Lora";--md-code-font:"Roboto Mono"}</style>
+<link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../stylesheets/supportvectors.css" rel="stylesheet"/>
+<link href="../css/ansi-colours.css" rel="stylesheet"/>
+<link href="../css/jupyter-cells.css" rel="stylesheet"/>
+<link href="../css/pandas-dataframe.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="gray" data-md-color-primary="light-blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#search-basics-package">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SupportVectors Rag to Riches" class="md-header__button md-logo" data-md-component="logo" href=".." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../images/overlapping_logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SupportVectors Rag to Riches
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Search Basics Package
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="gray" data-md-color-media="" data-md-color-primary="light-blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SupportVectors Rag to Riches" class="md-nav__button md-logo" data-md-component="logo" href=".." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../images/overlapping_logo.png"/>
+</a>
+    SupportVectors Rag to Riches
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    RAG to Riches: Advanced Retrieval-Augmented Generation Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Apidocs
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Apidocs
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/animals/">
+<span class="md-ellipsis">
+    Animals
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/embedded_vectordb/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/semantic_search/">
+<span class="md-ellipsis">
+    SemanticSearch
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../apidocs/simple_text_embedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Corpus
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Corpus
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/">
+<span class="md-ellipsis">
+    Corpus Package: Data Models and Content Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/AnimalQuote/">
+<span class="md-ellipsis">
+    AnimalQuote Class: Individual Quote Data Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/AnimalWisdom/">
+<span class="md-ellipsis">
+    AnimalWisdom Class: Quote Collection Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/Animals/">
+<span class="md-ellipsis">
+    Animals Class: Complete RAG System
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../examples/">
+<span class="md-ellipsis">
+    Examples Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Exceptions
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Exceptions
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exceptions/">
+<span class="md-ellipsis">
+    Exceptions Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Notebooks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Notebooks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/">
+<span class="md-ellipsis">
+    Interactive Notebooks
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/lesson-1/">
+<span class="md-ellipsis">
+    Lesson 1
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/lesson-2/">
+<span class="md-ellipsis">
+    Lesson 2
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/search-corpus/">
+<span class="md-ellipsis">
+    Search corpus
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/semantic-search/">
+<span class="md-ellipsis">
+    Semantic search
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/supportvectors-common/">
+<span class="md-ellipsis">
+    Supportvectors common
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Project guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Project guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Tips and tricks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_1">
+<span class="md-nav__icon md-icon"></span>
+            Tips and tricks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../project-guide/tips-and-tricks/cuda-hell/">
+<span class="md-ellipsis">
+    Some tips and tricks to deal with the CUDA hell
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    Search
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            Search
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../search/">
+<span class="md-ellipsis">
+    Search Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    Search basics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            Search basics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Search Basics Package
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Search Basics Package
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-components">
+<span class="md-ellipsis">
+      Key Components
+    </span>
+</a>
+<nav aria-label="Key Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-only-search">
+<span class="md-ellipsis">
+      Text-Only Search
+    </span>
+</a>
+<nav aria-label="Text-Only Search" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#features">
+<span class="md-ellipsis">
+      Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multimodal-search">
+<span class="md-ellipsis">
+      Multimodal Search
+    </span>
+</a>
+<nav aria-label="Multimodal Search" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#features_1">
+<span class="md-ellipsis">
+      Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+<span class="md-ellipsis">
+      Architecture
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-started">
+<span class="md-ellipsis">
+      Getting Started
+    </span>
+</a>
+<nav aria-label="Getting Started" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-only-search-example">
+<span class="md-ellipsis">
+      Text-Only Search Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multimodal-search-example">
+<span class="md-ellipsis">
+      Multimodal Search Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-only-search-deep-dive">
+<span class="md-ellipsis">
+      Text-Only Search Deep Dive
+    </span>
+</a>
+<nav aria-label="Text-Only Search Deep Dive" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-setup">
+<span class="md-ellipsis">
+      Basic Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-documents">
+<span class="md-ellipsis">
+      Adding Documents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#searching-and-filtering">
+<span class="md-ellipsis">
+      Searching and Filtering
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#result-processing">
+<span class="md-ellipsis">
+      Result Processing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multimodal-search-deep-dive">
+<span class="md-ellipsis">
+      Multimodal Search Deep Dive
+    </span>
+</a>
+<nav aria-label="Multimodal Search Deep Dive" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup-and-configuration">
+<span class="md-ellipsis">
+      Setup and Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-mixed-content">
+<span class="md-ellipsis">
+      Adding Mixed Content
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cross-modal-search">
+<span class="md-ellipsis">
+      Cross-Modal Search
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-multimodal-features">
+<span class="md-ellipsis">
+      Advanced Multimodal Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-optimization">
+<span class="md-ellipsis">
+      Performance Optimization
+    </span>
+</a>
+<nav aria-label="Performance Optimization" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-only-search-optimization">
+<span class="md-ellipsis">
+      Text-Only Search Optimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multimodal-search-optimization">
+<span class="md-ellipsis">
+      Multimodal Search Optimization
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#educational-features">
+<span class="md-ellipsis">
+      Educational Features
+    </span>
+</a>
+<nav aria-label="Educational Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-progression">
+<span class="md-ellipsis">
+      Learning Progression
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-examples-for-learning">
+<span class="md-ellipsis">
+      Code Examples for Learning
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-use-cases">
+<span class="md-ellipsis">
+      Common Use Cases
+    </span>
+</a>
+<nav aria-label="Common Use Cases" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#document-search-system">
+<span class="md-ellipsis">
+      Document Search System
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#media-asset-management">
+<span class="md-ellipsis">
+      Media Asset Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#related-components">
+<span class="md-ellipsis">
+      Related Components
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    Start simply
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            Start simply
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../start_simply/">
+<span class="md-ellipsis">
+    Start Simply Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+<span class="md-ellipsis">
+    Utils
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_11_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_11">
+<span class="md-nav__icon md-icon"></span>
+            Utils
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../utils/">
+<span class="md-ellipsis">
+    Utils Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_12" type="checkbox"/>
+<label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+<span class="md-ellipsis">
+    Vectordb
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_12_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_12">
+<span class="md-nav__icon md-icon"></span>
+            Vectordb
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../vectordb/">
+<span class="md-ellipsis">
+    Vector Database Package: Embeddings and Storage
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../vectordb/EmbeddedVectorDB/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB Class
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../vectordb/SimpleTextEmbedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder Class
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-components">
+<span class="md-ellipsis">
+      Key Components
+    </span>
+</a>
+<nav aria-label="Key Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-only-search">
+<span class="md-ellipsis">
+      Text-Only Search
+    </span>
+</a>
+<nav aria-label="Text-Only Search" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#features">
+<span class="md-ellipsis">
+      Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multimodal-search">
+<span class="md-ellipsis">
+      Multimodal Search
+    </span>
+</a>
+<nav aria-label="Multimodal Search" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#features_1">
+<span class="md-ellipsis">
+      Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+<span class="md-ellipsis">
+      Architecture
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-started">
+<span class="md-ellipsis">
+      Getting Started
+    </span>
+</a>
+<nav aria-label="Getting Started" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-only-search-example">
+<span class="md-ellipsis">
+      Text-Only Search Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multimodal-search-example">
+<span class="md-ellipsis">
+      Multimodal Search Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-only-search-deep-dive">
+<span class="md-ellipsis">
+      Text-Only Search Deep Dive
+    </span>
+</a>
+<nav aria-label="Text-Only Search Deep Dive" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-setup">
+<span class="md-ellipsis">
+      Basic Setup
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-documents">
+<span class="md-ellipsis">
+      Adding Documents
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#searching-and-filtering">
+<span class="md-ellipsis">
+      Searching and Filtering
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#result-processing">
+<span class="md-ellipsis">
+      Result Processing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multimodal-search-deep-dive">
+<span class="md-ellipsis">
+      Multimodal Search Deep Dive
+    </span>
+</a>
+<nav aria-label="Multimodal Search Deep Dive" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup-and-configuration">
+<span class="md-ellipsis">
+      Setup and Configuration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-mixed-content">
+<span class="md-ellipsis">
+      Adding Mixed Content
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cross-modal-search">
+<span class="md-ellipsis">
+      Cross-Modal Search
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-multimodal-features">
+<span class="md-ellipsis">
+      Advanced Multimodal Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-optimization">
+<span class="md-ellipsis">
+      Performance Optimization
+    </span>
+</a>
+<nav aria-label="Performance Optimization" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-only-search-optimization">
+<span class="md-ellipsis">
+      Text-Only Search Optimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multimodal-search-optimization">
+<span class="md-ellipsis">
+      Multimodal Search Optimization
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#educational-features">
+<span class="md-ellipsis">
+      Educational Features
+    </span>
+</a>
+<nav aria-label="Educational Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-progression">
+<span class="md-ellipsis">
+      Learning Progression
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#code-examples-for-learning">
+<span class="md-ellipsis">
+      Code Examples for Learning
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-use-cases">
+<span class="md-ellipsis">
+      Common Use Cases
+    </span>
+</a>
+<nav aria-label="Common Use Cases" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#document-search-system">
+<span class="md-ellipsis">
+      Document Search System
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#media-asset-management">
+<span class="md-ellipsis">
+      Media Asset Management
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#related-components">
+<span class="md-ellipsis">
+      Related Components
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="search-basics-package">Search Basics Package<a class="headerlink" href="#search-basics-package" title="Permanent link">¶</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>The <code>search_basics</code> package provides fundamental search implementations for the RAG to Riches framework. This package offers simple, educational implementations of both text-only and multimodal search capabilities, serving as building blocks for more complex search systems.</p>
+<h2 id="key-components">Key Components<a class="headerlink" href="#key-components" title="Permanent link">¶</a></h2>
+<h3 id="text-only-search">Text-Only Search<a class="headerlink" href="#text-only-search" title="Permanent link">¶</a></h3>
+<p><strong>File</strong>: <code>text_only_search.py</code></p>
+<p>A straightforward implementation of text-based semantic search that demonstrates core vector search concepts without additional complexity.</p>
+<h4 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>Pure Text Search</strong>: Focuses solely on textual content without multimedia elements</li>
+<li><strong>Vector Embeddings</strong>: Uses sentence transformers for semantic understanding</li>
+<li><strong>Simple Interface</strong>: Easy-to-understand API for learning and prototyping</li>
+<li><strong>Educational Value</strong>: Clear code structure for understanding search fundamentals</li>
+</ul>
+<h3 id="multimodal-search">Multimodal Search<a class="headerlink" href="#multimodal-search" title="Permanent link">¶</a></h3>
+<p><strong>File</strong>: <code>multimodal_search.py</code></p>
+<p>An advanced implementation that combines text and image search capabilities, demonstrating how modern RAG systems can work with multiple data types.</p>
+<h4 id="features_1">Features<a class="headerlink" href="#features_1" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>Text + Image Search</strong>: Combines textual and visual information</li>
+<li><strong>Cross-Modal Retrieval</strong>: Find images using text queries and vice versa</li>
+<li><strong>Unified Embeddings</strong>: Single vector space for multiple modalities</li>
+<li><strong>Rich Media Support</strong>: Handles various image formats and text combinations</li>
+</ul>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h2>
+<div class="mermaid">graph TB
+    subgraph "Text-Only Search"
+        TextQuery[Text Query] --&gt; TextEmbed[Text Embedding]
+        TextEmbed --&gt; TextVector[Vector Search]
+        TextVector --&gt; TextResults[Text Results]
+    end
+
+    subgraph "Multimodal Search"
+        MMQuery[Query<br/>Text/Image] --&gt; MMEmbed[Multimodal<br/>Embedding]
+        MMEmbed --&gt; MMVector[Vector Search]
+        MMVector --&gt; MMResults[Mixed Results<br/>Text + Images]
+    end
+
+    subgraph "Shared Components"
+        VectorDB[Vector Database]
+        TextVector --&gt; VectorDB
+        MMVector --&gt; VectorDB
+    end
+
+    style TextQuery fill:#e1f5fe
+    style MMQuery fill:#f3e5f5
+    style VectorDB fill:#e8f5e8
+</div>
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h2>
+<h3 id="text-only-search-example">Text-Only Search Example<a class="headerlink" href="#text-only-search-example" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.search_basics.text_only_search</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextOnlySearch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Initialize text search</span>
+<span class="n">search_engine</span> <span class="o">=</span> <span class="n">TextOnlySearch</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s2">"simple_text_search"</span><span class="p">)</span>
+
+<span class="c1"># Add some documents</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"The quick brown fox jumps over the lazy dog."</span><span class="p">,</span>
+    <span class="s2">"Python is a powerful programming language for data science."</span><span class="p">,</span>
+    <span class="s2">"Machine learning models require large amounts of training data."</span><span class="p">,</span>
+    <span class="s2">"Natural language processing helps computers understand human language."</span>
+<span class="p">]</span>
+
+<span class="c1"># Index the documents</span>
+<span class="n">search_engine</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
+
+<span class="c1"># Perform searches</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">search_engine</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"programming languages"</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span><span class="si">}</span><span class="s2"> (Score: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'score'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+
+<span class="c1"># Output:</span>
+<span class="c1"># 1. Python is a powerful programming language for data science. (Score: 0.845)</span>
+<span class="c1"># 2. Natural language processing helps computers understand human language. (Score: 0.672)</span>
+</code></pre></div>
+<h3 id="multimodal-search-example">Multimodal Search Example<a class="headerlink" href="#multimodal-search-example" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.search_basics.multimodal_search</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultimodalSearch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Initialize multimodal search</span>
+<span class="n">mm_search</span> <span class="o">=</span> <span class="n">MultimodalSearch</span><span class="p">(</span><span class="n">collection_name</span><span class="o">=</span><span class="s2">"multimodal_demo"</span><span class="p">)</span>
+
+<span class="c1"># Add text documents</span>
+<span class="n">text_docs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"A beautiful sunset over the ocean with orange and pink colors."</span><span class="p">,</span>
+    <span class="s2">"A cute puppy playing in a green park with children."</span><span class="p">,</span>
+    <span class="s2">"Modern architecture featuring glass and steel buildings."</span>
+<span class="p">]</span>
+<span class="n">mm_search</span><span class="o">.</span><span class="n">add_text_documents</span><span class="p">(</span><span class="n">text_docs</span><span class="p">)</span>
+
+<span class="c1"># Add images with descriptions</span>
+<span class="n">image_paths</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"images/sunset.jpg"</span><span class="p">),</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"images/puppy.jpg"</span><span class="p">),</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"images/building.jpg"</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">mm_search</span><span class="o">.</span><span class="n">add_images</span><span class="p">(</span><span class="n">image_paths</span><span class="p">)</span>
+
+<span class="c1"># Search with text to find related images and text</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">mm_search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"cute animals"</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'text'</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Text: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'content'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">result</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'image'</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Image: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'path'</span><span class="p">]</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Search with an image to find similar content</span>
+<span class="n">query_image</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"query_images/dog.jpg"</span><span class="p">)</span>
+<span class="n">visual_results</span> <span class="o">=</span> <span class="n">mm_search</span><span class="o">.</span><span class="n">search_by_image</span><span class="p">(</span><span class="n">query_image</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="text-only-search-deep-dive">Text-Only Search Deep Dive<a class="headerlink" href="#text-only-search-deep-dive" title="Permanent link">¶</a></h2>
+<h3 id="basic-setup">Basic Setup<a class="headerlink" href="#basic-setup" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.search_basics.text_only_search</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextOnlySearch</span>
+
+<span class="c1"># Create a search instance</span>
+<span class="n">search</span> <span class="o">=</span> <span class="n">TextOnlySearch</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">"my_documents"</span><span class="p">,</span>
+    <span class="n">embedding_model</span><span class="o">=</span><span class="s2">"all-MiniLM-L6-v2"</span>  <span class="c1"># Lightweight, fast model</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="adding-documents">Adding Documents<a class="headerlink" href="#adding-documents" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Method 1: Add documents as a list</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"Document 1 content here..."</span><span class="p">,</span>
+    <span class="s2">"Document 2 content here..."</span><span class="p">,</span>
+    <span class="s2">"Document 3 content here..."</span>
+<span class="p">]</span>
+<span class="n">search</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
+
+<span class="c1"># Method 2: Add documents with metadata</span>
+<span class="n">docs_with_metadata</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"text"</span><span class="p">:</span> <span class="s2">"Content 1"</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Doc 1"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"science"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"text"</span><span class="p">:</span> <span class="s2">"Content 2"</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Doc 2"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"history"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"text"</span><span class="p">:</span> <span class="s2">"Content 3"</span><span class="p">,</span> <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Doc 3"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"literature"</span><span class="p">}</span>
+<span class="p">]</span>
+<span class="n">search</span><span class="o">.</span><span class="n">add_documents_with_metadata</span><span class="p">(</span><span class="n">docs_with_metadata</span><span class="p">)</span>
+
+<span class="c1"># Method 3: Add single document</span>
+<span class="n">search</span><span class="o">.</span><span class="n">add_document</span><span class="p">(</span><span class="s2">"Single document content"</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">"source"</span><span class="p">:</span> <span class="s2">"manual"</span><span class="p">})</span>
+</code></pre></div>
+<h3 id="searching-and-filtering">Searching and Filtering<a class="headerlink" href="#searching-and-filtering" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Basic search</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"machine learning"</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Search with score threshold</span>
+<span class="n">high_quality_results</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="s2">"artificial intelligence"</span><span class="p">,</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">score_threshold</span><span class="o">=</span><span class="mf">0.7</span>  <span class="c1"># Only return highly relevant results</span>
+<span class="p">)</span>
+
+<span class="c1"># Search with metadata filtering</span>
+<span class="n">filtered_results</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="s2">"scientific discovery"</span><span class="p">,</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">metadata_filter</span><span class="o">=</span><span class="p">{</span><span class="s2">"category"</span><span class="p">:</span> <span class="s2">"science"</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Advanced search with multiple filters</span>
+<span class="n">complex_results</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="s2">"historical events"</span><span class="p">,</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+    <span class="n">metadata_filter</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"history"</span><span class="p">,</span>
+        <span class="s2">"year"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"$gte"</span><span class="p">:</span> <span class="mi">1900</span><span class="p">}</span>  <span class="c1"># Published after 1900</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="result-processing">Result Processing<a class="headerlink" href="#result-processing" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Process search results</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"climate change"</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Result </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Text: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'text'</span><span class="p">][:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>  <span class="c1"># First 100 chars</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Score: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">'score'</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Metadata: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'metadata'</span><span class="p">,</span><span class="w"> </span><span class="p">{})</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Extract just the text content</span>
+<span class="n">text_content</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+
+<span class="c1"># Get average relevance score</span>
+<span class="n">avg_score</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'score'</span><span class="p">]</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Average relevance: </span><span class="si">{</span><span class="n">avg_score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="multimodal-search-deep-dive">Multimodal Search Deep Dive<a class="headerlink" href="#multimodal-search-deep-dive" title="Permanent link">¶</a></h2>
+<h3 id="setup-and-configuration">Setup and Configuration<a class="headerlink" href="#setup-and-configuration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.search_basics.multimodal_search</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultimodalSearch</span>
+
+<span class="c1"># Initialize with custom models</span>
+<span class="n">mm_search</span> <span class="o">=</span> <span class="n">MultimodalSearch</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">"multimodal_content"</span><span class="p">,</span>
+    <span class="n">text_model</span><span class="o">=</span><span class="s2">"all-MiniLM-L6-v2"</span><span class="p">,</span>
+    <span class="n">image_model</span><span class="o">=</span><span class="s2">"clip-ViT-B-32"</span><span class="p">,</span>  <span class="c1"># CLIP model for image understanding</span>
+    <span class="n">device</span><span class="o">=</span><span class="s2">"cuda"</span>  <span class="c1"># Use GPU if available</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="adding-mixed-content">Adding Mixed Content<a class="headerlink" href="#adding-mixed-content" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add text documents</span>
+<span class="n">text_documents</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"A serene landscape with mountains and lakes."</span><span class="p">,</span>
+    <span class="s2">"Urban photography capturing city life and architecture."</span><span class="p">,</span>
+    <span class="s2">"Portrait photography with natural lighting techniques."</span>
+<span class="p">]</span>
+<span class="n">mm_search</span><span class="o">.</span><span class="n">add_text_documents</span><span class="p">(</span><span class="n">text_documents</span><span class="p">)</span>
+
+<span class="c1"># Add images with automatic description generation</span>
+<span class="n">image_files</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"photos/landscape1.jpg"</span><span class="p">),</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"photos/city_scene.jpg"</span><span class="p">),</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"photos/portrait.jpg"</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">mm_search</span><span class="o">.</span><span class="n">add_images</span><span class="p">(</span><span class="n">image_files</span><span class="p">,</span> <span class="n">auto_describe</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Add images with custom descriptions</span>
+<span class="n">image_data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">"path"</span><span class="p">:</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"photos/sunset.jpg"</span><span class="p">),</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Beautiful golden hour sunset over a calm ocean"</span><span class="p">,</span>
+        <span class="s2">"metadata"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"location"</span><span class="p">:</span> <span class="s2">"California"</span><span class="p">,</span> <span class="s2">"time"</span><span class="p">:</span> <span class="s2">"evening"</span><span class="p">}</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">"path"</span><span class="p">:</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"photos/forest.jpg"</span><span class="p">),</span>
+        <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Dense forest with tall pine trees and morning mist"</span><span class="p">,</span>
+        <span class="s2">"metadata"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"location"</span><span class="p">:</span> <span class="s2">"Pacific Northwest"</span><span class="p">,</span> <span class="s2">"time"</span><span class="p">:</span> <span class="s2">"morning"</span><span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+<span class="n">mm_search</span><span class="o">.</span><span class="n">add_images_with_metadata</span><span class="p">(</span><span class="n">image_data</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="cross-modal-search">Cross-Modal Search<a class="headerlink" href="#cross-modal-search" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Text query to find both text and images</span>
+<span class="n">mixed_results</span> <span class="o">=</span> <span class="n">mm_search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="s2">"peaceful nature scenes"</span><span class="p">,</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">include_text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">include_images</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Separate results by type</span>
+<span class="n">text_results</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">mixed_results</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'text'</span><span class="p">]</span>
+<span class="n">image_results</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">mixed_results</span> <span class="k">if</span> <span class="n">r</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'image'</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">text_results</span><span class="p">)</span><span class="si">}</span><span class="s2"> text matches and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">image_results</span><span class="p">)</span><span class="si">}</span><span class="s2"> image matches"</span><span class="p">)</span>
+
+<span class="c1"># Image query to find similar images and related text</span>
+<span class="n">query_image</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"query/example.jpg"</span><span class="p">)</span>
+<span class="n">visual_matches</span> <span class="o">=</span> <span class="n">mm_search</span><span class="o">.</span><span class="n">search_by_image</span><span class="p">(</span>
+    <span class="n">query_image</span><span class="p">,</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">include_similar_text</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># Also find related text descriptions</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="advanced-multimodal-features">Advanced Multimodal Features<a class="headerlink" href="#advanced-multimodal-features" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Search with multiple query types</span>
+<span class="n">compound_results</span> <span class="o">=</span> <span class="n">mm_search</span><span class="o">.</span><span class="n">compound_search</span><span class="p">(</span>
+    <span class="n">text_query</span><span class="o">=</span><span class="s2">"mountain hiking"</span><span class="p">,</span>
+    <span class="n">image_query</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">"query/hiking.jpg"</span><span class="p">),</span>
+    <span class="n">weight_text</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span>  <span class="c1"># 60% weight to text similarity</span>
+    <span class="n">weight_image</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>  <span class="c1"># 40% weight to image similarity</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="c1"># Filter by content type and metadata</span>
+<span class="n">filtered_mm_results</span> <span class="o">=</span> <span class="n">mm_search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="s2">"architectural photography"</span><span class="p">,</span>
+    <span class="n">content_type</span><span class="o">=</span><span class="s2">"image"</span><span class="p">,</span>  <span class="c1"># Only return images</span>
+    <span class="n">metadata_filter</span><span class="o">=</span><span class="p">{</span><span class="s2">"style"</span><span class="p">:</span> <span class="s2">"modern"</span><span class="p">},</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">5</span>
+<span class="p">)</span>
+
+<span class="c1"># Get embeddings for custom processing</span>
+<span class="n">text_embedding</span> <span class="o">=</span> <span class="n">mm_search</span><span class="o">.</span><span class="n">get_text_embedding</span><span class="p">(</span><span class="s2">"beautiful landscape"</span><span class="p">)</span>
+<span class="n">image_embedding</span> <span class="o">=</span> <span class="n">mm_search</span><span class="o">.</span><span class="n">get_image_embedding</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"test_image.jpg"</span><span class="p">))</span>
+
+<span class="c1"># Calculate custom similarity</span>
+<span class="n">similarity</span> <span class="o">=</span> <span class="n">mm_search</span><span class="o">.</span><span class="n">calculate_similarity</span><span class="p">(</span><span class="n">text_embedding</span><span class="p">,</span> <span class="n">image_embedding</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cross-modal similarity: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="performance-optimization">Performance Optimization<a class="headerlink" href="#performance-optimization" title="Permanent link">¶</a></h2>
+<h3 id="text-only-search-optimization">Text-Only Search Optimization<a class="headerlink" href="#text-only-search-optimization" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Optimize for speed</span>
+<span class="n">fast_search</span> <span class="o">=</span> <span class="n">TextOnlySearch</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">"speed_optimized"</span><span class="p">,</span>
+    <span class="n">embedding_model</span><span class="o">=</span><span class="s2">"all-MiniLM-L6-v2"</span><span class="p">,</span>  <span class="c1"># Faster, smaller model</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>  <span class="c1"># Process documents in batches</span>
+    <span class="n">max_doc_length</span><span class="o">=</span><span class="mi">512</span>  <span class="c1"># Limit document length</span>
+<span class="p">)</span>
+
+<span class="c1"># Pre-compute embeddings for static content</span>
+<span class="n">fast_search</span><span class="o">.</span><span class="n">precompute_embeddings</span><span class="p">()</span>
+
+<span class="c1"># Use approximate search for very large collections</span>
+<span class="n">approx_results</span> <span class="o">=</span> <span class="n">fast_search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+    <span class="s2">"query text"</span><span class="p">,</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">approximate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Faster but slightly less accurate</span>
+    <span class="n">search_ef</span><span class="o">=</span><span class="mi">100</span>  <span class="c1"># HNSW parameter for speed/accuracy tradeoff</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="multimodal-search-optimization">Multimodal Search Optimization<a class="headerlink" href="#multimodal-search-optimization" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Memory-efficient multimodal search</span>
+<span class="n">efficient_mm</span> <span class="o">=</span> <span class="n">MultimodalSearch</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">"memory_optimized"</span><span class="p">,</span>
+    <span class="n">text_model</span><span class="o">=</span><span class="s2">"all-MiniLM-L6-v2"</span><span class="p">,</span>
+    <span class="n">image_model</span><span class="o">=</span><span class="s2">"clip-ViT-B-32"</span><span class="p">,</span>
+    <span class="n">device</span><span class="o">=</span><span class="s2">"cpu"</span><span class="p">,</span>  <span class="c1"># Use CPU to save GPU memory</span>
+    <span class="n">precision</span><span class="o">=</span><span class="s2">"float16"</span><span class="p">,</span>  <span class="c1"># Use half precision for memory savings</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">16</span>  <span class="c1"># Smaller batches for memory efficiency</span>
+<span class="p">)</span>
+
+<span class="c1"># Cache frequently used embeddings</span>
+<span class="n">efficient_mm</span><span class="o">.</span><span class="n">enable_embedding_cache</span><span class="p">(</span><span class="n">max_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># Lazy loading for large image collections</span>
+<span class="n">efficient_mm</span><span class="o">.</span><span class="n">enable_lazy_loading</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="educational-features">Educational Features<a class="headerlink" href="#educational-features" title="Permanent link">¶</a></h2>
+<h3 id="learning-progression">Learning Progression<a class="headerlink" href="#learning-progression" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Start with Text-Only</strong>: Understand basic vector search concepts</li>
+<li><strong>Add Metadata</strong>: Learn about filtering and structured search</li>
+<li><strong>Explore Multimodal</strong>: Understand cross-modal retrieval</li>
+<li><strong>Optimize Performance</strong>: Learn about production considerations</li>
+</ol>
+<h3 id="code-examples-for-learning">Code Examples for Learning<a class="headerlink" href="#code-examples-for-learning" title="Permanent link">¶</a></h3>
+<p>Each component includes extensive documentation and examples to help understand:</p>
+<ul>
+<li>How vector embeddings work</li>
+<li>The relationship between queries and results</li>
+<li>Performance vs. accuracy tradeoffs</li>
+<li>Memory and computational considerations</li>
+</ul>
+<h2 id="common-use-cases">Common Use Cases<a class="headerlink" href="#common-use-cases" title="Permanent link">¶</a></h2>
+<h3 id="document-search-system">Document Search System<a class="headerlink" href="#document-search-system" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Build a simple document search for a knowledge base</span>
+<span class="n">doc_search</span> <span class="o">=</span> <span class="n">TextOnlySearch</span><span class="p">(</span><span class="s2">"company_docs"</span><span class="p">)</span>
+
+<span class="c1"># Load company documents</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="n">load_company_documents</span><span class="p">()</span>  <span class="c1"># Your document loading function</span>
+<span class="n">doc_search</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
+
+<span class="c1"># Employee searches for information</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">doc_search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"vacation policy"</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">display_search_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="media-asset-management">Media Asset Management<a class="headerlink" href="#media-asset-management" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create a searchable media library</span>
+<span class="n">media_search</span> <span class="o">=</span> <span class="n">MultimodalSearch</span><span class="p">(</span><span class="s2">"media_assets"</span><span class="p">)</span>
+
+<span class="c1"># Index your media collection</span>
+<span class="n">media_search</span><span class="o">.</span><span class="n">add_images</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"media_library"</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"*.jpg"</span><span class="p">))</span>
+<span class="n">media_search</span><span class="o">.</span><span class="n">add_text_documents</span><span class="p">(</span><span class="n">load_media_descriptions</span><span class="p">())</span>
+
+<span class="c1"># Search for specific content</span>
+<span class="n">vacation_photos</span> <span class="o">=</span> <span class="n">media_search</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"beach vacation photos"</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="related-components">Related Components<a class="headerlink" href="#related-components" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="../start_simply/"><code>start_simply/</code></a>: Basic RAG implementation using these search components</li>
+<li><a href="../search/"><code>search/</code></a>: Advanced semantic search capabilities</li>
+<li><a href="../vectordb/"><code>vectordb/</code></a>: Understanding the underlying vector storage</li>
+<li><a href="../examples/"><code>examples/</code></a>: Complete applications using search basics</li>
+</ul>
+<hr/>
+<p><em>Part of the RAG to Riches framework - fundamental search capabilities for intelligent applications.</em> </p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+<script src="../javascripts/mathjax.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

@@ -1,0 +1,2720 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)" name="description"/>
+<meta content="SupportVectors" name="author"/>
+<link href="https://supportvectors.ai/rag-to-riches/corpus/AnimalWisdom/" rel="canonical"/>
+<link href="../AnimalQuote/" rel="prev"/>
+<link href="../Animals/" rel="next"/>
+<link href="../../images/favicon.ico" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.14" name="generator"/>
+<title>AnimalWisdom Class: Quote Collection Management - SupportVectors Rag to Riches</title>
+<link href="../../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Lora:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Lora";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../stylesheets/supportvectors.css" rel="stylesheet"/>
+<link href="../../css/ansi-colours.css" rel="stylesheet"/>
+<link href="../../css/jupyter-cells.css" rel="stylesheet"/>
+<link href="../../css/pandas-dataframe.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="gray" data-md-color-primary="light-blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#animalwisdom-class-quote-collection-management">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SupportVectors Rag to Riches" class="md-header__button md-logo" data-md-component="logo" href="../.." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../../images/overlapping_logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SupportVectors Rag to Riches
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              AnimalWisdom Class: Quote Collection Management
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="gray" data-md-color-media="" data-md-color-primary="light-blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SupportVectors Rag to Riches" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../../images/overlapping_logo.png"/>
+</a>
+    SupportVectors Rag to Riches
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    RAG to Riches: Advanced Retrieval-Augmented Generation Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Apidocs
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Apidocs
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/animals/">
+<span class="md-ellipsis">
+    Animals
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/embedded_vectordb/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/semantic_search/">
+<span class="md-ellipsis">
+    SemanticSearch
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/simple_text_embedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Corpus
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Corpus
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    Corpus Package: Data Models and Content Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../AnimalQuote/">
+<span class="md-ellipsis">
+    AnimalQuote Class: Individual Quote Data Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    AnimalWisdom Class: Quote Collection Management
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    AnimalWisdom Class: Quote Collection Management
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-overview">
+<span class="md-ellipsis">
+      🎯 Class Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-definition">
+<span class="md-ellipsis">
+      📋 Class Definition
+    </span>
+</a>
+<nav aria-label="📋 Class Definition" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-architecture">
+<span class="md-ellipsis">
+      🏗️ Class Architecture
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-configuration">
+<span class="md-ellipsis">
+      🔧 Model Configuration
+    </span>
+</a>
+<nav aria-label="🔧 Model Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-features">
+<span class="md-ellipsis">
+      Configuration Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fields">
+<span class="md-ellipsis">
+      📊 Fields
+    </span>
+</a>
+<nav aria-label="📊 Fields" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quotes-listanimalquote">
+<span class="md-ellipsis">
+      quotes: List[AnimalQuote]
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#source_file-optionalpath">
+<span class="md-ellipsis">
+      source_file: Optional[Path]
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#methods">
+<span class="md-ellipsis">
+      🔍 Methods
+    </span>
+</a>
+<nav aria-label="🔍 Methods" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#__len__self-int">
+<span class="md-ellipsis">
+      __len__(self) -&gt; int
+    </span>
+</a>
+<nav aria-label="__len__(self) -&gt; int" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get_categoriesself-liststr">
+<span class="md-ellipsis">
+      get_categories(self) -&gt; List[str]
+    </span>
+</a>
+<nav aria-label="get_categories(self) -&gt; List[str]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_1">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage_1">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get_authorsself-liststr">
+<span class="md-ellipsis">
+      get_authors(self) -&gt; List[str]
+    </span>
+</a>
+<nav aria-label="get_authors(self) -&gt; List[str]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_2">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage_2">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases_1">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#filter_by_categoryself-category-str-listanimalquote">
+<span class="md-ellipsis">
+      filter_by_category(self, category: str) -&gt; List[AnimalQuote]
+    </span>
+</a>
+<nav aria-label="filter_by_category(self, category: str) -&gt; List[AnimalQuote]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters">
+<span class="md-ellipsis">
+      Parameters
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_3">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage_3">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases_2">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#filter_by_authorself-author-str-listanimalquote">
+<span class="md-ellipsis">
+      filter_by_author(self, author: str) -&gt; List[AnimalQuote]
+    </span>
+</a>
+<nav aria-label="filter_by_author(self, author: str) -&gt; List[AnimalQuote]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters_1">
+<span class="md-ellipsis">
+      Parameters
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_4">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage_4">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases_3">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validate_quotes_not_emptycls-v-listanimalquote-listanimalquote">
+<span class="md-ellipsis">
+      validate_quotes_not_empty(cls, v: List[AnimalQuote]) -&gt; List[AnimalQuote]
+    </span>
+</a>
+<nav aria-label="validate_quotes_not_empty(cls, v: List[AnimalQuote]) -&gt; List[AnimalQuote]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters_2">
+<span class="md-ellipsis">
+      Parameters
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_5">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#raises">
+<span class="md-ellipsis">
+      Raises
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      💡 Usage Examples
+    </span>
+</a>
+<nav aria-label="💡 Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-creation">
+<span class="md-ellipsis">
+      Basic Creation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#from-jsonl-loading">
+<span class="md-ellipsis">
+      From JSONL Loading
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#collection-analysis">
+<span class="md-ellipsis">
+      Collection Analysis
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#filtering-and-exploration">
+<span class="md-ellipsis">
+      Filtering and Exploration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-validation">
+<span class="md-ellipsis">
+      Data Validation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      🛡️ Error Handling
+    </span>
+</a>
+<nav aria-label="🛡️ Error Handling" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-validation-errors">
+<span class="md-ellipsis">
+      Common Validation Errors
+    </span>
+</a>
+<nav aria-label="Common Validation Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#empty-collection">
+<span class="md-ellipsis">
+      Empty Collection
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#invalid-quote-objects">
+<span class="md-ellipsis">
+      Invalid Quote Objects
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#source-file-issues">
+<span class="md-ellipsis">
+      Source File Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-points">
+<span class="md-ellipsis">
+      🔗 Integration Points
+    </span>
+</a>
+<nav aria-label="🔗 Integration Points" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-animals-class">
+<span class="md-ellipsis">
+      With Animals Class
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-vector-databases">
+<span class="md-ellipsis">
+      With Vector Databases
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-analysis-tools">
+<span class="md-ellipsis">
+      With Analysis Tools
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-principles">
+<span class="md-ellipsis">
+      🎯 Design Principles
+    </span>
+</a>
+<nav aria-label="🎯 Design Principles" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#collection-management">
+<span class="md-ellipsis">
+      Collection Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-integrity">
+<span class="md-ellipsis">
+      Data Integrity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance">
+<span class="md-ellipsis">
+      Performance
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-usage">
+<span class="md-ellipsis">
+      🔍 Advanced Usage
+    </span>
+</a>
+<nav aria-label="🔍 Advanced Usage" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-analysis-methods">
+<span class="md-ellipsis">
+      Custom Analysis Methods
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-operations">
+<span class="md-ellipsis">
+      Batch Operations
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#source-code">
+<span class="md-ellipsis">
+      📚 Source Code
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom">
+<span class="md-ellipsis">
+      AnimalWisdom
+    </span>
+</a>
+<nav aria-label="AnimalWisdom" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.__len__">
+<span class="md-ellipsis">
+      __len__
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.filter_by_author">
+<span class="md-ellipsis">
+      filter_by_author
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.filter_by_category">
+<span class="md-ellipsis">
+      filter_by_category
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.get_authors">
+<span class="md-ellipsis">
+      get_authors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.get_categories">
+<span class="md-ellipsis">
+      get_categories
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.validate_quotes_not_empty">
+<span class="md-ellipsis">
+      validate_quotes_not_empty
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Animals/">
+<span class="md-ellipsis">
+    Animals Class: Complete RAG System
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/">
+<span class="md-ellipsis">
+    Examples Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Exceptions
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Exceptions
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../exceptions/">
+<span class="md-ellipsis">
+    Exceptions Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Notebooks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Notebooks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/">
+<span class="md-ellipsis">
+    Interactive Notebooks
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/lesson-1/">
+<span class="md-ellipsis">
+    Lesson 1
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/lesson-2/">
+<span class="md-ellipsis">
+    Lesson 2
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/search-corpus/">
+<span class="md-ellipsis">
+    Search corpus
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/semantic-search/">
+<span class="md-ellipsis">
+    Semantic search
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/supportvectors-common/">
+<span class="md-ellipsis">
+    Supportvectors common
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Project guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Project guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Tips and tricks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_1">
+<span class="md-nav__icon md-icon"></span>
+            Tips and tricks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../project-guide/tips-and-tricks/cuda-hell/">
+<span class="md-ellipsis">
+    Some tips and tricks to deal with the CUDA hell
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    Search
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            Search
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../search/">
+<span class="md-ellipsis">
+    Search Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    Search basics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            Search basics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../search_basics/">
+<span class="md-ellipsis">
+    Search Basics Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    Start simply
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            Start simply
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../start_simply/">
+<span class="md-ellipsis">
+    Start Simply Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+<span class="md-ellipsis">
+    Utils
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_11_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_11">
+<span class="md-nav__icon md-icon"></span>
+            Utils
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../utils/">
+<span class="md-ellipsis">
+    Utils Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_12" type="checkbox"/>
+<label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+<span class="md-ellipsis">
+    Vectordb
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_12_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_12">
+<span class="md-nav__icon md-icon"></span>
+            Vectordb
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vectordb/">
+<span class="md-ellipsis">
+    Vector Database Package: Embeddings and Storage
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vectordb/EmbeddedVectorDB/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB Class
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vectordb/SimpleTextEmbedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder Class
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-overview">
+<span class="md-ellipsis">
+      🎯 Class Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-definition">
+<span class="md-ellipsis">
+      📋 Class Definition
+    </span>
+</a>
+<nav aria-label="📋 Class Definition" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-architecture">
+<span class="md-ellipsis">
+      🏗️ Class Architecture
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-configuration">
+<span class="md-ellipsis">
+      🔧 Model Configuration
+    </span>
+</a>
+<nav aria-label="🔧 Model Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-features">
+<span class="md-ellipsis">
+      Configuration Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fields">
+<span class="md-ellipsis">
+      📊 Fields
+    </span>
+</a>
+<nav aria-label="📊 Fields" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quotes-listanimalquote">
+<span class="md-ellipsis">
+      quotes: List[AnimalQuote]
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#source_file-optionalpath">
+<span class="md-ellipsis">
+      source_file: Optional[Path]
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#methods">
+<span class="md-ellipsis">
+      🔍 Methods
+    </span>
+</a>
+<nav aria-label="🔍 Methods" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#__len__self-int">
+<span class="md-ellipsis">
+      __len__(self) -&gt; int
+    </span>
+</a>
+<nav aria-label="__len__(self) -&gt; int" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get_categoriesself-liststr">
+<span class="md-ellipsis">
+      get_categories(self) -&gt; List[str]
+    </span>
+</a>
+<nav aria-label="get_categories(self) -&gt; List[str]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_1">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage_1">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#get_authorsself-liststr">
+<span class="md-ellipsis">
+      get_authors(self) -&gt; List[str]
+    </span>
+</a>
+<nav aria-label="get_authors(self) -&gt; List[str]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_2">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage_2">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases_1">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#filter_by_categoryself-category-str-listanimalquote">
+<span class="md-ellipsis">
+      filter_by_category(self, category: str) -&gt; List[AnimalQuote]
+    </span>
+</a>
+<nav aria-label="filter_by_category(self, category: str) -&gt; List[AnimalQuote]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters">
+<span class="md-ellipsis">
+      Parameters
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_3">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage_3">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases_2">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#filter_by_authorself-author-str-listanimalquote">
+<span class="md-ellipsis">
+      filter_by_author(self, author: str) -&gt; List[AnimalQuote]
+    </span>
+</a>
+<nav aria-label="filter_by_author(self, author: str) -&gt; List[AnimalQuote]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters_1">
+<span class="md-ellipsis">
+      Parameters
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_4">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage_4">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases_3">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validate_quotes_not_emptycls-v-listanimalquote-listanimalquote">
+<span class="md-ellipsis">
+      validate_quotes_not_empty(cls, v: List[AnimalQuote]) -&gt; List[AnimalQuote]
+    </span>
+</a>
+<nav aria-label="validate_quotes_not_empty(cls, v: List[AnimalQuote]) -&gt; List[AnimalQuote]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters_2">
+<span class="md-ellipsis">
+      Parameters
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_5">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#raises">
+<span class="md-ellipsis">
+      Raises
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      💡 Usage Examples
+    </span>
+</a>
+<nav aria-label="💡 Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-creation">
+<span class="md-ellipsis">
+      Basic Creation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#from-jsonl-loading">
+<span class="md-ellipsis">
+      From JSONL Loading
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#collection-analysis">
+<span class="md-ellipsis">
+      Collection Analysis
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#filtering-and-exploration">
+<span class="md-ellipsis">
+      Filtering and Exploration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-validation">
+<span class="md-ellipsis">
+      Data Validation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      🛡️ Error Handling
+    </span>
+</a>
+<nav aria-label="🛡️ Error Handling" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-validation-errors">
+<span class="md-ellipsis">
+      Common Validation Errors
+    </span>
+</a>
+<nav aria-label="Common Validation Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#empty-collection">
+<span class="md-ellipsis">
+      Empty Collection
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#invalid-quote-objects">
+<span class="md-ellipsis">
+      Invalid Quote Objects
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#source-file-issues">
+<span class="md-ellipsis">
+      Source File Issues
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-points">
+<span class="md-ellipsis">
+      🔗 Integration Points
+    </span>
+</a>
+<nav aria-label="🔗 Integration Points" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-animals-class">
+<span class="md-ellipsis">
+      With Animals Class
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-vector-databases">
+<span class="md-ellipsis">
+      With Vector Databases
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-analysis-tools">
+<span class="md-ellipsis">
+      With Analysis Tools
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-principles">
+<span class="md-ellipsis">
+      🎯 Design Principles
+    </span>
+</a>
+<nav aria-label="🎯 Design Principles" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#collection-management">
+<span class="md-ellipsis">
+      Collection Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-integrity">
+<span class="md-ellipsis">
+      Data Integrity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance">
+<span class="md-ellipsis">
+      Performance
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-usage">
+<span class="md-ellipsis">
+      🔍 Advanced Usage
+    </span>
+</a>
+<nav aria-label="🔍 Advanced Usage" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-analysis-methods">
+<span class="md-ellipsis">
+      Custom Analysis Methods
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-operations">
+<span class="md-ellipsis">
+      Batch Operations
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#source-code">
+<span class="md-ellipsis">
+      📚 Source Code
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom">
+<span class="md-ellipsis">
+      AnimalWisdom
+    </span>
+</a>
+<nav aria-label="AnimalWisdom" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.__len__">
+<span class="md-ellipsis">
+      __len__
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.filter_by_author">
+<span class="md-ellipsis">
+      filter_by_author
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.filter_by_category">
+<span class="md-ellipsis">
+      filter_by_category
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.get_authors">
+<span class="md-ellipsis">
+      get_authors
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.get_categories">
+<span class="md-ellipsis">
+      get_categories
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalWisdom.validate_quotes_not_empty">
+<span class="md-ellipsis">
+      validate_quotes_not_empty
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="animalwisdom-class-quote-collection-management">AnimalWisdom Class: Quote Collection Management<a class="headerlink" href="#animalwisdom-class-quote-collection-management" title="Permanent link">¶</a></h1>
+<h2 id="class-overview">🎯 Class Overview<a class="headerlink" href="#class-overview" title="Permanent link">¶</a></h2>
+<p>The <code>AnimalWisdom</code> class is a sophisticated Pydantic data model that represents a complete collection of animal quotes. It provides validation, convenient access methods, and powerful filtering capabilities for managing large sets of quotes loaded from corpus files.</p>
+<p>This class serves as the primary container for quote collections, offering both data integrity and rich functionality for exploring and analyzing animal wisdom across different authors, categories, and themes.</p>
+<h2 id="class-definition">📋 Class Definition<a class="headerlink" href="#class-definition" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AnimalWisdom</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Collection of animal quotes loaded from the corpus.</span>
+
+<span class="sd">    This model represents the complete collection of animal quotes,</span>
+<span class="sd">    providing validation and convenient access methods for the data.</span>
+<span class="sd">    """</span>
+</code></pre></div>
+<h3 id="class-architecture">🏗️ Class Architecture<a class="headerlink" href="#class-architecture" title="Permanent link">¶</a></h3>
+<div class="mermaid">classDiagram
+    class AnimalWisdom {
+        +List[AnimalQuote] quotes
+        +Optional[Path] source_file
+        +ModelConfig model_config
+
+        +__len__() int
+        +get_categories() List[str]
+        +get_authors() List[str]
+        +filter_by_category(category) List[AnimalQuote]
+        +filter_by_author(author) List[AnimalQuote]
+        +validate_quotes_not_empty() List[AnimalQuote]
+    }
+
+    class AnimalQuote {
+        +str text
+        +str author
+        +str category
+    }
+
+    AnimalWisdom *-- AnimalQuote : contains many
+
+    note for AnimalWisdom "Collection container with\nfiltering and analysis methods"
+</div>
+<h2 id="model-configuration">🔧 Model Configuration<a class="headerlink" href="#model-configuration" title="Permanent link">¶</a></h2>
+<p>The class uses flexible Pydantic configuration for collection management:</p>
+<div class="highlight"><pre><span></span><code><span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span>
+    <span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>      <span class="c1"># Validate on field assignment</span>
+    <span class="n">arbitrary_types_allowed</span><span class="o">=</span><span class="kc">True</span>   <span class="c1"># Allow Path objects</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="configuration-features">Configuration Features<a class="headerlink" href="#configuration-features" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Assignment Validation</strong>: Changes to the collection are validated</li>
+<li><strong>Type Flexibility</strong>: Supports Path objects for source file tracking</li>
+<li><strong>Mutable Collections</strong>: Allows for dynamic quote management</li>
+<li><strong>Extensible Design</strong>: Ready for additional metadata and features</li>
+</ul>
+<h2 id="fields">📊 Fields<a class="headerlink" href="#fields" title="Permanent link">¶</a></h2>
+<h3 id="quotes-listanimalquote"><code>quotes: List[AnimalQuote]</code><a class="headerlink" href="#quotes-listanimalquote" title="Permanent link">¶</a></h3>
+<p>The core collection of animal quotes, each represented as a validated <code>AnimalQuote</code> instance.</p>
+<p><strong>Validation Rules:</strong>
+- Must contain at least one quote (non-empty list)
+- All items must be valid <code>AnimalQuote</code> instances
+- Validated on assignment and initialization</p>
+<p><strong>Example Structure:</strong>
+<div class="highlight"><pre><span></span><code><span class="n">quotes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="s2">"Dogs are not our whole life, but they make our lives whole."</span><span class="p">,</span>
+        <span class="n">author</span><span class="o">=</span><span class="s2">"Roger Caras"</span><span class="p">,</span>
+        <span class="n">category</span><span class="o">=</span><span class="s2">"Pets and Companionship"</span>
+    <span class="p">),</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="s2">"The greatness of a nation can be judged by the way its animals are treated."</span><span class="p">,</span>
+        <span class="n">author</span><span class="o">=</span><span class="s2">"Mahatma Gandhi"</span><span class="p">,</span> 
+        <span class="n">category</span><span class="o">=</span><span class="s2">"Ethics and Compassion"</span>
+    <span class="p">),</span>
+    <span class="c1"># ... more quotes</span>
+<span class="p">]</span>
+</code></pre></div></p>
+<h3 id="source_file-optionalpath"><code>source_file: Optional[Path]</code><a class="headerlink" href="#source_file-optionalpath" title="Permanent link">¶</a></h3>
+<p>Optional path to the source JSONL file from which the quotes were loaded. Useful for tracking data provenance and enabling reload operations.</p>
+<p><strong>Features:</strong>
+- Tracks the origin of the quote collection
+- Enables data lineage and debugging
+- Supports reload and refresh operations
+- Can be None for programmatically created collections</p>
+<p><strong>Example Values:</strong>
+<div class="highlight"><pre><span></span><code><span class="n">source_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"data/corpus/animals/animals.jsonl"</span><span class="p">)</span>
+<span class="n">source_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"/home/user/quotes/wisdom_collection.jsonl"</span><span class="p">)</span>
+<span class="n">source_file</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># For programmatically created collections</span>
+</code></pre></div></p>
+<h2 id="methods">🔍 Methods<a class="headerlink" href="#methods" title="Permanent link">¶</a></h2>
+<h3 id="__len__self-int"><code>__len__(self) -&gt; int</code><a class="headerlink" href="#__len__self-int" title="Permanent link">¶</a></h3>
+<p>Return the number of quotes in the collection.</p>
+<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">¶</a></h4>
+<p><code>int</code> - Total count of quotes in the collection</p>
+<h4 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Collection contains </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes"</span><span class="p">)</span>
+
+<span class="c1"># Use in conditionals</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Large collection detected"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="get_categoriesself-liststr"><code>get_categories(self) -&gt; List[str]</code><a class="headerlink" href="#get_categoriesself-liststr" title="Permanent link">¶</a></h3>
+<p>Get unique categories from all quotes in the collection.</p>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">¶</a></h4>
+<p><code>List[str]</code> - Sorted list of unique category names</p>
+<h4 id="example-usage_1">Example Usage<a class="headerlink" href="#example-usage_1" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">categories</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">get_categories</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Available categories (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span><span class="si">}</span><span class="s2">):"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Example output:</span>
+<span class="c1"># Available categories (5):</span>
+<span class="c1">#   - Animal Behavior</span>
+<span class="c1">#   - Ethics and Compassion</span>
+<span class="c1">#   - Pets and Companionship</span>
+<span class="c1">#   - Wisdom and Philosophy</span>
+<span class="c1">#   - Wildlife and Conservation</span>
+</code></pre></div>
+<h4 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">¶</a></h4>
+<ul>
+<li>Building category filters for search interfaces</li>
+<li>Analyzing thematic distribution of quotes</li>
+<li>Creating navigation menus</li>
+<li>Generating collection statistics</li>
+</ul>
+<h3 id="get_authorsself-liststr"><code>get_authors(self) -&gt; List[str]</code><a class="headerlink" href="#get_authorsself-liststr" title="Permanent link">¶</a></h3>
+<p>Get unique authors from all quotes in the collection.</p>
+<h4 id="returns_2">Returns<a class="headerlink" href="#returns_2" title="Permanent link">¶</a></h4>
+<p><code>List[str]</code> - Sorted list of unique author names</p>
+<h4 id="example-usage_2">Example Usage<a class="headerlink" href="#example-usage_2" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">authors</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">get_authors</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Quotes from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">authors</span><span class="p">)</span><span class="si">}</span><span class="s2"> different authors:"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="n">authors</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>  <span class="c1"># Show first 10</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - </span><span class="si">{</span><span class="n">author</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Find most prolific authors</span>
+<span class="n">author_counts</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">quotes</span><span class="p">:</span>
+    <span class="n">author_counts</span><span class="p">[</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="p">]</span> <span class="o">=</span> <span class="n">author_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">top_authors</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">author_counts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Most quoted author: </span><span class="si">{</span><span class="n">top_authors</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">top_authors</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> quotes)"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="use-cases_1">Use Cases<a class="headerlink" href="#use-cases_1" title="Permanent link">¶</a></h4>
+<ul>
+<li>Author-based filtering and search</li>
+<li>Attribution analysis and verification</li>
+<li>Building author indexes</li>
+<li>Identifying collection coverage and gaps</li>
+</ul>
+<h3 id="filter_by_categoryself-category-str-listanimalquote"><code>filter_by_category(self, category: str) -&gt; List[AnimalQuote]</code><a class="headerlink" href="#filter_by_categoryself-category-str-listanimalquote" title="Permanent link">¶</a></h3>
+<p>Filter quotes by category, returning all quotes that match the specified category.</p>
+<h4 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>category</code></td>
+<td><code>str</code></td>
+<td>Category name to filter by (exact match)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="returns_3">Returns<a class="headerlink" href="#returns_3" title="Permanent link">¶</a></h4>
+<p><code>List[AnimalQuote]</code> - List of quotes matching the specified category</p>
+<h4 id="example-usage_3">Example Usage<a class="headerlink" href="#example-usage_3" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get all quotes about pets</span>
+<span class="n">pet_quotes</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_category</span><span class="p">(</span><span class="s2">"Pets and Companionship"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pet_quotes</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes about pets:"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">pet_quotes</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  '</span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">' - </span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Analyze category distribution</span>
+<span class="n">ethics_quotes</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_category</span><span class="p">(</span><span class="s2">"Ethics and Compassion"</span><span class="p">)</span>
+<span class="n">wisdom_quotes</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_category</span><span class="p">(</span><span class="s2">"Wisdom and Philosophy"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ethics quotes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ethics_quotes</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Wisdom quotes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wisdom_quotes</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="use-cases_2">Use Cases<a class="headerlink" href="#use-cases_2" title="Permanent link">¶</a></h4>
+<ul>
+<li>Thematic exploration of quotes</li>
+<li>Building category-specific collections</li>
+<li>Content curation for specific topics</li>
+<li>Analyzing quote distribution across themes</li>
+</ul>
+<h3 id="filter_by_authorself-author-str-listanimalquote"><code>filter_by_author(self, author: str) -&gt; List[AnimalQuote]</code><a class="headerlink" href="#filter_by_authorself-author-str-listanimalquote" title="Permanent link">¶</a></h3>
+<p>Filter quotes by author, returning all quotes attributed to the specified author.</p>
+<h4 id="parameters_1">Parameters<a class="headerlink" href="#parameters_1" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>author</code></td>
+<td><code>str</code></td>
+<td>Author name to filter by (exact match)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="returns_4">Returns<a class="headerlink" href="#returns_4" title="Permanent link">¶</a></h4>
+<p><code>List[AnimalQuote]</code> - List of quotes by the specified author</p>
+<h4 id="example-usage_4">Example Usage<a class="headerlink" href="#example-usage_4" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get all quotes by Gandhi</span>
+<span class="n">gandhi_quotes</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_author</span><span class="p">(</span><span class="s2">"Mahatma Gandhi"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Gandhi's quotes about animals (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gandhi_quotes</span><span class="p">)</span><span class="si">}</span><span class="s2">):"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">gandhi_quotes</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  '</span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Category: </span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Compare authors</span>
+<span class="n">einstein_quotes</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_author</span><span class="p">(</span><span class="s2">"Albert Einstein"</span><span class="p">)</span>
+<span class="n">schweitzer_quotes</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_author</span><span class="p">(</span><span class="s2">"Albert Schweitzer"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Einstein: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">einstein_quotes</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Schweitzer: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">schweitzer_quotes</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="use-cases_3">Use Cases<a class="headerlink" href="#use-cases_3" title="Permanent link">¶</a></h4>
+<ul>
+<li>Author-focused research and analysis</li>
+<li>Building author-specific quote collections</li>
+<li>Verifying attribution and coverage</li>
+<li>Comparative analysis between authors</li>
+</ul>
+<h3 id="validate_quotes_not_emptycls-v-listanimalquote-listanimalquote"><code>validate_quotes_not_empty(cls, v: List[AnimalQuote]) -&gt; List[AnimalQuote]</code><a class="headerlink" href="#validate_quotes_not_emptycls-v-listanimalquote-listanimalquote" title="Permanent link">¶</a></h3>
+<p>Class method validator that ensures the quotes collection is not empty.</p>
+<h4 id="parameters_2">Parameters<a class="headerlink" href="#parameters_2" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>v</code></td>
+<td><code>List[AnimalQuote]</code></td>
+<td>The quotes list to validate</td>
+</tr>
+</tbody>
+</table>
+<h4 id="returns_5">Returns<a class="headerlink" href="#returns_5" title="Permanent link">¶</a></h4>
+<p><code>List[AnimalQuote]</code> - The validated quotes list</p>
+<h4 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">¶</a></h4>
+<p><code>ValueError</code> - If the quotes collection is empty</p>
+<h4 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="nd">@field_validator</span><span class="p">(</span><span class="s1">'quotes'</span><span class="p">)</span>
+<span class="nd">@classmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_quotes_not_empty</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Ensure quotes list is not empty."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Quotes collection cannot be empty"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">v</span>
+</code></pre></div>
+<h2 id="usage-examples">💡 Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">¶</a></h2>
+<h3 id="basic-creation">Basic Creation<a class="headerlink" href="#basic-creation" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.corpus.data_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnimalQuote</span><span class="p">,</span> <span class="n">AnimalWisdom</span>
+
+<span class="c1"># Create individual quotes</span>
+<span class="n">quotes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="s2">"A dog is the only thing on earth that loves you more than you love yourself."</span><span class="p">,</span>
+        <span class="n">author</span><span class="o">=</span><span class="s2">"Josh Billings"</span><span class="p">,</span>
+        <span class="n">category</span><span class="o">=</span><span class="s2">"Pets and Companionship"</span>
+    <span class="p">),</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="s2">"Animals are such agreeable friends—they ask no questions; they pass no criticisms."</span><span class="p">,</span>
+        <span class="n">author</span><span class="o">=</span><span class="s2">"George Eliot"</span><span class="p">,</span>
+        <span class="n">category</span><span class="o">=</span><span class="s2">"Friendship and Understanding"</span>
+    <span class="p">),</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="s2">"The greatness of a nation can be judged by the way its animals are treated."</span><span class="p">,</span>
+        <span class="n">author</span><span class="o">=</span><span class="s2">"Mahatma Gandhi"</span><span class="p">,</span>
+        <span class="n">category</span><span class="o">=</span><span class="s2">"Ethics and Compassion"</span>
+    <span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Create wisdom collection</span>
+<span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span>
+    <span class="n">quotes</span><span class="o">=</span><span class="n">quotes</span><span class="p">,</span>
+    <span class="n">source_file</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">"data/sample_quotes.jsonl"</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Created collection with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="from-jsonl-loading">From JSONL Loading<a class="headerlink" href="#from-jsonl-loading" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Simulate loading from JSONL file</span>
+<span class="n">jsonl_content</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'{"text": "Dogs have a way of finding the people who need them.", "author": "Thom Jones", "category": "Healing and Therapy"}'</span><span class="p">,</span>
+    <span class="s1">'{"text": "Cats choose us; we don</span><span class="se">\'</span><span class="s1">t own them.", "author": "Kristin Cast", "category": "Pet Wisdom"}'</span><span class="p">,</span>
+    <span class="s1">'{"text": "The bond with a dog is as lasting as the ties of this earth can ever be.", "author": "Konrad Lorenz", "category": "Human-Animal Bond"}'</span>
+<span class="p">]</span>
+
+<span class="c1"># Parse quotes</span>
+<span class="n">quotes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">jsonl_content</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">quotes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AnimalQuote</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">))</span>
+
+<span class="c1"># Create wisdom collection</span>
+<span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span>
+    <span class="n">quotes</span><span class="o">=</span><span class="n">quotes</span><span class="p">,</span>
+    <span class="n">source_file</span><span class="o">=</span><span class="n">Path</span><span class="p">(</span><span class="s2">"data/therapy_quotes.jsonl"</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes from JSONL"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="collection-analysis">Collection Analysis<a class="headerlink" href="#collection-analysis" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Comprehensive collection analysis</span>
+<span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">])</span>  <span class="c1"># Assume loaded collection</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== Collection Statistics ==="</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total quotes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unique authors: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="o">.</span><span class="n">get_authors</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Categories: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="o">.</span><span class="n">get_categories</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== Category Distribution ==="</span><span class="p">)</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">get_categories</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_category</span><span class="p">(</span><span class="n">category</span><span class="p">))</span>
+    <span class="n">percentage</span> <span class="o">=</span> <span class="p">(</span><span class="n">count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">wisdom</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> quotes (</span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== Top Authors ==="</span><span class="p">)</span>
+<span class="n">author_counts</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">quotes</span><span class="p">:</span>
+    <span class="n">author_counts</span><span class="p">[</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="p">]</span> <span class="o">=</span> <span class="n">author_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">top_authors</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">author_counts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">author</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">top_authors</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">author</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> quotes"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="filtering-and-exploration">Filtering and Exploration<a class="headerlink" href="#filtering-and-exploration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Explore specific themes</span>
+<span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">])</span>
+
+<span class="c1"># Find all ethics-related quotes</span>
+<span class="n">ethics_quotes</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_category</span><span class="p">(</span><span class="s2">"Ethics and Compassion"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ethics and Compassion (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ethics_quotes</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes):"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">ethics_quotes</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  '</span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">60</span><span class="p">]</span><span class="si">}</span><span class="s2">...' - </span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Explore a specific author's perspective</span>
+<span class="n">gandhi_quotes</span> <span class="o">=</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_author</span><span class="p">(</span><span class="s2">"Mahatma Gandhi"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Mahatma Gandhi's perspective (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">gandhi_quotes</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes):"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">gandhi_quotes</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Category: </span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Quote: '</span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">'"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Cross-analysis: Find authors who wrote about specific themes</span>
+<span class="n">pet_authors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">filter_by_category</span><span class="p">(</span><span class="s2">"Pets and Companionship"</span><span class="p">):</span>
+    <span class="n">pet_authors</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Authors who wrote about pets: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pet_authors</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">author</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pet_authors</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - </span><span class="si">{</span><span class="n">author</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="data-validation">Data Validation<a class="headerlink" href="#data-validation" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Validation examples</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># This will fail - empty collection</span>
+    <span class="n">empty_wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="p">[])</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Validation error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># This will work - valid collection</span>
+    <span class="n">valid_quotes</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">AnimalQuote</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Quote 1"</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">"Author 1"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"Category A"</span><span class="p">),</span>
+        <span class="n">AnimalQuote</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Quote 2"</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">"Author 2"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"Category B"</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">valid_wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="n">valid_quotes</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Successfully created collection with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_wisdom</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes"</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unexpected error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="error-handling">🛡️ Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">¶</a></h2>
+<h3 id="common-validation-errors">Common Validation Errors<a class="headerlink" href="#common-validation-errors" title="Permanent link">¶</a></h3>
+<h4 id="empty-collection">Empty Collection<a class="headerlink" href="#empty-collection" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># This will raise ValueError</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">empty_wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="p">[])</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cannot create empty collection: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="invalid-quote-objects">Invalid Quote Objects<a class="headerlink" href="#invalid-quote-objects" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># This will raise validation errors</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">invalid_wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="p">[</span><span class="s2">"not a quote object"</span><span class="p">])</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Invalid quote type: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="source-file-issues">Source File Issues<a class="headerlink" href="#source-file-issues" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Source file validation (if custom validators are added)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span>
+        <span class="n">quotes</span><span class="o">=</span><span class="p">[</span><span class="n">valid_quote</span><span class="p">],</span>
+        <span class="n">source_file</span><span class="o">=</span><span class="s2">"not_a_path_object"</span>  <span class="c1"># Should be Path object</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Source file error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="integration-points">🔗 Integration Points<a class="headerlink" href="#integration-points" title="Permanent link">¶</a></h2>
+<h3 id="with-animals-class">With Animals Class<a class="headerlink" href="#with-animals-class" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.corpus.animals</span><span class="w"> </span><span class="kn">import</span> <span class="n">Animals</span>
+
+<span class="c1"># AnimalWisdom is returned by Animals.load_from_jsonl()</span>
+<span class="n">animals</span> <span class="o">=</span> <span class="n">Animals</span><span class="p">(</span><span class="n">vector_db</span><span class="p">)</span>
+<span class="n">wisdom</span> <span class="o">=</span> <span class="n">animals</span><span class="o">.</span><span class="n">load_from_jsonl</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"quotes.jsonl"</span><span class="p">))</span>
+
+<span class="c1"># Access the collection methods</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Categories: </span><span class="si">{</span><span class="n">wisdom</span><span class="o">.</span><span class="n">get_categories</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Authors: </span><span class="si">{</span><span class="n">wisdom</span><span class="o">.</span><span class="n">get_authors</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="with-vector-databases">With Vector Databases<a class="headerlink" href="#with-vector-databases" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Prepare for indexing</span>
+<span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">])</span>
+
+<span class="c1"># Extract data for vector operations</span>
+<span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">quotes</span><span class="p">]</span>
+<span class="n">payloads</span> <span class="o">=</span> <span class="p">[</span><span class="n">quote</span><span class="o">.</span><span class="n">to_payload</span><span class="p">()</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">quotes</span><span class="p">]</span>
+
+<span class="c1"># Index in vector database</span>
+<span class="n">semantic_search</span><span class="o">.</span><span class="n">index_all_text</span><span class="p">(</span><span class="n">texts</span><span class="o">=</span><span class="n">texts</span><span class="p">,</span> <span class="n">metadata_list</span><span class="o">=</span><span class="n">payloads</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="with-analysis-tools">With Analysis Tools<a class="headerlink" href="#with-analysis-tools" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Export for external analysis</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">])</span>
+
+<span class="c1"># Convert to DataFrame</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">wisdom</span><span class="o">.</span><span class="n">quotes</span><span class="p">:</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">'text'</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="s1">'author'</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+        <span class="s1">'category'</span><span class="p">:</span> <span class="n">quote</span><span class="o">.</span><span class="n">category</span><span class="p">,</span>
+        <span class="s1">'text_length'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="p">),</span>
+        <span class="s1">'word_count'</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="p">})</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</code></pre></div>
+<h2 id="design-principles">🎯 Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">¶</a></h2>
+<h3 id="collection-management">Collection Management<a class="headerlink" href="#collection-management" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Comprehensive</strong>: Manages complete quote collections with metadata</li>
+<li><strong>Flexible</strong>: Supports various collection sizes and sources</li>
+<li><strong>Analytical</strong>: Provides rich methods for exploring and filtering data</li>
+</ul>
+<h3 id="data-integrity">Data Integrity<a class="headerlink" href="#data-integrity" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Validated</strong>: Ensures all quotes are valid AnimalQuote instances</li>
+<li><strong>Consistent</strong>: Maintains collection invariants and constraints</li>
+<li><strong>Traceable</strong>: Tracks data provenance through source file references</li>
+</ul>
+<h3 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Efficient Filtering</strong>: Fast category and author-based filtering</li>
+<li><strong>Memory Conscious</strong>: Reasonable memory usage for large collections</li>
+<li><strong>Lazy Operations</strong>: Methods compute results on-demand</li>
+</ul>
+<h2 id="advanced-usage">🔍 Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permanent link">¶</a></h2>
+<h3 id="custom-analysis-methods">Custom Analysis Methods<a class="headerlink" href="#custom-analysis-methods" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ExtendedAnimalWisdom</span><span class="p">(</span><span class="n">AnimalWisdom</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_quotes_by_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">min_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">'inf'</span><span class="p">))</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Filter quotes by text length."""</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">quote</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span> 
+            <span class="k">if</span> <span class="n">min_length</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">max_length</span>
+        <span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_most_quoted_authors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">top_n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Get the most frequently quoted authors."""</span>
+        <span class="n">author_counts</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span><span class="p">:</span>
+            <span class="n">author_counts</span><span class="p">[</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="p">]</span> <span class="o">=</span> <span class="n">author_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">author_counts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="n">top_n</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">search_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">case_sensitive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Simple text search within quotes."""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">case_sensitive</span><span class="p">:</span>
+            <span class="n">search_term</span> <span class="o">=</span> <span class="n">search_term</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">quote</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span>
+            <span class="k">if</span> <span class="n">search_term</span> <span class="ow">in</span> <span class="p">(</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">case_sensitive</span> <span class="k">else</span> <span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="p">]</span>
+</code></pre></div>
+<h3 id="batch-operations">Batch Operations<a class="headerlink" href="#batch-operations" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Process multiple collections</span>
+<span class="n">collections</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">jsonl_files</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"wisdom_quotes.jsonl"</span><span class="p">),</span>
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"pet_quotes.jsonl"</span><span class="p">),</span> 
+    <span class="n">Path</span><span class="p">(</span><span class="s2">"conservation_quotes.jsonl"</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">jsonl_files</span><span class="p">:</span>
+    <span class="c1"># Load each collection</span>
+    <span class="n">quotes</span> <span class="o">=</span> <span class="n">load_quotes_from_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>  <span class="c1"># Custom loading function</span>
+    <span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="n">quotes</span><span class="p">,</span> <span class="n">source_file</span><span class="o">=</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="n">collections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wisdom</span><span class="p">)</span>
+
+<span class="c1"># Combine collections</span>
+<span class="n">all_quotes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">collection</span> <span class="ow">in</span> <span class="n">collections</span><span class="p">:</span>
+    <span class="n">all_quotes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">quotes</span><span class="p">)</span>
+
+<span class="n">combined_wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="n">all_quotes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Combined collection: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">combined_wisdom</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes from </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">collections</span><span class="p">)</span><span class="si">}</span><span class="s2"> sources"</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="source-code">📚 Source Code<a class="headerlink" href="#source-code" title="Permanent link">¶</a></h2>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalWisdom">
+<code>rag_to_riches.corpus.data_models.AnimalWisdom</code>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalWisdom" title="Permanent link">¶</a></h2>
+<div class="doc doc-contents first">
+<p class="doc doc-class-bases">
+              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+<p>Collection of animal quotes loaded from the corpus.</p>
+<p>This model represents the complete collection of animal quotes,
+providing validation and convenient access methods for the data.</p>
+<p><span class="doc-section-title">Attributes:</span></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td><code><span title="rag_to_riches.corpus.data_models.AnimalWisdom.quotes">quotes</span></code></td>
+<td>
+<code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" href="../AnimalQuote/#rag_to_riches.corpus.data_models.AnimalQuote" title="rag_to_riches.corpus.data_models.AnimalQuote">AnimalQuote</a>]</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>List of AnimalQuote instances</p>
+</div>
+</td>
+</tr>
+<tr class="doc-section-item">
+<td><code><span title="rag_to_riches.corpus.data_models.AnimalWisdom.source_file">source_file</span></code></td>
+<td>
+<code><span title="typing.Optional">Optional</span>[<span title="pathlib.Path">Path</span>]</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>Optional path to the source JSONL file</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AnimalWisdom</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Collection of animal quotes loaded from the corpus.</span>
+
+<span class="sd">    This model represents the complete collection of animal quotes,</span>
+<span class="sd">    providing validation and convenient access methods for the data.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        quotes: List of AnimalQuote instances</span>
+<span class="sd">        source_file: Optional path to the source JSONL file</span>
+<span class="sd">    """</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span>
+        <span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">arbitrary_types_allowed</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">quotes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span> 
+        <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Collection of animal quotes"</span>
+    <span class="p">)</span>
+    <span class="n">source_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Path to the source JSONL file"</span>
+    <span class="p">)</span>
+
+    <span class="nd">@field_validator</span><span class="p">(</span><span class="s1">'quotes'</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_quotes_not_empty</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Ensure quotes list is not empty."""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Quotes collection cannot be empty"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Return the number of quotes in the collection."""</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quotes</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Get unique categories from all quotes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Sorted list of unique category names.</span>
+<span class="sd">        """</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="p">{</span><span class="n">quote</span><span class="o">.</span><span class="n">category</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_authors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Get unique authors from all quotes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Sorted list of unique author names.</span>
+<span class="sd">        """</span>
+        <span class="n">authors</span> <span class="o">=</span> <span class="p">{</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">authors</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_by_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Filter quotes by category.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            category: Category name to filter by.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of quotes matching the category.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">quote</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span> <span class="k">if</span> <span class="n">quote</span><span class="o">.</span><span class="n">category</span> <span class="o">==</span> <span class="n">category</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">filter_by_author</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">author</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Filter quotes by author.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            author: Author name to filter by.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of quotes by the specified author.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">quote</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span> <span class="k">if</span> <span class="n">quote</span><span class="o">.</span><span class="n">author</span> <span class="o">==</span> <span class="n">author</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalWisdom.__len__">
+<code class="highlight language-python"><span class="fm">__len__</span><span class="p">()</span></code>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalWisdom.__len__" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Return the number of quotes in the collection.</p>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Return the number of quotes in the collection."""</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quotes</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalWisdom.filter_by_author">
+<code class="highlight language-python"><span class="n">filter_by_author</span><span class="p">(</span><span class="n">author</span><span class="p">)</span></code>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalWisdom.filter_by_author" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Filter quotes by author.</p>
+<p><span class="doc-section-title">Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td>
+<code>author</code>
+</td>
+<td>
+<code><span title="str">str</span></code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>Author name to filter by.</p>
+</div>
+</td>
+<td>
+<em>required</em>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="doc-section-title">Returns:</span></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td>
+<code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" href="../AnimalQuote/#rag_to_riches.corpus.data_models.AnimalQuote" title="rag_to_riches.corpus.data_models.AnimalQuote">AnimalQuote</a>]</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>List of quotes by the specified author.</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_by_author</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">author</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Filter quotes by author.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        author: Author name to filter by.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of quotes by the specified author.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">quote</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span> <span class="k">if</span> <span class="n">quote</span><span class="o">.</span><span class="n">author</span> <span class="o">==</span> <span class="n">author</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalWisdom.filter_by_category">
+<code class="highlight language-python"><span class="n">filter_by_category</span><span class="p">(</span><span class="n">category</span><span class="p">)</span></code>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalWisdom.filter_by_category" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Filter quotes by category.</p>
+<p><span class="doc-section-title">Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td>
+<code>category</code>
+</td>
+<td>
+<code><span title="str">str</span></code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>Category name to filter by.</p>
+</div>
+</td>
+<td>
+<em>required</em>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span class="doc-section-title">Returns:</span></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td>
+<code><span title="typing.List">List</span>[<a class="autorefs autorefs-internal" href="../AnimalQuote/#rag_to_riches.corpus.data_models.AnimalQuote" title="rag_to_riches.corpus.data_models.AnimalQuote">AnimalQuote</a>]</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>List of quotes matching the category.</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">filter_by_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Filter quotes by category.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        category: Category name to filter by.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of quotes matching the category.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">quote</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span> <span class="k">if</span> <span class="n">quote</span><span class="o">.</span><span class="n">category</span> <span class="o">==</span> <span class="n">category</span><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalWisdom.get_authors">
+<code class="highlight language-python"><span class="n">get_authors</span><span class="p">()</span></code>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalWisdom.get_authors" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Get unique authors from all quotes.</p>
+<p><span class="doc-section-title">Returns:</span></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td>
+<code><span title="typing.List">List</span>[<span title="str">str</span>]</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>Sorted list of unique author names.</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_authors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Get unique authors from all quotes.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Sorted list of unique author names.</span>
+<span class="sd">    """</span>
+    <span class="n">authors</span> <span class="o">=</span> <span class="p">{</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span><span class="p">}</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">authors</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalWisdom.get_categories">
+<code class="highlight language-python"><span class="n">get_categories</span><span class="p">()</span></code>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalWisdom.get_categories" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Get unique categories from all quotes.</p>
+<p><span class="doc-section-title">Returns:</span></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td>
+<code><span title="typing.List">List</span>[<span title="str">str</span>]</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>Sorted list of unique category names.</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Get unique categories from all quotes.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Sorted list of unique category names.</span>
+<span class="sd">    """</span>
+    <span class="n">categories</span> <span class="o">=</span> <span class="p">{</span><span class="n">quote</span><span class="o">.</span><span class="n">category</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span><span class="p">}</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalWisdom.validate_quotes_not_empty">
+<code class="highlight language-python"><span class="n">validate_quotes_not_empty</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></code>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+</span>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalWisdom.validate_quotes_not_empty" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Ensure quotes list is not empty.</p>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@field_validator</span><span class="p">(</span><span class="s1">'quotes'</span><span class="p">)</span>
+<span class="nd">@classmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_quotes_not_empty</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Ensure quotes list is not empty."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Quotes collection cannot be empty"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">v</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div><hr/>
+<p><em>The AnimalWisdom class provides a robust foundation for managing quote collections - combining data validation, rich analysis capabilities, and seamless integration with the broader RAG framework. Perfect for building intelligent content systems that need to explore and understand large collections of textual wisdom.</em> </p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+<script src="../../javascripts/mathjax.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>
