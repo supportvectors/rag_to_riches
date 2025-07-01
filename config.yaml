@@ -34,4 +34,7 @@ vector_db:
   multimodal_basic:
     collection_name: "multimodal_basic"
     vector_size: 768
+
+paths:
+  data: /Users/chandarl/data
   
