@@ -12,13 +12,13 @@
         <meta name="author" content="SupportVectors">
       
       
-        <link rel="canonical" href="https://supportvectors.ai/rag-to-riches/project-guide/tips-and-tricks/cuda-hell/">
+        <link rel="canonical" href="https://supportvectors.ai/rag-to-riches/notebooks/examples/search-corpus/">
       
       
-        <link rel="prev" href="../../../notebooks/examples/supportvectors-common/">
+        <link rel="prev" href="../lesson-2/">
       
       
-        <link rel="next" href="../../../search/">
+        <link rel="next" href="../semantic-search/">
       
       
       <link rel="icon" href="../../../images/favicon.ico">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Some tips and tricks to deal with the CUDA hell - SupportVectors Rag to Riches</title>
+        <title>Search corpus - SupportVectors Rag to Riches</title>
       
     
     
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#some-tips-and-tricks-to-deal-with-the-cuda-hell" class="md-skip">
+        <a href="#toy-corpus-for-semantic-search" class="md-skip">
           Skip to content
         </a>
       
@@ -123,7 +123,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Some tips and tricks to deal with the CUDA hell
+              Search corpus
             
           </span>
         </div>
@@ -536,18 +536,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
@@ -563,7 +565,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Notebooks
@@ -574,18 +576,20 @@
                 
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" checked>
         
           
           <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
@@ -601,7 +605,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5_1">
             <span class="md-nav__icon md-icon"></span>
             Examples
@@ -615,7 +619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../notebooks/examples/lesson-1/" class="md-nav__link">
+      <a href="../lesson-1/" class="md-nav__link">
         
   
   
@@ -638,7 +642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../notebooks/examples/lesson-2/" class="md-nav__link">
+      <a href="../lesson-2/" class="md-nav__link">
         
   
   
@@ -658,10 +662,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../notebooks/examples/search-corpus/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -672,6 +685,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -684,7 +698,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../notebooks/examples/semantic-search/" class="md-nav__link">
+      <a href="../semantic-search/" class="md-nav__link">
         
   
   
@@ -707,7 +721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../notebooks/examples/supportvectors-common/" class="md-nav__link">
+      <a href="../supportvectors-common/" class="md-nav__link">
         
   
   
@@ -742,20 +756,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
         
           
           <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
@@ -771,7 +783,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             Project guide
@@ -782,20 +794,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
         
           
           <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
@@ -811,7 +821,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_6_1">
             <span class="md-nav__icon md-icon"></span>
             Tips and tricks
@@ -822,32 +832,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Some tips and tricks to deal with the CUDA hell
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../project-guide/tips-and-tricks/cuda-hell/" class="md-nav__link">
         
   
   
@@ -858,59 +846,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#install-the-cuda-toolkit" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install the cuda-toolkit
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#flush-cuda-memory-from-python-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      Flush cuda memory from Python code
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Flush cuda memory from Python code">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#nvtop-is-your-friend" class="md-nav__link">
-    <span class="md-ellipsis">
-      nvtop is your friend!
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1337,47 +1272,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#install-the-cuda-toolkit" class="md-nav__link">
-    <span class="md-ellipsis">
-      Install the cuda-toolkit
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#flush-cuda-memory-from-python-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      Flush cuda memory from Python code
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Flush cuda memory from Python code">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#nvtop-is-your-friend" class="md-nav__link">
-    <span class="md-ellipsis">
-      nvtop is your friend!
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1392,28 +1286,379 @@
 
 
 
-<h1 id="some-tips-and-tricks-to-deal-with-the-cuda-hell">Some tips and tricks to deal with the CUDA hell<a class="headerlink" href="#some-tips-and-tricks-to-deal-with-the-cuda-hell" title="Permanent link">&para;</a></h1>
-<p>These are some tips and tricks that may be helpful while dealing with CUDA.</p>
-<h2 id="install-the-cuda-toolkit">Install the cuda-toolkit<a class="headerlink" href="#install-the-cuda-toolkit" title="Permanent link">&para;</a></h2>
-<p>It is important to remember that one <strong>must</strong> install the cuda-toolkit, and set the CUDA_HOME environment variable, in order for some critical tools, such as <code>vLLM</code> to work. To do this, follow the instructions at: <a href="https://docs.nvidia.com/cuda/cuda-installation-guide-linux/">CUDA installation guide on Linux</a></p>
-<h2 id="flush-cuda-memory-from-python-code">Flush cuda memory from Python code<a class="headerlink" href="#flush-cuda-memory-from-python-code" title="Permanent link">&para;</a></h2>
-<p>It is helpful to start all Python code that uses CUDA with the following mantra invocation:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span><span class="o">,</span><span class="w"> </span><span class="nn">gc</span>
-<span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
-<span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">empty_cache</span><span class="p">()</span>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var requireJsScript = document.createElement('script');
+    requireJsScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js';
+
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var jupyterWidgetsScript = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
+
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    jupyterWidgetsScript.src = widgetRendererSrc;
+
+    document.body.appendChild(requireJsScript);
+    document.body.appendChild(jupyterWidgetsScript);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="toy-corpus-for-semantic-search">Toy corpus for semantic search<a class="headerlink" href="#toy-corpus-for-semantic-search" title="Permanent link">&para;</a></h1>
+<p>Here, we create a toy corpus comprising of a few small document texts. Then we will make this the context of semantic search.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1">#</span>
+<span class="c1"># From &quot;Through the looking Glass&quot; by Lewis Caroll</span>
+<span class="c1">#</span>
+<span class="n">jabberwocky</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">’Twas brillig, and the slithy toves</span>
+<span class="s2">      Did gyre and gimble in the wabe:</span>
+<span class="s2">All mimsy were the borogoves,</span>
+<span class="s2">      And the mome raths outgrabe.</span>
+
+<span class="s2">“Beware the Jabberwock, my son!</span>
+<span class="s2">      The jaws that bite, the claws that catch!</span>
+<span class="s2">Beware the Jubjub bird, and shun</span>
+<span class="s2">      The frumious Bandersnatch!”</span>
+
+<span class="s2">He took his vorpal sword in hand;</span>
+<span class="s2">      Long time the manxome foe he sought—</span>
+<span class="s2">So rested he by the Tumtum tree</span>
+<span class="s2">      And stood awhile in thought.</span>
+
+<span class="s2">And, as in uffish thought he stood,</span>
+<span class="s2">      The Jabberwock, with eyes of flame,</span>
+<span class="s2">Came whiffling through the tulgey wood,</span>
+<span class="s2">      And burbled as it came!</span>
+
+<span class="s2">One, two! One, two! And through and through</span>
+<span class="s2">      The vorpal blade went snicker-snack!</span>
+<span class="s2">He left it dead, and with its head</span>
+<span class="s2">      He went galumphing back.</span>
+
+<span class="s2">“And hast thou slain the Jabberwock?</span>
+<span class="s2">      Come to my arms, my beamish boy!</span>
+<span class="s2">O frabjous day! Callooh! Callay!”</span>
+<span class="s2">      He chortled in his joy.</span>
+
+<span class="s2">’Twas brillig, and the slithy toves</span>
+<span class="s2">      Did gyre and gimble in the wabe:</span>
+<span class="s2">All mimsy were the borogoves,</span>
+<span class="s2">      And the mome raths outgrabe.</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
 </code></pre></div>
-<p>Despite this invocation, quite often it will not completely flush the cuda memory. In that case, a better invocation at the level of the Linux shell is:</p>
-<p><div class="highlight"><pre><span></span><code>nvidia-smi<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">&#39;python&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{ print $5 }&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-9
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1">#</span>
+<span class="c1"># The beginning of the &quot;Tale of two cities&quot;, by Charles Dickens</span>
+<span class="c1">#</span>
+<span class="n">best_of_times</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">It was the best of times, it was the worst of times, </span>
+<span class="s2">it was the age of wisdom, it was the age of foolishness, </span>
+<span class="s2">it was the epoch of belief, it was the epoch of incredulity, </span>
+<span class="s2">it was the season of light, it was the season of darkness, </span>
+<span class="s2">it was the spring of hope, it was the winter of despair, </span>
+<span class="s2">we had everything before us, we had nothing before us, </span>
+<span class="s2">we were all going direct to heaven, </span>
+<span class="s2">we were all going direct the other way–in short, </span>
+<span class="s2">the period was so far like the present period, </span>
+<span class="s2">that some of its noisiest authorities insisted on its being received, </span>
+<span class="s2">for good or for evil, in the superlative degree of comparison only.</span>
+<span class="s2">&quot;&quot;&quot;</span>
 </code></pre></div>
-This pearl of wisdom is gleaned from: <a href="https://stackoverflow.com/questions/15197286/how-can-i-flush-gpu-memory-using-cuda-physical-reset-is-unavailable">How to flush GPU memory using CUDA </a></p>
-<p>If you're still hitting unexpected memory errors or similar problems then try:</p>
-<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>fuser<span class="w"> </span>-v<span class="w"> </span>/dev/nvidia*<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s1">&#39; &#39;</span><span class="w"> </span>-f2-<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>xargs<span class="w"> </span>-n1<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-9
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1">#</span>
+<span class="c1"># From the &quot;Tale of two cities&quot; by Charles Dickens</span>
+<span class="c1">#</span>
+<span class="n">mystery</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">A wonderful fact to reflect upon, that every human creature is </span>
+<span class="s2">constituted to be that profound secret and mystery to every other. </span>
+<span class="s2">&quot;&quot;&quot;</span>
 </code></pre></div>
-<h3 id="nvtop-is-your-friend"><code>nvtop</code> is your friend!<a class="headerlink" href="#nvtop-is-your-friend" title="Permanent link">&para;</a></h3>
-<p>A very useful and visual tool to see what is happening in CUDA is to use the tool <code>nvtop</code>. Install it with the mantra:</p>
-<p><div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>nvtop
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1">#</span>
+<span class="c1"># A poignant passage from the &quot;Tale of two cities&quot;, by Charles Dickens</span>
+<span class="c1">#</span>
+<span class="n">last_dream</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">I wish you to know that you have been the last dream of my soul. </span>
+<span class="s2">In my degradation I have not been so degraded but that the sight </span>
+<span class="s2">of you with your father, and of this home made such a home by you, </span>
+<span class="s2">has stirred old shadows that I thought had died out of me. </span>
+<span class="s2">Since I knew you, I have been troubled by a remorse that I </span>
+<span class="s2">thought would never reproach me again, and have heard whispers </span>
+<span class="s2">from old voices impelling me upward, that I thought were silent </span>
+<span class="s2">for ever. I have had unformed ideas of striving afresh, beginning anew, </span>
+<span class="s2">shaking off sloth and sensuality, and fighting out the abandoned fight. </span>
+<span class="s2">A dream, all a dream, that ends in nothing, and leaves the sleeper </span>
+<span class="s2">where he lay down, but I wish you to know that you inspired it.</span>
+<span class="s2">&quot;&quot;&quot;</span>
 </code></pre></div>
-(or its equivalent if you foolishly use anything other than redhat/centos/rocky-linux).</p>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">mark_twain_dog</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">The dog is a gentleman; I hope to go to his heaven not man&#39;s.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">einstein</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;If a man aspires towards a righteous life, his first act of abstinence is from injury to animals.&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">tweedledee</span>  <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Tweedledum and Tweedledee: She then meets the fat twin brothers </span>
+<span class="s2">Tweedledum and Tweedledee, whom she knows from the nursery rhyme. </span>
+<span class="s2">After reciting the long poem &quot;The Walrus and the Carpenter&quot;, </span>
+<span class="s2">they draw Alice&#39;s attention to the Red King—loudly snoring away </span>
+<span class="s2">under a nearby tree—and maliciously provoke her with idle philosophical </span>
+<span class="s2">banter that she exists only as an imaginary figure in the Red King&#39;s dreams. </span>
+<span class="s2">Finally, the brothers begin suiting up for battle, only to be frightened </span>
+<span class="s2">away by an enormous crow, as the nursery rhyme about them predicts.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">goldens_1</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Golden retrievers are not bred to be guard dogs, and considering the size of their hearts and their irrepressible joy and life, they are less likely to bite than to bark, less likely to bark than to lick a hand in greeting. In spite of their size, they think they are lap dogs, and in spite of being dogs, they think they’re also human, and nearly every human they meet is judged to have the potential to be a boon companion who might at any moment, cry, “Let’s go!” and lead them on a great adventure.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">goldens_2</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">If you’re lucky, a golden retriever will come into your life, steal your heart, and change everything</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">goldens_3</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">My friend Phil has a theory that the Lord, having made teenagers, felt constrained to make amends and so created the golden retriever.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">dog_soul</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">If you don’t believe that dogs have souls, you haven’t looked into their eyes long enough.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">keats</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">A thing of beauty is a joy for ever:</span>
+<span class="s2">Its loveliness increases; it will never</span>
+<span class="s2">Pass into nothingness; but still will keep</span>
+<span class="s2">A bower quiet for us, and a sleep</span>
+<span class="s2">Full of sweet dreams, and health, and quiet breathing.</span>
+<span class="s2">Therefore, on every morrow, are we wreathing</span>
+<span class="s2">A flowery band to bind us to the earth,</span>
+<span class="s2">Spite of despondence, of the inhuman dearth</span>
+<span class="s2">Of noble natures, of the gloomy days,</span>
+<span class="s2">Of all the unhealthy and o&#39;er-darkn&#39;d ways</span>
+<span class="s2">Made for our searching: yes, in spite of all,</span>
+<span class="s2">Some shape of beauty moves away the pall</span>
+<span class="s2">From our dark spirits. Such the sun, the moon,</span>
+<span class="s2">Trees old and young, sprouting a shady boon</span>
+<span class="s2">For simple sheep; and such are daffodils</span>
+<span class="s2">With the green world they live in; and clear rills</span>
+<span class="s2">That for themselves a cooling covert make</span>
+<span class="s2">&#39;Gainst the hot season; the mid-forest brake,</span>
+<span class="s2">Rich with a sprinkling of fair musk-rose blooms:</span>
+<span class="s2">And such too is the grandeur of the dooms</span>
+<span class="s2">We have imagined for the mighty dead;</span>
+<span class="s2">An endless fountain of immortal drink,</span>
+<span class="s2">Pouring unto us from the heaven&#39;s brink</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">attention</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">The dominant sequence transduction models are based on </span>
+<span class="s2">complex recurrent or convolutional neural networks in an encoder-decoder configuration. </span>
+<span class="s2">The best performing models also connect the encoder and decoder through </span>
+<span class="s2">an attention mechanism. We propose a new simple network architecture, </span>
+<span class="s2">the Transformer, based solely on attention mechanisms, </span>
+<span class="s2">dispensing with recurrence and convolutions entirely. </span>
+<span class="s2">Experiments on two machine translation tasks show these models </span>
+<span class="s2">to be superior in quality while being more parallelizable </span>
+<span class="s2">and requiring significantly less time to train. </span>
+<span class="s2">Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, </span>
+<span class="s2">improving over the existing best results, including ensembles by over 2 BLEU. </span>
+<span class="s2">On the WMT 2014 English-to-French translation task, our model establishes </span>
+<span class="s2">a new single-model state-of-the-art BLEU score of 41.8 after training for </span>
+<span class="s2">3.5 days on eight GPUs, a small fraction of the training costs of the </span>
+<span class="s2">best models from the literature. We show that the Transformer </span>
+<span class="s2">generalizes well to other tasks by applying it successfully to </span>
+<span class="s2">English constituency parsing both with large and limited training data.</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">backprop</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">In machine learning, backpropagation</span>
+<span class="s2">(backprop,[1] BP) is a widely used</span>
+<span class="s2">algorithm for training feedforward</span>
+<span class="s2">artificial neural networks.</span>
+<span class="s2">Generalizations of backpropagation</span>
+<span class="s2">exist for other artificial neural</span>
+<span class="s2">networks (ANNs), and for functions</span>
+<span class="s2">generally. These classes of algorithms</span>
+<span class="s2">are all referred to generically as</span>
+<span class="s2">&quot;backpropagation&quot;.[2] In fitting a</span>
+<span class="s2">neural network, backpropagation</span>
+<span class="s2">computes the gradient of the loss</span>
+<span class="s2">function with respect to the weights of</span>
+<span class="s2">the network for a single input–output</span>
+<span class="s2">example, and does so efficiently,</span>
+<span class="s2">unlike a naive direct computation of</span>
+<span class="s2">the gradient with respect to each</span>
+<span class="s2">weight individually. This efficiency</span>
+<span class="s2">makes it feasible to use gradient</span>
+<span class="s2">methods for training multilayer</span>
+<span class="s2">networks, updating weights to minimize</span>
+<span class="s2">loss; gradient descent, or variants</span>
+<span class="s2">such as stochastic gradient descent,</span>
+<span class="s2">are commonly used. The backpropagation</span>
+<span class="s2">algorithm works by computing the</span>
+<span class="s2">gradient of the loss function with</span>
+<span class="s2">respect to each weight by the chain</span>
+<span class="s2">rule, computing the gradient one layer</span>
+<span class="s2">at a time, iterating backward from the</span>
+<span class="s2">last layer to avoid redundant</span>
+<span class="s2">calculations of intermediate terms in</span>
+<span class="s2">the chain rule; this is an example of</span>
+<span class="s2">dynamic programming.[3]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="c1"># Wordsworth</span>
+<span class="n">lucy</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">She dwelt among the untrodden ways</span>
+<span class="s2">Beside the springs of Dove,</span>
+<span class="s2">A Maid whom there were none to praise</span>
+<span class="s2">And very few to love:</span>
+
+<span class="s2">A violet by a mossy stone</span>
+<span class="s2">Half hidden from the eye!</span>
+<span class="s2">—Fair as a star, when only one</span>
+<span class="s2">Is shining in the sky.</span>
+
+<span class="s2">She lived unknown, and few could know</span>
+<span class="s2">When Lucy ceased to be;</span>
+<span class="s2">But she is in her grave, and, oh,</span>
+<span class="s2">The difference to me!</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Davies</span>
+<span class="n">full_of_cares</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">What is this life if, full of care,</span>
+<span class="s2">We have no time to stand and stare.</span>
+
+<span class="s2">No time to stand beneath the boughs</span>
+<span class="s2">And stare as long as sheep or cows.</span>
+
+<span class="s2">No time to see, when woods we pass,</span>
+<span class="s2">Where squirrels hide their nuts in grass.</span>
+
+<span class="s2">No time to see, in broad daylight,</span>
+<span class="s2">Streams full of stars, like skies at night.</span>
+
+<span class="s2">No time to turn at Beauty&#39;s glance,</span>
+<span class="s2">And watch her feet, how they can dance.</span>
+
+<span class="s2">No time to wait till her mouth can</span>
+<span class="s2">Enrich that smile her eyes began.</span>
+
+<span class="s2">A poor life this if, full of care,</span>
+<span class="s2">We have no time to stand and stare.</span>
+
+
+<span class="s2">&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code><span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">jabberwocky</span><span class="p">,</span> <span class="n">best_of_times</span><span class="p">,</span> <span class="n">last_dream</span><span class="p">,</span> <span class="n">mystery</span><span class="p">,</span> <span class="n">mark_twain_dog</span><span class="p">,</span> <span class="n">einstein</span><span class="p">,</span>
+    <span class="n">tweedledee</span><span class="p">,</span> <span class="n">goldens_1</span><span class="p">,</span> <span class="n">goldens_2</span><span class="p">,</span> <span class="n">goldens_3</span><span class="p">,</span> <span class="n">dog_soul</span><span class="p">,</span> <span class="n">keats</span><span class="p">,</span> <span class="n">attention</span><span class="p">,</span> <span class="n">backprop</span><span class="p">,</span> <span class="n">lucy</span><span class="p">,</span> <span class="n">full_of_cares</span>
+<span class="p">]</span>
+</code></pre></div>
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+
+</div>
+</div>
 
 
 

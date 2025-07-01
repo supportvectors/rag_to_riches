@@ -1,0 +1,1102 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)" name="description"/>
+<meta content="SupportVectors" name="author"/>
+<link href="https://supportvectors.ai/rag-to-riches/exceptions/" rel="canonical"/>
+<link href="../examples/" rel="prev"/>
+<link href="../notebooks/examples/lesson-1/" rel="next"/>
+<link href="../images/favicon.ico" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.14" name="generator"/>
+<title>Exceptions Package - SupportVectors Rag to Riches</title>
+<link href="../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Lora:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Lora";--md-code-font:"Roboto Mono"}</style>
+<link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../stylesheets/supportvectors.css" rel="stylesheet"/>
+<link href="../css/ansi-colours.css" rel="stylesheet"/>
+<link href="../css/jupyter-cells.css" rel="stylesheet"/>
+<link href="../css/pandas-dataframe.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="gray" data-md-color-primary="light-blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#exceptions-package">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SupportVectors Rag to Riches" class="md-header__button md-logo" data-md-component="logo" href=".." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../images/overlapping_logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SupportVectors Rag to Riches
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Exceptions Package
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="gray" data-md-color-media="" data-md-color-primary="light-blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SupportVectors Rag to Riches" class="md-nav__button md-logo" data-md-component="logo" href=".." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../images/overlapping_logo.png"/>
+</a>
+    SupportVectors Rag to Riches
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    RAG to Riches: Advanced Retrieval-Augmented Generation Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Corpus
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Corpus
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/">
+<span class="md-ellipsis">
+    Corpus Package: Data Models and Content Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/AnimalQuote/">
+<span class="md-ellipsis">
+    AnimalQuote Class: Individual Quote Data Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/AnimalWisdom/">
+<span class="md-ellipsis">
+    AnimalWisdom Class: Quote Collection Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/Animals/">
+<span class="md-ellipsis">
+    Animals Class: Complete RAG System
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../examples/">
+<span class="md-ellipsis">
+    Examples Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Exceptions
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Exceptions
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Exceptions Package
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Exceptions Package
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-components">
+<span class="md-ellipsis">
+      Key Components
+    </span>
+</a>
+<nav aria-label="Key Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exception-hierarchy">
+<span class="md-ellipsis">
+      Exception Hierarchy
+    </span>
+</a>
+<nav aria-label="Exception Hierarchy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#base-exception-classes">
+<span class="md-ellipsis">
+      Base Exception Classes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#specialized-exception-classes">
+<span class="md-ellipsis">
+      Specialized Exception Classes
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+<span class="md-ellipsis">
+      Architecture
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#features">
+<span class="md-ellipsis">
+      Features
+    </span>
+</a>
+<nav aria-label="Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-by-contract-integration">
+<span class="md-ellipsis">
+      Design by Contract Integration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rich-error-information">
+<span class="md-ellipsis">
+      Rich Error Information
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exception-chaining">
+<span class="md-ellipsis">
+      Exception Chaining
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      Usage Examples
+    </span>
+</a>
+<nav aria-label="Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-exception-handling">
+<span class="md-ellipsis">
+      Basic Exception Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exception-with-context">
+<span class="md-ellipsis">
+      Exception with Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-exception-handling">
+<span class="md-ellipsis">
+      Custom Exception Handling
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-with-logging">
+<span class="md-ellipsis">
+      Integration with Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exception-guidelines">
+<span class="md-ellipsis">
+      Exception Guidelines
+    </span>
+</a>
+<nav aria-label="Exception Guidelines" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-to-use-custom-exceptions">
+<span class="md-ellipsis">
+      When to Use Custom Exceptions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#best-practices">
+<span class="md-ellipsis">
+      Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling-patterns">
+<span class="md-ellipsis">
+      Error Handling Patterns
+    </span>
+</a>
+<nav aria-label="Error Handling Patterns" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-pattern">
+<span class="md-ellipsis">
+      Validation Pattern
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resource-management-pattern">
+<span class="md-ellipsis">
+      Resource Management Pattern
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#related-components">
+<span class="md-ellipsis">
+      Related Components
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Notebooks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Notebooks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_1">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/lesson-1/">
+<span class="md-ellipsis">
+    Lesson 1
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/lesson-2/">
+<span class="md-ellipsis">
+    Lesson 2
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/search-corpus/">
+<span class="md-ellipsis">
+    Search corpus
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/semantic-search/">
+<span class="md-ellipsis">
+    Semantic search
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/supportvectors-common/">
+<span class="md-ellipsis">
+    Supportvectors common
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Project guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Project guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Tips and tricks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            Tips and tricks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../project-guide/tips-and-tricks/cuda-hell/">
+<span class="md-ellipsis">
+    Some tips and tricks to deal with the CUDA hell
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Search
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Search
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../search/">
+<span class="md-ellipsis">
+    Search Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    Search basics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            Search basics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../search_basics/">
+<span class="md-ellipsis">
+    Search Basics Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    Start simply
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            Start simply
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../start_simply/">
+<span class="md-ellipsis">
+    Start Simply Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    Utils
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            Utils
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../utils/">
+<span class="md-ellipsis">
+    Utils Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+<span class="md-ellipsis">
+    Vectordb
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_11_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_11">
+<span class="md-nav__icon md-icon"></span>
+            Vectordb
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../vectordb/">
+<span class="md-ellipsis">
+    Vector Database Package: Embeddings and Storage
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../vectordb/EmbeddedVectorDB/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB Class
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../vectordb/SimpleTextEmbedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder Class
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-components">
+<span class="md-ellipsis">
+      Key Components
+    </span>
+</a>
+<nav aria-label="Key Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exception-hierarchy">
+<span class="md-ellipsis">
+      Exception Hierarchy
+    </span>
+</a>
+<nav aria-label="Exception Hierarchy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#base-exception-classes">
+<span class="md-ellipsis">
+      Base Exception Classes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#specialized-exception-classes">
+<span class="md-ellipsis">
+      Specialized Exception Classes
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+<span class="md-ellipsis">
+      Architecture
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#features">
+<span class="md-ellipsis">
+      Features
+    </span>
+</a>
+<nav aria-label="Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-by-contract-integration">
+<span class="md-ellipsis">
+      Design by Contract Integration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rich-error-information">
+<span class="md-ellipsis">
+      Rich Error Information
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exception-chaining">
+<span class="md-ellipsis">
+      Exception Chaining
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      Usage Examples
+    </span>
+</a>
+<nav aria-label="Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-exception-handling">
+<span class="md-ellipsis">
+      Basic Exception Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exception-with-context">
+<span class="md-ellipsis">
+      Exception with Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-exception-handling">
+<span class="md-ellipsis">
+      Custom Exception Handling
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-with-logging">
+<span class="md-ellipsis">
+      Integration with Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#exception-guidelines">
+<span class="md-ellipsis">
+      Exception Guidelines
+    </span>
+</a>
+<nav aria-label="Exception Guidelines" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-to-use-custom-exceptions">
+<span class="md-ellipsis">
+      When to Use Custom Exceptions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#best-practices">
+<span class="md-ellipsis">
+      Best Practices
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling-patterns">
+<span class="md-ellipsis">
+      Error Handling Patterns
+    </span>
+</a>
+<nav aria-label="Error Handling Patterns" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-pattern">
+<span class="md-ellipsis">
+      Validation Pattern
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resource-management-pattern">
+<span class="md-ellipsis">
+      Resource Management Pattern
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#related-components">
+<span class="md-ellipsis">
+      Related Components
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="exceptions-package">Exceptions Package<a class="headerlink" href="#exceptions-package" title="Permanent link">¶</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>The <code>exceptions</code> package provides a comprehensive, hierarchical exception system for the RAG to Riches framework. This package implements custom exceptions that provide clear, actionable error messages and enable robust error handling throughout the application.</p>
+<h2 id="key-components">Key Components<a class="headerlink" href="#key-components" title="Permanent link">¶</a></h2>
+<h3 id="exception-hierarchy">Exception Hierarchy<a class="headerlink" href="#exception-hierarchy" title="Permanent link">¶</a></h3>
+<p><strong>File</strong>: <code>exceptions.py</code></p>
+<p>The exceptions package defines a well-structured hierarchy of custom exceptions that help identify and handle different types of errors that can occur during RAG operations.</p>
+<h4 id="base-exception-classes">Base Exception Classes<a class="headerlink" href="#base-exception-classes" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong><code>RAGException</code></strong>: Base exception for all RAG-related errors</li>
+<li><strong><code>ValidationError</code></strong>: For input validation failures</li>
+<li><strong><code>DatabaseError</code></strong>: For vector database operation failures</li>
+<li><strong><code>SearchError</code></strong>: For semantic search operation failures</li>
+<li><strong><code>EmbeddingError</code></strong>: For text embedding operation failures</li>
+<li><strong><code>LLMError</code></strong>: For language model interaction failures</li>
+</ul>
+<h4 id="specialized-exception-classes">Specialized Exception Classes<a class="headerlink" href="#specialized-exception-classes" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong><code>CollectionNotFoundError</code></strong>: When a vector collection doesn't exist</li>
+<li><strong><code>InvalidQueryError</code></strong>: For malformed or invalid search queries</li>
+<li><strong><code>InsufficientDataError</code></strong>: When not enough data is available for operations</li>
+<li><strong><code>ConfigurationError</code></strong>: For configuration and setup issues</li>
+<li><strong><code>AuthenticationError</code></strong>: For API key and authentication failures</li>
+</ul>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h2>
+<div class="mermaid">graph TB
+    subgraph "Exception Hierarchy"
+        RAGException[RAGException<br/>Base Exception]
+
+        RAGException --&gt; ValidationError
+        RAGException --&gt; DatabaseError
+        RAGException --&gt; SearchError
+        RAGException --&gt; EmbeddingError
+        RAGException --&gt; LLMError
+
+        DatabaseError --&gt; CollectionNotFoundError
+        SearchError --&gt; InvalidQueryError
+        ValidationError --&gt; InsufficientDataError
+        RAGException --&gt; ConfigurationError
+        LLMError --&gt; AuthenticationError
+    end
+
+    style RAGException fill:#e1f5fe
+    style ValidationError fill:#f3e5f5
+    style DatabaseError fill:#e8f5e8
+    style SearchError fill:#fff3e0
+</div>
+<h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
+<h3 id="design-by-contract-integration">Design by Contract Integration<a class="headerlink" href="#design-by-contract-integration" title="Permanent link">¶</a></h3>
+<p>The exceptions package integrates seamlessly with the project's Design-by-Contract approach:</p>
+<ul>
+<li><strong>Pre-condition Violations</strong>: Clear exceptions when input requirements aren't met</li>
+<li><strong>Post-condition Failures</strong>: Exceptions when expected outputs can't be generated</li>
+<li><strong>Invariant Violations</strong>: Exceptions when object state becomes invalid</li>
+<li><strong>Fail-Fast Behavior</strong>: Immediate exception raising prevents error propagation</li>
+</ul>
+<h3 id="rich-error-information">Rich Error Information<a class="headerlink" href="#rich-error-information" title="Permanent link">¶</a></h3>
+<p>Each exception provides comprehensive error context:</p>
+<ul>
+<li><strong>Descriptive Messages</strong>: Clear, human-readable error descriptions</li>
+<li><strong>Error Codes</strong>: Structured error identification for programmatic handling</li>
+<li><strong>Context Data</strong>: Relevant data and state information when the error occurred</li>
+<li><strong>Suggestions</strong>: Actionable recommendations for resolving the issue</li>
+</ul>
+<h3 id="exception-chaining">Exception Chaining<a class="headerlink" href="#exception-chaining" title="Permanent link">¶</a></h3>
+<p>Proper exception chaining preserves the full error context:</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Some vector database operation</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">QdrantError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">DatabaseError</span><span class="p">(</span><span class="s2">"Vector search failed"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+</code></pre></div>
+<h2 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">¶</a></h2>
+<h3 id="basic-exception-handling">Basic Exception Handling<a class="headerlink" href="#basic-exception-handling" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RAGException</span><span class="p">,</span> 
+    <span class="n">CollectionNotFoundError</span><span class="p">,</span>
+    <span class="n">InvalidQueryError</span>
+<span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Perform RAG operations</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">animals</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"some query"</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">CollectionNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Collection setup required: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="c1"># Handle collection creation</span>
+<span class="k">except</span> <span class="n">InvalidQueryError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Query validation failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="c1"># Handle query refinement</span>
+<span class="k">except</span> <span class="n">RAGException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"General RAG error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="c1"># Handle general errors</span>
+</code></pre></div>
+<h3 id="exception-with-context">Exception with Context<a class="headerlink" href="#exception-with-context" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">InsufficientDataError</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_corpus_size</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">InsufficientDataError</span><span class="p">(</span>
+            <span class="s2">"Corpus too small for reliable search"</span><span class="p">,</span>
+            <span class="n">min_required</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">actual_size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">),</span>
+            <span class="n">suggestion</span><span class="o">=</span><span class="s2">"Add more documents to improve search quality"</span>
+        <span class="p">)</span>
+</code></pre></div>
+<h3 id="custom-exception-handling">Custom Exception Handling<a class="headerlink" href="#custom-exception-handling" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationError</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">safe_rag_operation</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">"Query cannot be empty"</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">perform_rag</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">ValidationError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Invalid input"</span><span class="p">,</span> <span class="s2">"results"</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unexpected error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Internal error"</span><span class="p">,</span> <span class="s2">"results"</span><span class="p">:</span> <span class="p">[]}</span>
+</code></pre></div>
+<h2 id="integration-with-logging">Integration with Logging<a class="headerlink" href="#integration-with-logging" title="Permanent link">¶</a></h2>
+<p>The exceptions package integrates with the project's logging system:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatabaseError</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Database operation</span>
+    <span class="k">pass</span>
+<span class="k">except</span> <span class="n">DatabaseError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Database operation failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">raise</span>
+</code></pre></div>
+<h2 id="exception-guidelines">Exception Guidelines<a class="headerlink" href="#exception-guidelines" title="Permanent link">¶</a></h2>
+<h3 id="when-to-use-custom-exceptions">When to Use Custom Exceptions<a class="headerlink" href="#when-to-use-custom-exceptions" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Domain-Specific Errors</strong>: Use custom exceptions for RAG-specific error conditions</li>
+<li><strong>Error Classification</strong>: Use the hierarchy to classify errors by type and severity</li>
+<li><strong>Error Recovery</strong>: Use specific exceptions to enable targeted error recovery</li>
+<li><strong>User Communication</strong>: Use descriptive messages for user-facing error communication</li>
+</ol>
+<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Specific over General</strong>: Use the most specific exception type available</li>
+<li><strong>Context Preservation</strong>: Always include relevant context in exception messages</li>
+<li><strong>Exception Chaining</strong>: Use <code>from</code> clause to preserve original exception context</li>
+<li><strong>Early Validation</strong>: Validate inputs early and raise appropriate validation errors</li>
+<li><strong>Graceful Degradation</strong>: Handle exceptions gracefully where possible</li>
+</ul>
+<h2 id="error-handling-patterns">Error Handling Patterns<a class="headerlink" href="#error-handling-patterns" title="Permanent link">¶</a></h2>
+<h3 id="validation-pattern">Validation Pattern<a class="headerlink" href="#validation-pattern" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ValidationError</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_search_params</span><span class="p">(</span><span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">query</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">"Search query cannot be empty"</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">limit</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"Limit must be between 1 and 100, got </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">"</span>
+        <span class="p">)</span>
+</code></pre></div>
+<h3 id="resource-management-pattern">Resource Management Pattern<a class="headerlink" href="#resource-management-pattern" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatabaseError</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">safe_database_operation</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">transaction</span><span class="p">():</span>
+            <span class="c1"># Perform database operations</span>
+            <span class="k">return</span> <span class="n">result</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">DatabaseError</span><span class="p">(</span><span class="s2">"Database transaction failed"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+</code></pre></div>
+<h2 id="related-components">Related Components<a class="headerlink" href="#related-components" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="../utils/"><code>utils/</code></a>: Logging configuration works with exception handling</li>
+<li><a href="../vectordb/"><code>vectordb/</code></a>: Database exceptions for vector operations</li>
+<li><a href="../search/"><code>search/</code></a>: Search exceptions for semantic search failures</li>
+<li><a href="../corpus/"><code>corpus/</code></a>: Validation exceptions for data model integrity</li>
+</ul>
+<hr/>
+<p><em>Part of the RAG to Riches framework - robust error handling for reliable applications.</em> </p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+<script src="../javascripts/mathjax.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

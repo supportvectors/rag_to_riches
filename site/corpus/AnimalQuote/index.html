@@ -1,0 +1,1921 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)" name="description"/>
+<meta content="SupportVectors" name="author"/>
+<link href="https://supportvectors.ai/rag-to-riches/corpus/AnimalQuote/" rel="canonical"/>
+<link href="../" rel="prev"/>
+<link href="../AnimalWisdom/" rel="next"/>
+<link href="../../images/favicon.ico" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.14" name="generator"/>
+<title>AnimalQuote Class: Individual Quote Data Model - SupportVectors Rag to Riches</title>
+<link href="../../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Lora:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Lora";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../stylesheets/supportvectors.css" rel="stylesheet"/>
+<link href="../../css/ansi-colours.css" rel="stylesheet"/>
+<link href="../../css/jupyter-cells.css" rel="stylesheet"/>
+<link href="../../css/pandas-dataframe.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="gray" data-md-color-primary="light-blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#animalquote-class-individual-quote-data-model">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SupportVectors Rag to Riches" class="md-header__button md-logo" data-md-component="logo" href="../.." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../../images/overlapping_logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SupportVectors Rag to Riches
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              AnimalQuote Class: Individual Quote Data Model
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="gray" data-md-color-media="" data-md-color-primary="light-blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SupportVectors Rag to Riches" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../../images/overlapping_logo.png"/>
+</a>
+    SupportVectors Rag to Riches
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    RAG to Riches: Advanced Retrieval-Augmented Generation Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Corpus
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Corpus
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    Corpus Package: Data Models and Content Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    AnimalQuote Class: Individual Quote Data Model
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    AnimalQuote Class: Individual Quote Data Model
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-overview">
+<span class="md-ellipsis">
+      🎯 Class Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-definition">
+<span class="md-ellipsis">
+      📋 Class Definition
+    </span>
+</a>
+<nav aria-label="📋 Class Definition" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-architecture">
+<span class="md-ellipsis">
+      🏗️ Class Architecture
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-configuration">
+<span class="md-ellipsis">
+      🔧 Model Configuration
+    </span>
+</a>
+<nav aria-label="🔧 Model Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-features">
+<span class="md-ellipsis">
+      Configuration Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fields">
+<span class="md-ellipsis">
+      📊 Fields
+    </span>
+</a>
+<nav aria-label="📊 Fields" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-str">
+<span class="md-ellipsis">
+      text: str
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#author-str">
+<span class="md-ellipsis">
+      author: str
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#category-str">
+<span class="md-ellipsis">
+      category: str
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#methods">
+<span class="md-ellipsis">
+      🔍 Methods
+    </span>
+</a>
+<nav aria-label="🔍 Methods" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validate_non_empty_stringscls-v-str-str">
+<span class="md-ellipsis">
+      validate_non_empty_strings(cls, v: str) -&gt; str
+    </span>
+</a>
+<nav aria-label="validate_non_empty_strings(cls, v: str) -&gt; str" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters">
+<span class="md-ellipsis">
+      Parameters
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#raises">
+<span class="md-ellipsis">
+      Raises
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#to_payloadself-dictstr-any">
+<span class="md-ellipsis">
+      to_payload(self) -&gt; Dict[str, Any]
+    </span>
+</a>
+<nav aria-label="to_payload(self) -&gt; Dict[str, Any]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_1">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#return-structure">
+<span class="md-ellipsis">
+      Return Structure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      💡 Usage Examples
+    </span>
+</a>
+<nav aria-label="💡 Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-creation">
+<span class="md-ellipsis">
+      Basic Creation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#from-jsonl-data">
+<span class="md-ellipsis">
+      From JSONL Data
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-in-action">
+<span class="md-ellipsis">
+      Validation in Action
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#immutability-demonstration">
+<span class="md-ellipsis">
+      Immutability Demonstration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-database-integration">
+<span class="md-ellipsis">
+      Vector Database Integration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      🛡️ Error Handling
+    </span>
+</a>
+<nav aria-label="🛡️ Error Handling" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-validation-errors">
+<span class="md-ellipsis">
+      Common Validation Errors
+    </span>
+</a>
+<nav aria-label="Common Validation Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#empty-fields">
+<span class="md-ellipsis">
+      Empty Fields
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extra-fields">
+<span class="md-ellipsis">
+      Extra Fields
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#type-errors">
+<span class="md-ellipsis">
+      Type Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-points">
+<span class="md-ellipsis">
+      🔗 Integration Points
+    </span>
+</a>
+<nav aria-label="🔗 Integration Points" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-animalwisdom">
+<span class="md-ellipsis">
+      With AnimalWisdom
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-vector-databases">
+<span class="md-ellipsis">
+      With Vector Databases
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-json-serialization">
+<span class="md-ellipsis">
+      With JSON Serialization
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-principles">
+<span class="md-ellipsis">
+      🎯 Design Principles
+    </span>
+</a>
+<nav aria-label="🎯 Design Principles" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-integrity">
+<span class="md-ellipsis">
+      Data Integrity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance">
+<span class="md-ellipsis">
+      Performance
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usability">
+<span class="md-ellipsis">
+      Usability
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-usage">
+<span class="md-ellipsis">
+      🔍 Advanced Usage
+    </span>
+</a>
+<nav aria-label="🔍 Advanced Usage" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-validation">
+<span class="md-ellipsis">
+      Custom Validation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-processing">
+<span class="md-ellipsis">
+      Batch Processing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#source-code">
+<span class="md-ellipsis">
+      📚 Source Code
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalQuote">
+<span class="md-ellipsis">
+      AnimalQuote
+    </span>
+</a>
+<nav aria-label="AnimalQuote" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalQuote.to_payload">
+<span class="md-ellipsis">
+      to_payload
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalQuote.validate_non_empty_strings">
+<span class="md-ellipsis">
+      validate_non_empty_strings
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../AnimalWisdom/">
+<span class="md-ellipsis">
+    AnimalWisdom Class: Quote Collection Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../Animals/">
+<span class="md-ellipsis">
+    Animals Class: Complete RAG System
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/">
+<span class="md-ellipsis">
+    Examples Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Exceptions
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Exceptions
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../exceptions/">
+<span class="md-ellipsis">
+    Exceptions Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Notebooks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Notebooks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_1">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/lesson-1/">
+<span class="md-ellipsis">
+    Lesson 1
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/lesson-2/">
+<span class="md-ellipsis">
+    Lesson 2
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/search-corpus/">
+<span class="md-ellipsis">
+    Search corpus
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/semantic-search/">
+<span class="md-ellipsis">
+    Semantic search
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../notebooks/examples/supportvectors-common/">
+<span class="md-ellipsis">
+    Supportvectors common
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Project guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Project guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Tips and tricks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            Tips and tricks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../project-guide/tips-and-tricks/cuda-hell/">
+<span class="md-ellipsis">
+    Some tips and tricks to deal with the CUDA hell
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Search
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Search
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../search/">
+<span class="md-ellipsis">
+    Search Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    Search basics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            Search basics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../search_basics/">
+<span class="md-ellipsis">
+    Search Basics Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    Start simply
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            Start simply
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../start_simply/">
+<span class="md-ellipsis">
+    Start Simply Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    Utils
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            Utils
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../utils/">
+<span class="md-ellipsis">
+    Utils Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+<span class="md-ellipsis">
+    Vectordb
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_11_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_11">
+<span class="md-nav__icon md-icon"></span>
+            Vectordb
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vectordb/">
+<span class="md-ellipsis">
+    Vector Database Package: Embeddings and Storage
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vectordb/EmbeddedVectorDB/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB Class
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vectordb/SimpleTextEmbedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder Class
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-overview">
+<span class="md-ellipsis">
+      🎯 Class Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-definition">
+<span class="md-ellipsis">
+      📋 Class Definition
+    </span>
+</a>
+<nav aria-label="📋 Class Definition" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#class-architecture">
+<span class="md-ellipsis">
+      🏗️ Class Architecture
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-configuration">
+<span class="md-ellipsis">
+      🔧 Model Configuration
+    </span>
+</a>
+<nav aria-label="🔧 Model Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-features">
+<span class="md-ellipsis">
+      Configuration Features
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fields">
+<span class="md-ellipsis">
+      📊 Fields
+    </span>
+</a>
+<nav aria-label="📊 Fields" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#text-str">
+<span class="md-ellipsis">
+      text: str
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#author-str">
+<span class="md-ellipsis">
+      author: str
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#category-str">
+<span class="md-ellipsis">
+      category: str
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#methods">
+<span class="md-ellipsis">
+      🔍 Methods
+    </span>
+</a>
+<nav aria-label="🔍 Methods" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validate_non_empty_stringscls-v-str-str">
+<span class="md-ellipsis">
+      validate_non_empty_strings(cls, v: str) -&gt; str
+    </span>
+</a>
+<nav aria-label="validate_non_empty_strings(cls, v: str) -&gt; str" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#parameters">
+<span class="md-ellipsis">
+      Parameters
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#raises">
+<span class="md-ellipsis">
+      Raises
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#to_payloadself-dictstr-any">
+<span class="md-ellipsis">
+      to_payload(self) -&gt; Dict[str, Any]
+    </span>
+</a>
+<nav aria-label="to_payload(self) -&gt; Dict[str, Any]" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#returns_1">
+<span class="md-ellipsis">
+      Returns
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#return-structure">
+<span class="md-ellipsis">
+      Return Structure
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example-usage">
+<span class="md-ellipsis">
+      Example Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases">
+<span class="md-ellipsis">
+      Use Cases
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usage-examples">
+<span class="md-ellipsis">
+      💡 Usage Examples
+    </span>
+</a>
+<nav aria-label="💡 Usage Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#basic-creation">
+<span class="md-ellipsis">
+      Basic Creation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#from-jsonl-data">
+<span class="md-ellipsis">
+      From JSONL Data
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-in-action">
+<span class="md-ellipsis">
+      Validation in Action
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#immutability-demonstration">
+<span class="md-ellipsis">
+      Immutability Demonstration
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-database-integration">
+<span class="md-ellipsis">
+      Vector Database Integration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      🛡️ Error Handling
+    </span>
+</a>
+<nav aria-label="🛡️ Error Handling" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-validation-errors">
+<span class="md-ellipsis">
+      Common Validation Errors
+    </span>
+</a>
+<nav aria-label="Common Validation Errors" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#empty-fields">
+<span class="md-ellipsis">
+      Empty Fields
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#extra-fields">
+<span class="md-ellipsis">
+      Extra Fields
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#type-errors">
+<span class="md-ellipsis">
+      Type Errors
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-points">
+<span class="md-ellipsis">
+      🔗 Integration Points
+    </span>
+</a>
+<nav aria-label="🔗 Integration Points" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-animalwisdom">
+<span class="md-ellipsis">
+      With AnimalWisdom
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-vector-databases">
+<span class="md-ellipsis">
+      With Vector Databases
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-json-serialization">
+<span class="md-ellipsis">
+      With JSON Serialization
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-principles">
+<span class="md-ellipsis">
+      🎯 Design Principles
+    </span>
+</a>
+<nav aria-label="🎯 Design Principles" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-integrity">
+<span class="md-ellipsis">
+      Data Integrity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance">
+<span class="md-ellipsis">
+      Performance
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#usability">
+<span class="md-ellipsis">
+      Usability
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-usage">
+<span class="md-ellipsis">
+      🔍 Advanced Usage
+    </span>
+</a>
+<nav aria-label="🔍 Advanced Usage" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#custom-validation">
+<span class="md-ellipsis">
+      Custom Validation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-processing">
+<span class="md-ellipsis">
+      Batch Processing
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#source-code">
+<span class="md-ellipsis">
+      📚 Source Code
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalQuote">
+<span class="md-ellipsis">
+      AnimalQuote
+    </span>
+</a>
+<nav aria-label="AnimalQuote" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalQuote.to_payload">
+<span class="md-ellipsis">
+      to_payload
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rag_to_riches.corpus.data_models.AnimalQuote.validate_non_empty_strings">
+<span class="md-ellipsis">
+      validate_non_empty_strings
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="animalquote-class-individual-quote-data-model">AnimalQuote Class: Individual Quote Data Model<a class="headerlink" href="#animalquote-class-individual-quote-data-model" title="Permanent link">¶</a></h1>
+<h2 id="class-overview">🎯 Class Overview<a class="headerlink" href="#class-overview" title="Permanent link">¶</a></h2>
+<p>The <code>AnimalQuote</code> class is a Pydantic data model that represents a single animal quote with comprehensive metadata. It provides robust validation, immutable data structures, and seamless integration with vector databases for semantic search applications.</p>
+<p>This class serves as the fundamental building block for the animal quotes corpus, ensuring data integrity and providing convenient methods for working with individual quotes.</p>
+<h2 id="class-definition">📋 Class Definition<a class="headerlink" href="#class-definition" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AnimalQuote</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Represents a single animal quote with metadata.</span>
+
+<span class="sd">    This model captures the structure of each line in the animals.jsonl file,</span>
+<span class="sd">    containing the quote text, author attribution, and thematic category.</span>
+<span class="sd">    """</span>
+</code></pre></div>
+<h3 id="class-architecture">🏗️ Class Architecture<a class="headerlink" href="#class-architecture" title="Permanent link">¶</a></h3>
+<div class="mermaid">classDiagram
+    class AnimalQuote {
+        +str text
+        +str author
+        +str category
+        +ModelConfig model_config
+
+        +to_payload() Dict[str, Any]
+        +validate_non_empty_strings() str
+    }
+
+    note for AnimalQuote "Immutable, validated data model\nwith automatic whitespace handling"
+</div>
+<h2 id="model-configuration">🔧 Model Configuration<a class="headerlink" href="#model-configuration" title="Permanent link">¶</a></h2>
+<p>The class uses strict Pydantic configuration for data integrity:</p>
+<div class="highlight"><pre><span></span><code><span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span>
+    <span class="n">str_strip_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>    <span class="c1"># Automatically strip whitespace</span>
+    <span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>     <span class="c1"># Validate on field assignment</span>
+    <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                  <span class="c1"># Immutable after creation</span>
+    <span class="n">extra</span><span class="o">=</span><span class="s2">"forbid"</span>               <span class="c1"># Reject extra fields</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="configuration-features">Configuration Features<a class="headerlink" href="#configuration-features" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Automatic Whitespace Stripping</strong>: All string fields are automatically trimmed</li>
+<li><strong>Assignment Validation</strong>: Changes to fields are validated in real-time</li>
+<li><strong>Immutable Objects</strong>: Quotes cannot be modified after creation (data integrity)</li>
+<li><strong>Strict Schema</strong>: Extra fields are rejected to prevent data corruption</li>
+</ul>
+<h2 id="fields">📊 Fields<a class="headerlink" href="#fields" title="Permanent link">¶</a></h2>
+<h3 id="text-str"><code>text: str</code><a class="headerlink" href="#text-str" title="Permanent link">¶</a></h3>
+<p>The actual quote content - the wisdom, insight, or saying attributed to animal behavior or human-animal relationships.</p>
+<p><strong>Validation Rules:</strong>
+- Must be non-empty after whitespace stripping
+- Minimum length: 1 character
+- Automatically trimmed of leading/trailing whitespace</p>
+<p><strong>Example Values:</strong>
+<div class="highlight"><pre><span></span><code><span class="s2">"Dogs are not our whole life, but they make our lives whole."</span>
+<span class="s2">"The greatness of a nation can be judged by the way its animals are treated."</span>
+<span class="s2">"Until one has loved an animal, a part of one's soul remains unawakened."</span>
+</code></pre></div></p>
+<h3 id="author-str"><code>author: str</code><a class="headerlink" href="#author-str" title="Permanent link">¶</a></h3>
+<p>Attribution of the quote to its original author - the person who said, wrote, or is credited with the wisdom.</p>
+<p><strong>Validation Rules:</strong>
+- Must be non-empty after whitespace stripping
+- Minimum length: 1 character
+- Automatically trimmed of leading/trailing whitespace</p>
+<p><strong>Example Values:</strong>
+<div class="highlight"><pre><span></span><code><span class="s2">"Roger Caras"</span>
+<span class="s2">"Mahatma Gandhi"</span>
+<span class="s2">"Anatole France"</span>
+<span class="s2">"Albert Schweitzer"</span>
+</code></pre></div></p>
+<h3 id="category-str"><code>category: str</code><a class="headerlink" href="#category-str" title="Permanent link">¶</a></h3>
+<p>Thematic categorization that groups related quotes for easier discovery and filtering.</p>
+<p><strong>Validation Rules:</strong>
+- Must be non-empty after whitespace stripping
+- Minimum length: 1 character
+- Automatically trimmed of leading/trailing whitespace</p>
+<p><strong>Example Values:</strong>
+<div class="highlight"><pre><span></span><code><span class="s2">"Pets and Companionship"</span>
+<span class="s2">"Ethics and Compassion"</span>
+<span class="s2">"Wisdom and Philosophy"</span>
+<span class="s2">"Animal Behavior"</span>
+<span class="s2">"Conservation and Nature"</span>
+</code></pre></div></p>
+<h2 id="methods">🔍 Methods<a class="headerlink" href="#methods" title="Permanent link">¶</a></h2>
+<h3 id="validate_non_empty_stringscls-v-str-str"><code>validate_non_empty_strings(cls, v: str) -&gt; str</code><a class="headerlink" href="#validate_non_empty_stringscls-v-str-str" title="Permanent link">¶</a></h3>
+<p>Class method validator that ensures all string fields are non-empty after stripping whitespace.</p>
+<h4 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>v</code></td>
+<td><code>str</code></td>
+<td>The string value to validate</td>
+</tr>
+</tbody>
+</table>
+<h4 id="returns">Returns<a class="headerlink" href="#returns" title="Permanent link">¶</a></h4>
+<p><code>str</code> - The validated and trimmed string</p>
+<h4 id="raises">Raises<a class="headerlink" href="#raises" title="Permanent link">¶</a></h4>
+<p><code>ValueError</code> - If the field is empty or contains only whitespace</p>
+<h4 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="nd">@field_validator</span><span class="p">(</span><span class="s1">'text'</span><span class="p">,</span> <span class="s1">'author'</span><span class="p">,</span> <span class="s1">'category'</span><span class="p">)</span>
+<span class="nd">@classmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_non_empty_strings</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Ensure all string fields are non-empty after stripping."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Field cannot be empty or whitespace only"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="to_payloadself-dictstr-any"><code>to_payload(self) -&gt; Dict[str, Any]</code><a class="headerlink" href="#to_payloadself-dictstr-any" title="Permanent link">¶</a></h3>
+<p>Convert the quote to a payload dictionary suitable for vector database storage.</p>
+<h4 id="returns_1">Returns<a class="headerlink" href="#returns_1" title="Permanent link">¶</a></h4>
+<p><code>Dict[str, Any]</code> - Dictionary with standardized keys for Qdrant point payload</p>
+<h4 id="return-structure">Return Structure<a class="headerlink" href="#return-structure" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="s2">"content"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>           <span class="c1"># The quote text for searching</span>
+    <span class="s2">"content_type"</span><span class="p">:</span> <span class="s2">"animal_quote"</span><span class="p">,</span> <span class="c1"># Type identifier</span>
+    <span class="s2">"author"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>          <span class="c1"># Author attribution</span>
+    <span class="s2">"category"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span>       <span class="c1"># Thematic category</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="n">quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s2">"Dogs are loyal companions who teach us about unconditional love."</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">"Unknown"</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">"Pets and Companionship"</span>
+<span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="n">quote</span><span class="o">.</span><span class="n">to_payload</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="c1"># Output:</span>
+<span class="c1"># {</span>
+<span class="c1">#     "content": "Dogs are loyal companions who teach us about unconditional love.",</span>
+<span class="c1">#     "content_type": "animal_quote",</span>
+<span class="c1">#     "author": "Unknown", </span>
+<span class="c1">#     "category": "Pets and Companionship"</span>
+<span class="c1"># }</span>
+</code></pre></div>
+<h4 id="use-cases">Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">¶</a></h4>
+<ul>
+<li>Storing quotes in vector databases (Qdrant points)</li>
+<li>Serializing for API responses</li>
+<li>Converting to search metadata</li>
+<li>Preparing data for machine learning pipelines</li>
+</ul>
+<h2 id="usage-examples">💡 Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">¶</a></h2>
+<h3 id="basic-creation">Basic Creation<a class="headerlink" href="#basic-creation" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.corpus.data_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnimalQuote</span>
+
+<span class="c1"># Create a simple quote</span>
+<span class="n">quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s2">"A dog is the only thing on earth that loves you more than you love yourself."</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">"Josh Billings"</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">"Pets and Companionship"</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Quote: </span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"By: </span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">author</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Category: </span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="from-jsonl-data">From JSONL Data<a class="headerlink" href="#from-jsonl-data" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="c1"># Typical JSONL line</span>
+<span class="n">jsonl_line</span> <span class="o">=</span> <span class="s1">'{"text": "Animals are such agreeable friends—they ask no questions; they pass no criticisms.", "author": "George Eliot", "category": "Friendship and Understanding"}'</span>
+
+<span class="c1"># Parse and create quote</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">jsonl_line</span><span class="p">)</span>
+<span class="n">quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Created quote: </span><span class="si">{</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">50</span><span class="p">]</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="validation-in-action">Validation in Action<a class="headerlink" href="#validation-in-action" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># This will work - valid data</span>
+<span class="n">good_quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s2">"  Cats choose us; we don't own them.  "</span><span class="p">,</span>  <span class="c1"># Whitespace will be stripped</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">"Kristin Cast"</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">"Pet Wisdom"</span>
+<span class="p">)</span>
+
+<span class="c1"># This will fail - empty text after stripping</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">bad_quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="s2">"   "</span><span class="p">,</span>  <span class="c1"># Only whitespace</span>
+        <span class="n">author</span><span class="o">=</span><span class="s2">"Someone"</span><span class="p">,</span>
+        <span class="n">category</span><span class="o">=</span><span class="s2">"Some Category"</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Validation error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="immutability-demonstration">Immutability Demonstration<a class="headerlink" href="#immutability-demonstration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s2">"Dogs have a way of finding the people who need them."</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">"Thom Jones"</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">"Healing and Therapy"</span>
+<span class="p">)</span>
+
+<span class="c1"># This will fail - objects are frozen</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">quote</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">"New text"</span>
+<span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Cannot modify: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="vector-database-integration">Vector Database Integration<a class="headerlink" href="#vector-database-integration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Convert to payload for storage</span>
+<span class="n">quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span>
+    <span class="n">text</span><span class="o">=</span><span class="s2">"The bond with a dog is as lasting as the ties of this earth can ever be."</span><span class="p">,</span>
+    <span class="n">author</span><span class="o">=</span><span class="s2">"Konrad Lorenz"</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="s2">"Human-Animal Bond"</span>
+<span class="p">)</span>
+
+<span class="c1"># Prepare for vector database</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="n">quote</span><span class="o">.</span><span class="n">to_payload</span><span class="p">()</span>
+
+<span class="c1"># This payload can be used with Qdrant points</span>
+<span class="n">point_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">())</span>
+<span class="n">vector</span> <span class="o">=</span> <span class="n">embedder</span><span class="o">.</span><span class="n">embed_text</span><span class="p">(</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="n">point</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PointStruct</span><span class="p">(</span>
+    <span class="nb">id</span><span class="o">=</span><span class="n">point_id</span><span class="p">,</span>
+    <span class="n">vector</span><span class="o">=</span><span class="n">vector</span><span class="p">,</span>
+    <span class="n">payload</span><span class="o">=</span><span class="n">payload</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="error-handling">🛡️ Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">¶</a></h2>
+<h3 id="common-validation-errors">Common Validation Errors<a class="headerlink" href="#common-validation-errors" title="Permanent link">¶</a></h3>
+<h4 id="empty-fields">Empty Fields<a class="headerlink" href="#empty-fields" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># These will all raise ValueError</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">"Author"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"Category"</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Empty text not allowed"</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Quote"</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">"   "</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"Category"</span><span class="p">)</span>  
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Whitespace-only author not allowed"</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Quote"</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">"Author"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"None values not allowed"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="extra-fields">Extra Fields<a class="headerlink" href="#extra-fields" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># This will fail due to extra="forbid"</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="s2">"Quote"</span><span class="p">,</span>
+        <span class="n">author</span><span class="o">=</span><span class="s2">"Author"</span><span class="p">,</span> 
+        <span class="n">category</span><span class="o">=</span><span class="s2">"Category"</span><span class="p">,</span>
+        <span class="n">extra_field</span><span class="o">=</span><span class="s2">"Not allowed"</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Extra fields not permitted"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="type-errors">Type Errors<a class="headerlink" href="#type-errors" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># This will fail - wrong types</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span>
+        <span class="n">text</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span>  <span class="c1"># Should be string</span>
+        <span class="n">author</span><span class="o">=</span><span class="s2">"Author"</span><span class="p">,</span>
+        <span class="n">category</span><span class="o">=</span><span class="s2">"Category"</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Text must be a string"</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="integration-points">🔗 Integration Points<a class="headerlink" href="#integration-points" title="Permanent link">¶</a></h2>
+<h3 id="with-animalwisdom">With AnimalWisdom<a class="headerlink" href="#with-animalwisdom" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.corpus.data_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnimalWisdom</span>
+
+<span class="n">quotes</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Quote 1"</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">"Author 1"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"Category A"</span><span class="p">),</span>
+    <span class="n">AnimalQuote</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Quote 2"</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">"Author 2"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"Category B"</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="n">quotes</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="with-vector-databases">With Vector Databases<a class="headerlink" href="#with-vector-databases" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Batch conversion for indexing</span>
+<span class="n">quotes</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c1"># List of AnimalQuote objects</span>
+<span class="n">payloads</span> <span class="o">=</span> <span class="p">[</span><span class="n">quote</span><span class="o">.</span><span class="n">to_payload</span><span class="p">()</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">quotes</span><span class="p">]</span>
+<span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">quote</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="n">quotes</span><span class="p">]</span>
+
+<span class="c1"># Ready for semantic search indexing</span>
+<span class="n">semantic_search</span><span class="o">.</span><span class="n">index_all_text</span><span class="p">(</span><span class="n">texts</span><span class="o">=</span><span class="n">texts</span><span class="p">,</span> <span class="n">metadata_list</span><span class="o">=</span><span class="n">payloads</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="with-json-serialization">With JSON Serialization<a class="headerlink" href="#with-json-serialization" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Pydantic provides JSON serialization</span>
+<span class="n">quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Quote"</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">"Author"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"Category"</span><span class="p">)</span>
+
+<span class="c1"># To JSON</span>
+<span class="n">json_str</span> <span class="o">=</span> <span class="n">quote</span><span class="o">.</span><span class="n">model_dump_json</span><span class="p">()</span>
+
+<span class="c1"># From JSON  </span>
+<span class="n">quote_copy</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="o">.</span><span class="n">model_validate_json</span><span class="p">(</span><span class="n">json_str</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="design-principles">🎯 Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">¶</a></h2>
+<h3 id="data-integrity">Data Integrity<a class="headerlink" href="#data-integrity" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Immutable</strong>: Once created, quotes cannot be modified</li>
+<li><strong>Validated</strong>: All fields are checked for correctness</li>
+<li><strong>Consistent</strong>: Automatic whitespace handling ensures clean data</li>
+</ul>
+<h3 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Lightweight</strong>: Minimal overhead for individual quotes</li>
+<li><strong>Efficient</strong>: Fast validation and serialization</li>
+<li><strong>Memory-friendly</strong>: Frozen objects can be safely shared</li>
+</ul>
+<h3 id="usability">Usability<a class="headerlink" href="#usability" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Clear API</strong>: Simple, intuitive field names and methods</li>
+<li><strong>Rich Errors</strong>: Detailed error messages for debugging</li>
+<li><strong>Integration-ready</strong>: Designed for vector database and AI workflows</li>
+</ul>
+<h2 id="advanced-usage">🔍 Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permanent link">¶</a></h2>
+<h3 id="custom-validation">Custom Validation<a class="headerlink" href="#custom-validation" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">field_validator</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ExtendedAnimalQuote</span><span class="p">(</span><span class="n">AnimalQuote</span><span class="p">):</span>
+    <span class="nd">@field_validator</span><span class="p">(</span><span class="s1">'category'</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_category</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="n">valid_categories</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">"Pets and Companionship"</span><span class="p">,</span>
+            <span class="s2">"Ethics and Compassion"</span><span class="p">,</span> 
+            <span class="s2">"Wisdom and Philosophy"</span><span class="p">,</span>
+            <span class="s2">"Animal Behavior"</span><span class="p">,</span>
+            <span class="s2">"Conservation and Nature"</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_categories</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Category must be one of: </span><span class="si">{</span><span class="n">valid_categories</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span>
+</code></pre></div>
+<h3 id="batch-processing">Batch Processing<a class="headerlink" href="#batch-processing" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Process multiple quotes efficiently</span>
+<span class="n">jsonl_data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">"text"</span><span class="p">:</span> <span class="s2">"Quote 1"</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"Author 1"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"Category A"</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">"text"</span><span class="p">:</span> <span class="s2">"Quote 2"</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"Author 2"</span><span class="p">,</span> <span class="s2">"category"</span><span class="p">:</span> <span class="s2">"Category B"</span><span class="p">},</span>
+    <span class="c1"># ... more quotes</span>
+<span class="p">]</span>
+
+<span class="n">quotes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">jsonl_data</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">quotes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">quote</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Skipping invalid quote: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Successfully created </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">quotes</span><span class="p">)</span><span class="si">}</span><span class="s2"> quotes"</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="source-code">📚 Source Code<a class="headerlink" href="#source-code" title="Permanent link">¶</a></h2>
+<div class="doc doc-object doc-class">
+<h2 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalQuote">
+<code>rag_to_riches.corpus.data_models.AnimalQuote</code>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalQuote" title="Permanent link">¶</a></h2>
+<div class="doc doc-contents first">
+<p class="doc doc-class-bases">
+              Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+<p>Represents a single animal quote with metadata.</p>
+<p>This model captures the structure of each line in the animals.jsonl file,
+containing the quote text, author attribution, and thematic category.</p>
+<p><span class="doc-section-title">Attributes:</span></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td><code><span title="rag_to_riches.corpus.data_models.AnimalQuote.text">text</span></code></td>
+<td>
+<code><span title="str">str</span></code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>The actual quote text content</p>
+</div>
+</td>
+</tr>
+<tr class="doc-section-item">
+<td><code><span title="rag_to_riches.corpus.data_models.AnimalQuote.author">author</span></code></td>
+<td>
+<code><span title="str">str</span></code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>Attribution of the quote to its original author</p>
+</div>
+</td>
+</tr>
+<tr class="doc-section-item">
+<td><code><span title="rag_to_riches.corpus.data_models.AnimalQuote.category">category</span></code></td>
+<td>
+<code><span title="str">str</span></code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>Thematic categorization for the quote</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AnimalQuote</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Represents a single animal quote with metadata.</span>
+
+<span class="sd">    This model captures the structure of each line in the animals.jsonl file,</span>
+<span class="sd">    containing the quote text, author attribution, and thematic category.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        text: The actual quote text content</span>
+<span class="sd">        author: Attribution of the quote to its original author</span>
+<span class="sd">        category: Thematic categorization for the quote</span>
+<span class="sd">    """</span>
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span>
+        <span class="n">str_strip_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">extra</span><span class="o">=</span><span class="s2">"forbid"</span>
+    <span class="p">)</span>
+
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span> 
+        <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+        <span class="n">description</span><span class="o">=</span><span class="s2">"The animal quote text content"</span>
+    <span class="p">)</span>
+    <span class="n">author</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span> 
+        <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+        <span class="n">description</span><span class="o">=</span><span class="s2">"The author of the quote"</span>
+    <span class="p">)</span>
+    <span class="n">category</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="o">...</span><span class="p">,</span> 
+        <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Thematic category for the quote"</span>
+    <span class="p">)</span>
+
+    <span class="nd">@field_validator</span><span class="p">(</span><span class="s1">'text'</span><span class="p">,</span> <span class="s1">'author'</span><span class="p">,</span> <span class="s1">'category'</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_non_empty_strings</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Ensure all string fields are non-empty after stripping."""</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Field cannot be empty or whitespace only"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Convert the quote to a payload dictionary for vector storage.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary suitable for Qdrant point payload.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">"content"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="s2">"content_type"</span><span class="p">:</span> <span class="s2">"animal_quote"</span><span class="p">,</span>
+            <span class="s2">"author"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+            <span class="s2">"category"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span>
+        <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
+<div class="doc doc-children">
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalQuote.to_payload">
+<code class="highlight language-python"><span class="n">to_payload</span><span class="p">()</span></code>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalQuote.to_payload" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Convert the quote to a payload dictionary for vector storage.</p>
+<p><span class="doc-section-title">Returns:</span></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="doc-section-item">
+<td>
+<code><span title="typing.Dict">Dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>
+</td>
+<td>
+<div class="doc-md-description">
+<p>Dictionary suitable for Qdrant point payload.</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_payload</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Convert the quote to a payload dictionary for vector storage.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary suitable for Qdrant point payload.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"content"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="s2">"content_type"</span><span class="p">:</span> <span class="s2">"animal_quote"</span><span class="p">,</span>
+        <span class="s2">"author"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">,</span>
+        <span class="s2">"category"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span>
+    <span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+<div class="doc doc-object doc-function">
+<h3 class="doc doc-heading" id="rag_to_riches.corpus.data_models.AnimalQuote.validate_non_empty_strings">
+<code class="highlight language-python"><span class="n">validate_non_empty_strings</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></code>
+<span class="doc doc-labels">
+<small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+</span>
+<a class="headerlink" href="#rag_to_riches.corpus.data_models.AnimalQuote.validate_non_empty_strings" title="Permanent link">¶</a></h3>
+<div class="doc doc-contents">
+<p>Ensure all string fields are non-empty after stripping.</p>
+<details class="quote">
+<summary>Source code in <code>src/rag_to_riches/corpus/data_models.py</code></summary>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@field_validator</span><span class="p">(</span><span class="s1">'text'</span><span class="p">,</span> <span class="s1">'author'</span><span class="p">,</span> <span class="s1">'category'</span><span class="p">)</span>
+<span class="nd">@classmethod</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_non_empty_strings</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Ensure all string fields are non-empty after stripping."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Field cannot be empty or whitespace only"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+</details>
+</div>
+</div>
+</div>
+</div>
+</div><hr/>
+<p><em>The AnimalQuote class exemplifies modern data modeling best practices - combining Pydantic's validation power with domain-specific requirements to create robust, reliable data structures for RAG applications.</em> </p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+<script src="../../javascripts/mathjax.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

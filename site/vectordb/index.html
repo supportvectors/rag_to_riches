@@ -1,0 +1,1360 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)" name="description"/>
+<meta content="SupportVectors" name="author"/>
+<link href="https://supportvectors.ai/rag-to-riches/vectordb/" rel="canonical"/>
+<link href="../utils/" rel="prev"/>
+<link href="EmbeddedVectorDB/" rel="next"/>
+<link href="../images/favicon.ico" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.14" name="generator"/>
+<title>Vector Database Package: Embeddings and Storage - SupportVectors Rag to Riches</title>
+<link href="../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Lora:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Lora";--md-code-font:"Roboto Mono"}</style>
+<link href="../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../stylesheets/supportvectors.css" rel="stylesheet"/>
+<link href="../css/ansi-colours.css" rel="stylesheet"/>
+<link href="../css/jupyter-cells.css" rel="stylesheet"/>
+<link href="../css/pandas-dataframe.css" rel="stylesheet"/>
+<script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="gray" data-md-color-primary="light-blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#vector-database-package-embeddings-and-storage">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SupportVectors Rag to Riches" class="md-header__button md-logo" data-md-component="logo" href=".." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../images/overlapping_logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SupportVectors Rag to Riches
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Vector Database Package: Embeddings and Storage
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="gray" data-md-color-media="" data-md-color-primary="light-blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SupportVectors Rag to Riches" class="md-nav__button md-logo" data-md-component="logo" href=".." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../images/overlapping_logo.png"/>
+</a>
+    SupportVectors Rag to Riches
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="..">
+<span class="md-ellipsis">
+    RAG to Riches: Advanced Retrieval-Augmented Generation Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Corpus
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Corpus
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/">
+<span class="md-ellipsis">
+    Corpus Package: Data Models and Content Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/AnimalQuote/">
+<span class="md-ellipsis">
+    AnimalQuote Class: Individual Quote Data Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/AnimalWisdom/">
+<span class="md-ellipsis">
+    AnimalWisdom Class: Quote Collection Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../corpus/Animals/">
+<span class="md-ellipsis">
+    Animals Class: Complete RAG System
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../examples/">
+<span class="md-ellipsis">
+    Examples Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Exceptions
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Exceptions
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../exceptions/">
+<span class="md-ellipsis">
+    Exceptions Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Notebooks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Notebooks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_5_1">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/lesson-1/">
+<span class="md-ellipsis">
+    Lesson 1
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/lesson-2/">
+<span class="md-ellipsis">
+    Lesson 2
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/search-corpus/">
+<span class="md-ellipsis">
+    Search corpus
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/semantic-search/">
+<span class="md-ellipsis">
+    Semantic search
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../notebooks/examples/supportvectors-common/">
+<span class="md-ellipsis">
+    Supportvectors common
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Project guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Project guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Tips and tricks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            Tips and tricks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../project-guide/tips-and-tricks/cuda-hell/">
+<span class="md-ellipsis">
+    Some tips and tricks to deal with the CUDA hell
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Search
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Search
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../search/">
+<span class="md-ellipsis">
+    Search Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    Search basics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            Search basics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../search_basics/">
+<span class="md-ellipsis">
+    Search Basics Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    Start simply
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            Start simply
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../start_simply/">
+<span class="md-ellipsis">
+    Start Simply Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    Utils
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            Utils
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../utils/">
+<span class="md-ellipsis">
+    Utils Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+<span class="md-ellipsis">
+    Vectordb
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_11_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_11">
+<span class="md-nav__icon md-icon"></span>
+            Vectordb
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Vector Database Package: Embeddings and Storage
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Vector Database Package: Embeddings and Storage
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#package-overview">
+<span class="md-ellipsis">
+      📖 Package Overview
+    </span>
+</a>
+<nav aria-label="📖 Package Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#package-purpose">
+<span class="md-ellipsis">
+      🎯 Package Purpose
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+<span class="md-ellipsis">
+      🏗️ Architecture
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#components">
+<span class="md-ellipsis">
+      📦 Components
+    </span>
+</a>
+<nav aria-label="📦 Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-components">
+<span class="md-ellipsis">
+      🏛️ Core Components
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#typical-data-flow">
+<span class="md-ellipsis">
+      🔄 Typical Data Flow
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-features">
+<span class="md-ellipsis">
+      💡 Key Features
+    </span>
+</a>
+<nav aria-label="💡 Key Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-text-embedding">
+<span class="md-ellipsis">
+      🔍 Advanced Text Embedding
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-database-operations">
+<span class="md-ellipsis">
+      🗄️ Vector Database Operations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-optimizations">
+<span class="md-ellipsis">
+      ⚡ Performance Optimizations
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-start-example">
+<span class="md-ellipsis">
+      🚀 Quick Start Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-options">
+<span class="md-ellipsis">
+      🛠️ Configuration Options
+    </span>
+</a>
+<nav aria-label="🛠️ Configuration Options" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#embedding-model-selection">
+<span class="md-ellipsis">
+      Embedding Model Selection
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-database-configuration">
+<span class="md-ellipsis">
+      Vector Database Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-usage">
+<span class="md-ellipsis">
+      🔧 Advanced Usage
+    </span>
+</a>
+<nav aria-label="🔧 Advanced Usage" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-processing-for-large-collections">
+<span class="md-ellipsis">
+      Batch Processing for Large Collections
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#collection-management">
+<span class="md-ellipsis">
+      Collection Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-search-options">
+<span class="md-ellipsis">
+      Advanced Search Options
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-with-other-packages">
+<span class="md-ellipsis">
+      🔗 Integration with Other Packages
+    </span>
+</a>
+<nav aria-label="🔗 Integration with Other Packages" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-corpus-package">
+<span class="md-ellipsis">
+      With Corpus Package
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-search-package">
+<span class="md-ellipsis">
+      With Search Package
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      🛡️ Error Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-considerations">
+<span class="md-ellipsis">
+      📊 Performance Considerations
+    </span>
+</a>
+<nav aria-label="📊 Performance Considerations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#memory-usage">
+<span class="md-ellipsis">
+      Memory Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#speed-optimization">
+<span class="md-ellipsis">
+      Speed Optimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scalability">
+<span class="md-ellipsis">
+      Scalability
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases">
+<span class="md-ellipsis">
+      🎯 Use Cases
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#detailed-documentation">
+<span class="md-ellipsis">
+      📚 Detailed Documentation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dependencies">
+<span class="md-ellipsis">
+      🔧 Dependencies
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="EmbeddedVectorDB/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB Class
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="SimpleTextEmbedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder Class
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#package-overview">
+<span class="md-ellipsis">
+      📖 Package Overview
+    </span>
+</a>
+<nav aria-label="📖 Package Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#package-purpose">
+<span class="md-ellipsis">
+      🎯 Package Purpose
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+<span class="md-ellipsis">
+      🏗️ Architecture
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#components">
+<span class="md-ellipsis">
+      📦 Components
+    </span>
+</a>
+<nav aria-label="📦 Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-components">
+<span class="md-ellipsis">
+      🏛️ Core Components
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#typical-data-flow">
+<span class="md-ellipsis">
+      🔄 Typical Data Flow
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-features">
+<span class="md-ellipsis">
+      💡 Key Features
+    </span>
+</a>
+<nav aria-label="💡 Key Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-text-embedding">
+<span class="md-ellipsis">
+      🔍 Advanced Text Embedding
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-database-operations">
+<span class="md-ellipsis">
+      🗄️ Vector Database Operations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-optimizations">
+<span class="md-ellipsis">
+      ⚡ Performance Optimizations
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-start-example">
+<span class="md-ellipsis">
+      🚀 Quick Start Example
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-options">
+<span class="md-ellipsis">
+      🛠️ Configuration Options
+    </span>
+</a>
+<nav aria-label="🛠️ Configuration Options" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#embedding-model-selection">
+<span class="md-ellipsis">
+      Embedding Model Selection
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vector-database-configuration">
+<span class="md-ellipsis">
+      Vector Database Configuration
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-usage">
+<span class="md-ellipsis">
+      🔧 Advanced Usage
+    </span>
+</a>
+<nav aria-label="🔧 Advanced Usage" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-processing-for-large-collections">
+<span class="md-ellipsis">
+      Batch Processing for Large Collections
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#collection-management">
+<span class="md-ellipsis">
+      Collection Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-search-options">
+<span class="md-ellipsis">
+      Advanced Search Options
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-with-other-packages">
+<span class="md-ellipsis">
+      🔗 Integration with Other Packages
+    </span>
+</a>
+<nav aria-label="🔗 Integration with Other Packages" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-corpus-package">
+<span class="md-ellipsis">
+      With Corpus Package
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#with-search-package">
+<span class="md-ellipsis">
+      With Search Package
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-handling">
+<span class="md-ellipsis">
+      🛡️ Error Handling
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance-considerations">
+<span class="md-ellipsis">
+      📊 Performance Considerations
+    </span>
+</a>
+<nav aria-label="📊 Performance Considerations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#memory-usage">
+<span class="md-ellipsis">
+      Memory Usage
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#speed-optimization">
+<span class="md-ellipsis">
+      Speed Optimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scalability">
+<span class="md-ellipsis">
+      Scalability
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#use-cases">
+<span class="md-ellipsis">
+      🎯 Use Cases
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#detailed-documentation">
+<span class="md-ellipsis">
+      📚 Detailed Documentation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dependencies">
+<span class="md-ellipsis">
+      🔧 Dependencies
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="vector-database-package-embeddings-and-storage">Vector Database Package: Embeddings and Storage<a class="headerlink" href="#vector-database-package-embeddings-and-storage" title="Permanent link">¶</a></h1>
+<h2 id="package-overview">📖 Package Overview<a class="headerlink" href="#package-overview" title="Permanent link">¶</a></h2>
+<p>The <code>vectordb</code> package provides the foundational infrastructure for vector-based semantic search in the RAG to Riches framework. It combines advanced text embedding capabilities with efficient vector storage and retrieval using Qdrant, creating a powerful foundation for similarity search and retrieval-augmented generation.</p>
+<h3 id="package-purpose">🎯 Package Purpose<a class="headerlink" href="#package-purpose" title="Permanent link">¶</a></h3>
+<p>This package transforms text into high-dimensional vector representations and provides persistent storage with lightning-fast similarity search. It handles the complete pipeline from text encoding to vector database operations, making semantic search accessible and efficient for RAG applications.</p>
+<h3 id="architecture">🏗️ Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h3>
+<div class="mermaid">classDiagram
+    class EmbeddedVectorDB {
+        +QdrantClient client
+        +create_collection() bool
+        +upsert_points() None
+        +search_points() List[ScoredPoint]
+        +count_points() int
+        +delete_collection() None
+        +get_collection_info() dict
+        +consistency_check() bool
+    }
+
+    class SimpleTextEmbedder {
+        +SentenceTransformer model
+        +str model_name
+        +int vector_size
+        +str distance_metric
+        +embed_text() List[float]
+        +embed_batch() List[List[float]]
+        +get_vector_size() int
+        +get_distance_metric() str
+    }
+
+    EmbeddedVectorDB --&gt; QdrantClient : uses
+    SimpleTextEmbedder --&gt; SentenceTransformer : uses
+
+    note for EmbeddedVectorDB "Local Qdrant database\nwith CRUD operations"
+    note for SimpleTextEmbedder "Sentence transformer\nembeddings with caching"
+</div>
+<h3 id="components">📦 Components<a class="headerlink" href="#components" title="Permanent link">¶</a></h3>
+<h4 id="core-components">🏛️ Core Components<a class="headerlink" href="#core-components" title="Permanent link">¶</a></h4>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="EmbeddedVectorDB/"><code>EmbeddedVectorDB</code></a></td>
+<td><code>embedded_vectordb.py</code></td>
+<td>Local Qdrant database operations</td>
+</tr>
+<tr>
+<td><a href="SimpleTextEmbedder/"><code>SimpleTextEmbedder</code></a></td>
+<td><code>embedder.py</code></td>
+<td>Text-to-vector transformation</td>
+</tr>
+</tbody>
+</table>
+<h4 id="typical-data-flow">🔄 Typical Data Flow<a class="headerlink" href="#typical-data-flow" title="Permanent link">¶</a></h4>
+<div class="mermaid">sequenceDiagram
+    participant Text as "Text Input"
+    participant Embedder as "SimpleTextEmbedder"
+    participant VectorDB as "EmbeddedVectorDB"
+    participant Qdrant as "Qdrant Storage"
+
+    Text-&gt;&gt;Embedder: "Dogs are loyal friends"
+    Embedder-&gt;&gt;Embedder: Load sentence transformer
+    Embedder-&gt;&gt;Embedder: Generate 384-dim vector
+    Embedder--&gt;&gt;VectorDB: [0.1, -0.3, 0.8, ...]
+
+    VectorDB-&gt;&gt;VectorDB: Create PointStruct
+    VectorDB-&gt;&gt;Qdrant: Store vector + metadata
+    Qdrant--&gt;&gt;VectorDB: Confirmation
+
+    Note over VectorDB: Later: Similarity Search
+    VectorDB-&gt;&gt;Qdrant: Query with vector
+    Qdrant--&gt;&gt;VectorDB: Similar vectors + scores
+    VectorDB--&gt;&gt;Text: Relevant results
+</div>
+<h3 id="key-features">💡 Key Features<a class="headerlink" href="#key-features" title="Permanent link">¶</a></h3>
+<h4 id="advanced-text-embedding">🔍 Advanced Text Embedding<a class="headerlink" href="#advanced-text-embedding" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>State-of-the-Art Models</strong>: Sentence transformers optimized for semantic understanding</li>
+<li><strong>Flexible Model Selection</strong>: Support for various embedding models and sizes</li>
+<li><strong>Batch Processing</strong>: Efficient handling of large text collections</li>
+<li><strong>Caching</strong>: Intelligent caching to avoid redundant computations</li>
+</ul>
+<h4 id="vector-database-operations">🗄️ Vector Database Operations<a class="headerlink" href="#vector-database-operations" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>Local Storage</strong>: Embedded Qdrant for development and production</li>
+<li><strong>CRUD Operations</strong>: Complete create, read, update, delete functionality</li>
+<li><strong>Collection Management</strong>: Flexible collection creation and configuration</li>
+<li><strong>Health Monitoring</strong>: Consistency checks and database statistics</li>
+</ul>
+<h4 id="performance-optimizations">⚡ Performance Optimizations<a class="headerlink" href="#performance-optimizations" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>GPU Acceleration</strong>: Automatic GPU usage when available</li>
+<li><strong>Connection Pooling</strong>: Efficient database connection management</li>
+<li><strong>Batch Operations</strong>: Optimized batch insert and search operations</li>
+<li><strong>Memory Management</strong>: Efficient memory usage for large collections</li>
+</ul>
+<h3 id="quick-start-example">🚀 Quick Start Example<a class="headerlink" href="#quick-start-example" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.vectordb.embedded_vectordb</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmbeddedVectorDB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.vectordb.embedder</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleTextEmbedder</span>
+
+<span class="c1"># Initialize components</span>
+<span class="n">vector_db</span> <span class="o">=</span> <span class="n">EmbeddedVectorDB</span><span class="p">()</span>
+<span class="n">embedder</span> <span class="o">=</span> <span class="n">SimpleTextEmbedder</span><span class="p">()</span>
+
+<span class="c1"># Create a collection</span>
+<span class="n">collection_name</span> <span class="o">=</span> <span class="s2">"example_quotes"</span>
+<span class="n">vector_db</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="n">collection_name</span><span class="p">,</span>
+    <span class="n">vector_size</span><span class="o">=</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_vector_size</span><span class="p">(),</span>
+    <span class="n">distance</span><span class="o">=</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_distance_metric</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="c1"># Embed and store text</span>
+<span class="n">texts</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">"Dogs are loyal companions who bring joy to our lives."</span><span class="p">,</span>
+    <span class="s2">"Cats are independent creatures with mysterious personalities."</span><span class="p">,</span>
+    <span class="s2">"Birds teach us about freedom and the beauty of flight."</span>
+<span class="p">]</span>
+
+<span class="c1"># Generate embeddings</span>
+<span class="n">vectors</span> <span class="o">=</span> <span class="n">embedder</span><span class="o">.</span><span class="n">embed_batch</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+
+<span class="c1"># Create points for storage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">uuid4</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qdrant_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+
+<span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">vector</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">vectors</span><span class="p">)):</span>
+    <span class="n">point</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PointStruct</span><span class="p">(</span>
+        <span class="nb">id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">()),</span>
+        <span class="n">vector</span><span class="o">=</span><span class="n">vector</span><span class="p">,</span>
+        <span class="n">payload</span><span class="o">=</span><span class="p">{</span><span class="s2">"content"</span><span class="p">:</span> <span class="n">text</span><span class="p">,</span> <span class="s2">"index"</span><span class="p">:</span> <span class="n">i</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+
+<span class="c1"># Store in database</span>
+<span class="n">vector_db</span><span class="o">.</span><span class="n">upsert_points</span><span class="p">(</span><span class="n">collection_name</span><span class="p">,</span> <span class="n">points</span><span class="p">)</span>
+
+<span class="c1"># Search for similar content</span>
+<span class="n">query_text</span> <span class="o">=</span> <span class="s2">"loyal pets and friendship"</span>
+<span class="n">query_vector</span> <span class="o">=</span> <span class="n">embedder</span><span class="o">.</span><span class="n">embed_text</span><span class="p">(</span><span class="n">query_text</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">search_points</span><span class="p">(</span><span class="n">collection_name</span><span class="p">,</span> <span class="n">query_vector</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Display results</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Score: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Text: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">payload</span><span class="p">[</span><span class="s1">'content'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"---"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="configuration-options">🛠️ Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link">¶</a></h3>
+<h4 id="embedding-model-selection">Embedding Model Selection<a class="headerlink" href="#embedding-model-selection" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Default model (balanced performance/quality)</span>
+<span class="n">embedder</span> <span class="o">=</span> <span class="n">SimpleTextEmbedder</span><span class="p">()</span>  <span class="c1"># Uses 'sentence-transformers/all-MiniLM-L6-v2'</span>
+
+<span class="c1"># High-quality model (larger, slower)</span>
+<span class="n">embedder</span> <span class="o">=</span> <span class="n">SimpleTextEmbedder</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">"sentence-transformers/all-mpnet-base-v2"</span><span class="p">)</span>
+
+<span class="c1"># Fast model (smaller, faster)</span>
+<span class="n">embedder</span> <span class="o">=</span> <span class="n">SimpleTextEmbedder</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">"sentence-transformers/all-MiniLM-L12-v2"</span><span class="p">)</span>
+
+<span class="c1"># Multilingual model</span>
+<span class="n">embedder</span> <span class="o">=</span> <span class="n">SimpleTextEmbedder</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">"sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="vector-database-configuration">Vector Database Configuration<a class="headerlink" href="#vector-database-configuration" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Custom database path (via config)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"vector_db"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"path"</span><span class="p">:</span> <span class="s2">"/custom/path/to/qdrant"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Different distance metrics</span>
+<span class="n">vector_db</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">"cosine_collection"</span><span class="p">,</span>
+    <span class="n">vector_size</span><span class="o">=</span><span class="mi">384</span><span class="p">,</span>
+    <span class="n">distance</span><span class="o">=</span><span class="s2">"Cosine"</span>  <span class="c1"># Options: "Cosine", "Euclid", "Dot"</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="advanced-usage">🔧 Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permanent link">¶</a></h3>
+<h4 id="batch-processing-for-large-collections">Batch Processing for Large Collections<a class="headerlink" href="#batch-processing-for-large-collections" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Efficient batch processing</span>
+<span class="n">large_text_collection</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c1"># Thousands of texts</span>
+
+<span class="c1"># Process in batches to manage memory</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">large_text_collection</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+    <span class="n">batch_texts</span> <span class="o">=</span> <span class="n">large_text_collection</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">batch_size</span><span class="p">]</span>
+    <span class="n">batch_vectors</span> <span class="o">=</span> <span class="n">embedder</span><span class="o">.</span><span class="n">embed_batch</span><span class="p">(</span><span class="n">batch_texts</span><span class="p">)</span>
+
+    <span class="c1"># Create points</span>
+    <span class="n">batch_points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">vector</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">batch_texts</span><span class="p">,</span> <span class="n">batch_vectors</span><span class="p">)):</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PointStruct</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">()),</span>
+            <span class="n">vector</span><span class="o">=</span><span class="n">vector</span><span class="p">,</span>
+            <span class="n">payload</span><span class="o">=</span><span class="p">{</span><span class="s2">"content"</span><span class="p">:</span> <span class="n">text</span><span class="p">,</span> <span class="s2">"batch"</span><span class="p">:</span> <span class="n">i</span><span class="o">//</span><span class="n">batch_size</span><span class="p">,</span> <span class="s2">"index"</span><span class="p">:</span> <span class="n">j</span><span class="p">}</span>
+        <span class="p">)</span>
+        <span class="n">batch_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+
+    <span class="c1"># Store batch</span>
+    <span class="n">vector_db</span><span class="o">.</span><span class="n">upsert_points</span><span class="p">(</span><span class="n">collection_name</span><span class="p">,</span> <span class="n">batch_points</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Processed batch </span><span class="si">{</span><span class="n">i</span><span class="o">//</span><span class="n">batch_size</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="collection-management">Collection Management<a class="headerlink" href="#collection-management" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># List all collections</span>
+<span class="n">collections</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">list_collections</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Available collections: </span><span class="si">{</span><span class="n">collections</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># Get collection statistics</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">get_collection_info</span><span class="p">(</span><span class="s2">"my_collection"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Collection has </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">'points_count'</span><span class="p">]</span><span class="si">}</span><span class="s2"> points"</span><span class="p">)</span>
+
+<span class="c1"># Check collection health</span>
+<span class="k">if</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">collection_exists</span><span class="p">(</span><span class="s2">"my_collection"</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">count_points</span><span class="p">(</span><span class="s2">"my_collection"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Collection is healthy with </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> points"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="advanced-search-options">Advanced Search Options<a class="headerlink" href="#advanced-search-options" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># Search with score threshold</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">search_points</span><span class="p">(</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">"quotes"</span><span class="p">,</span>
+    <span class="n">query_vector</span><span class="o">=</span><span class="n">query_vector</span><span class="p">,</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">score_threshold</span><span class="o">=</span><span class="mf">0.7</span>  <span class="c1"># Only return highly similar results</span>
+<span class="p">)</span>
+
+<span class="c1"># Search with metadata filtering (requires Qdrant filters)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qdrant_client.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Filter</span><span class="p">,</span> <span class="n">FieldCondition</span><span class="p">,</span> <span class="n">MatchValue</span>
+
+<span class="n">filter_condition</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span>
+    <span class="n">must</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">FieldCondition</span><span class="p">(</span>
+            <span class="n">key</span><span class="o">=</span><span class="s2">"category"</span><span class="p">,</span>
+            <span class="n">match</span><span class="o">=</span><span class="n">MatchValue</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s2">"pets"</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Note: This requires additional implementation in EmbeddedVectorDB</span>
+<span class="c1"># filtered_results = vector_db.search_points_with_filter(</span>
+<span class="c1">#     collection_name, query_vector, filter_condition</span>
+<span class="c1"># )</span>
+</code></pre></div>
+<h3 id="integration-with-other-packages">🔗 Integration with Other Packages<a class="headerlink" href="#integration-with-other-packages" title="Permanent link">¶</a></h3>
+<p>The vectordb package seamlessly integrates with other framework components:</p>
+<h4 id="with-corpus-package">With Corpus Package<a class="headerlink" href="#with-corpus-package" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.corpus.animals</span><span class="w"> </span><span class="kn">import</span> <span class="n">Animals</span>
+
+<span class="c1"># Animals class uses vectordb internally</span>
+<span class="n">animals</span> <span class="o">=</span> <span class="n">Animals</span><span class="p">(</span><span class="n">vector_db</span><span class="p">,</span> <span class="n">embedder</span><span class="p">)</span>
+<span class="n">wisdom</span> <span class="o">=</span> <span class="n">animals</span><span class="o">.</span><span class="n">load_from_jsonl</span><span class="p">(</span><span class="s2">"quotes.jsonl"</span><span class="p">)</span>
+<span class="n">animals</span><span class="o">.</span><span class="n">index_all_quotes</span><span class="p">()</span>  <span class="c1"># Uses vectordb for storage</span>
+</code></pre></div>
+<h4 id="with-search-package">With Search Package<a class="headerlink" href="#with-search-package" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.search.semantic_search</span><span class="w"> </span><span class="kn">import</span> <span class="n">SemanticSearch</span>
+
+<span class="c1"># SemanticSearch combines embedder and vector_db</span>
+<span class="n">search</span> <span class="o">=</span> <span class="n">SemanticSearch</span><span class="p">(</span>
+    <span class="n">embedder</span><span class="o">=</span><span class="n">embedder</span><span class="p">,</span>
+    <span class="n">vector_db</span><span class="o">=</span><span class="n">vector_db</span><span class="p">,</span>
+    <span class="n">collection_name</span><span class="o">=</span><span class="s2">"search_collection"</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="error-handling">🛡️ Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">¶</a></h3>
+<p>The package provides comprehensive error handling with custom exceptions:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">VectorDatabasePathNotFoundError</span><span class="p">,</span>
+    <span class="n">CollectionAlreadyExistsError</span><span class="p">,</span>
+    <span class="n">CollectionNotFoundError</span><span class="p">,</span>
+    <span class="n">InvalidVectorSizeError</span><span class="p">,</span>
+    <span class="n">InvalidDistanceMetricError</span>
+<span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># This might fail if collection exists</span>
+    <span class="n">vector_db</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span><span class="s2">"existing_collection"</span><span class="p">,</span> <span class="mi">384</span><span class="p">,</span> <span class="s2">"Cosine"</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">CollectionAlreadyExistsError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Collection already exists: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="c1"># Handle gracefully - maybe use existing collection</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># This might fail if collection doesn't exist</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">vector_db</span><span class="o">.</span><span class="n">count_points</span><span class="p">(</span><span class="s2">"nonexistent_collection"</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">CollectionNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Collection not found: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="c1"># Create collection or handle error</span>
+</code></pre></div>
+<h3 id="performance-considerations">📊 Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permanent link">¶</a></h3>
+<h4 id="memory-usage">Memory Usage<a class="headerlink" href="#memory-usage" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>Embedding Models</strong>: Models are loaded once and cached in memory</li>
+<li><strong>Batch Size</strong>: Optimize batch sizes based on available memory</li>
+<li><strong>Vector Storage</strong>: Qdrant efficiently manages vector storage on disk</li>
+</ul>
+<h4 id="speed-optimization">Speed Optimization<a class="headerlink" href="#speed-optimization" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>GPU Acceleration</strong>: Automatically uses GPU if available for embeddings</li>
+<li><strong>Parallel Processing</strong>: Sentence transformers support parallel batch processing</li>
+<li><strong>Connection Reuse</strong>: Database connections are reused for efficiency</li>
+</ul>
+<h4 id="scalability">Scalability<a class="headerlink" href="#scalability" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>Collection Size</strong>: Qdrant can handle millions of vectors efficiently</li>
+<li><strong>Search Speed</strong>: Sub-second search times for most collection sizes</li>
+<li><strong>Storage</strong>: Efficient compression and indexing for large datasets</li>
+</ul>
+<h3 id="use-cases">🎯 Use Cases<a class="headerlink" href="#use-cases" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Semantic Search</strong>: Find similar documents based on meaning</li>
+<li><strong>Content Recommendation</strong>: Suggest related content to users</li>
+<li><strong>Duplicate Detection</strong>: Identify similar or duplicate content</li>
+<li><strong>Content Clustering</strong>: Group similar content automatically</li>
+<li><strong>Question Answering</strong>: Find relevant context for user questions</li>
+</ul>
+<h3 id="detailed-documentation">📚 Detailed Documentation<a class="headerlink" href="#detailed-documentation" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong><a href="EmbeddedVectorDB/">EmbeddedVectorDB Class</a></strong>: Complete database operations</li>
+<li><strong><a href="SimpleTextEmbedder/">SimpleTextEmbedder Class</a></strong>: Text embedding and transformation</li>
+</ul>
+<h3 id="dependencies">🔧 Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">¶</a></h3>
+<p>The vectordb package relies on several key technologies:</p>
+<ul>
+<li><strong>Qdrant</strong>: High-performance vector database</li>
+<li><strong>Sentence Transformers</strong>: State-of-the-art text embeddings</li>
+<li><strong>PyTorch</strong>: Deep learning framework for embeddings</li>
+<li><strong>Loguru</strong>: Comprehensive logging</li>
+<li><strong>icontract</strong>: Design-by-contract validation</li>
+</ul>
+<hr/>
+<p><em>The vectordb package provides the essential infrastructure for semantic search - transforming text into meaningful vectors and storing them efficiently for lightning-fast similarity search. Perfect for building intelligent applications that understand content meaning rather than just keywords.</em> </p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../assets/javascripts/bundle.13a4f30d.min.js"></script>
+<script src="../javascripts/mathjax.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>
