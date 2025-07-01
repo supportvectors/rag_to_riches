@@ -13,7 +13,8 @@ import json
 from pathlib import Path
 from typing import List
 
-from rag_to_riches.corpus.animals import AnimalQuote, AnimalWisdom, Animals
+from rag_to_riches.corpus.animals import Animals
+from rag_to_riches.corpus.data_models import AnimalQuote, AnimalWisdom
 from rag_to_riches.vectordb.embedded_vectordb import EmbeddedVectorDB
 from rag_to_riches.vectordb.embedder import SimpleTextEmbedder
 from rag_to_riches.exceptions import InvalidPointsError
@@ -203,8 +204,8 @@ class TestAnimals:
         """Test Animals class initialization."""
         assert animals_loader.collection_name == "test_animals"
         assert animals_loader.wisdom is None
-        assert isinstance(animals_loader.vector_db, EmbeddedVectorDB)
         assert isinstance(animals_loader.embedder, SimpleTextEmbedder)
+        assert isinstance(animals_loader.semantic_search.vector_db, EmbeddedVectorDB)
     
     def test_load_from_jsonl(self, animals_loader: Animals, temp_jsonl_file: Path):
         """Test loading quotes from JSONL file."""

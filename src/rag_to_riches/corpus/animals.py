@@ -24,157 +24,63 @@ from rag_to_riches.vectordb.embedded_vectordb import EmbeddedVectorDB
 from rag_to_riches.vectordb.embedder import SimpleTextEmbedder
 from rag_to_riches.search.semantic_search import SemanticSearch
 from rag_to_riches.exceptions import InvalidPointsError
-
-
-#============================================================================================
-#  Pydantic Model: AnimalQuote
-#============================================================================================
-class AnimalQuote(BaseModel):
-    """Represents a single animal quote with metadata.
-    
-    This model captures the structure of each line in the animals.jsonl file,
-    containing the quote text, author attribution, and thematic category.
-    
-    Attributes:
-        text: The actual quote text content
-        author: Attribution of the quote to its original author
-        category: Thematic categorization for the quote
-    """
-    model_config = ConfigDict(
-        str_strip_whitespace=True,
-        validate_assignment=True,
-        frozen=True,
-        extra="forbid"
-    )
-    
-    text: str = Field(
-        ..., 
-        min_length=1, 
-        description="The animal quote text content"
-    )
-    author: str = Field(
-        ..., 
-        min_length=1, 
-        description="The author of the quote"
-    )
-    category: str = Field(
-        ..., 
-        min_length=1, 
-        description="Thematic category for the quote"
-    )
-    
-    @field_validator('text', 'author', 'category')
-    @classmethod
-    def validate_non_empty_strings(cls, v: str) -> str:
-        """Ensure all string fields are non-empty after stripping."""
-        if not v or not v.strip():
-            raise ValueError("Field cannot be empty or whitespace only")
-        return v.strip()
-    
-    def to_payload(self) -> Dict[str, Any]:
-        """Convert the quote to a payload dictionary for vector storage.
-        
-        Returns:
-            Dictionary suitable for Qdrant point payload.
-        """
-        return {
-            "content": self.text,
-            "content_type": "animal_quote",
-            "author": self.author,
-            "category": self.category
-        }
-
-
-#============================================================================================
-#  Pydantic Model: AnimalWisdom
-#============================================================================================
-class AnimalWisdom(BaseModel):
-    """Collection of animal quotes loaded from the corpus.
-    
-    This model represents the complete collection of animal quotes,
-    providing validation and convenient access methods for the data.
-    
-    Attributes:
-        quotes: List of AnimalQuote instances
-        source_file: Optional path to the source JSONL file
-    """
-    model_config = ConfigDict(
-        validate_assignment=True,
-        arbitrary_types_allowed=True
-    )
-    
-    quotes: List[AnimalQuote] = Field(
-        ..., 
-        min_length=1, 
-        description="Collection of animal quotes"
-    )
-    source_file: Optional[Path] = Field(
-        default=None,
-        description="Path to the source JSONL file"
-    )
-    
-    @field_validator('quotes')
-    @classmethod
-    def validate_quotes_not_empty(cls, v: List[AnimalQuote]) -> List[AnimalQuote]:
-        """Ensure quotes list is not empty."""
-        if not v:
-            raise ValueError("Quotes collection cannot be empty")
-        return v
-    
-    def __len__(self) -> int:
-        """Return the number of quotes in the collection."""
-        return len(self.quotes)
-    
-    def get_categories(self) -> List[str]:
-        """Get unique categories from all quotes.
-        
-        Returns:
-            Sorted list of unique category names.
-        """
-        categories = {quote.category for quote in self.quotes}
-        return sorted(categories)
-    
-    def get_authors(self) -> List[str]:
-        """Get unique authors from all quotes.
-        
-        Returns:
-            Sorted list of unique author names.
-        """
-        authors = {quote.author for quote in self.quotes}
-        return sorted(authors)
-    
-    def filter_by_category(self, category: str) -> List[AnimalQuote]:
-        """Filter quotes by category.
-        
-        Args:
-            category: Category name to filter by.
-            
-        Returns:
-            List of quotes matching the category.
-        """
-        return [quote for quote in self.quotes if quote.category == category]
-    
-    def filter_by_author(self, author: str) -> List[AnimalQuote]:
-        """Filter quotes by author.
-        
-        Args:
-            author: Author name to filter by.
-            
-        Returns:
-            List of quotes by the specified author.
-        """
-        return [quote for quote in self.quotes if quote.author == author]
+from rag_to_riches.corpus.data_models import AnimalQuote, AnimalWisdom
 
 
 #============================================================================================
 #  Class: Animals
 #============================================================================================
 class Animals:
-    """Loader and vectorizer for animal quotes corpus.
+    """A powerful, intelligent corpus loader for animal quotes with RAG capabilities.
     
-    This class handles loading animal quotes from JSONL files and provides
-    domain-specific search capabilities using the underlying SemanticSearch engine.
-    It acts as a specialized wrapper around SemanticSearch for animal quotes.
+    This class provides a complete solution for working with collections of animal quotes,
+    offering semantic search, AI-powered question answering, and beautiful result display.
+    Perfect for educational applications, research, or building chatbots that need access
+    to animal wisdom and quotes.
+    
+    Key Features:
+        - Load quotes from JSONL files with automatic validation
+        - Semantic search using state-of-the-art embeddings
+        - Filter by author, category, or similarity score
+        - AI-powered question answering with GPT models
+        - Beautiful formatted output with Rich library
+        - Complete RAG (Retrieval-Augmented Generation) pipeline
+        - Batch operations for efficiency
+    
+    Typical Workflow:
+        1. Initialize with a vector database
+        2. Load quotes from a JSONL file
+        3. Index quotes for semantic search
+        4. Search for relevant quotes
+        5. Ask AI questions about the quotes
+    
+    Example:
+        ```python
+        from pathlib import Path
+        from rag_to_riches.vectordb.embedded_vectordb import EmbeddedVectorDB
+        from rag_to_riches.corpus.animals import Animals
+        
+        # Initialize
+        vector_db = EmbeddedVectorDB()
+        animals = Animals(vector_db, collection_name="my_quotes")
+        
+        # Load and index quotes
+        quotes_file = Path("data/animal_quotes.jsonl")
+        animals.load_and_index(quotes_file)
+        
+        # Search for quotes
+        results = animals.search("wisdom about dogs", limit=5)
+        
+        # Ask AI a question
+        response = animals.ask_llm("What do animals teach us about loyalty?")
+        animals.display_llm_response(response, "loyalty question")
+        ```
+    
+    Attributes:
+        embedder: Text embedding model for vector representations
+        collection_name: Name of the Qdrant collection storing the quotes
+        wisdom: Loaded collection of animal quotes (None until loaded)
+        semantic_search: Underlying search engine for similarity queries
     """
     
     # ----------------------------------------------------------------------------------------
@@ -187,12 +93,42 @@ class Animals:
     def __init__(self, vector_db: EmbeddedVectorDB, 
                  embedder: Optional[SimpleTextEmbedder] = None,
                  collection_name: str = "animals") -> None:
-        """Initialize the Animals corpus loader.
+        """Initialize your Animals quote corpus with intelligent search capabilities.
+        
+        Sets up the complete infrastructure for loading, indexing, and searching animal
+        quotes. The system uses advanced sentence transformers for semantic understanding
+        and can work with any size collection efficiently.
         
         Args:
-            vector_db: Vector database instance for storage.
-            embedder: Text embedder for creating vector representations.
-            collection_name: Name of the Qdrant collection to use.
+            vector_db: Your vector database instance where quotes will be stored.
+                This handles all the vector storage and retrieval operations.
+            embedder: Optional text embedding model. If None, uses the default
+                'sentence-transformers/all-MiniLM-L6-v2' model which provides
+                excellent semantic understanding for quotes and wisdom.
+            collection_name: Unique name for your quote collection. Use descriptive
+                names like "animal_wisdom", "pet_quotes", or "nature_sayings" to
+                organize multiple collections.
+        
+        Example:
+            ```python
+            # Basic setup with default embedder
+            animals = Animals(vector_db)
+            
+            # Custom setup with specific collection
+            animals = Animals(
+                vector_db=my_db,
+                collection_name="philosophical_animal_quotes"
+            )
+            
+            # Advanced setup with custom embedder
+            custom_embedder = SimpleTextEmbedder(model_name="custom-model")
+            animals = Animals(vector_db, embedder=custom_embedder)
+            ```
+        
+        Note:
+            The constructor automatically loads the RAG system prompt for AI interactions.
+            If the prompt file is missing, a warning is logged but the system continues
+            to work with reduced AI capabilities.
         """
         self.embedder = embedder or SimpleTextEmbedder()
         self.collection_name = collection_name
@@ -208,8 +144,13 @@ class Animals:
         logger.info(f"Initialized Animals corpus loader for collection '{collection_name}'")
         if not Animals.ANIMALS_RAG_SYSTEM_PROMPT:
             Animals.ANIMALS_RAG_SYSTEM_PROMPT = self._load_system_prompt()
+
     def _load_system_prompt(self) -> str:
-        """Load system prompt text from external file."""
+        """Load the AI system prompt from external configuration file.
+        
+        Returns:
+            The system prompt text for RAG operations, or empty string if unavailable.
+        """
         try:
             return Animals.SYSTEM_PROMPT_PATH.read_text(encoding="utf-8")
         except Exception as e:
@@ -225,17 +166,57 @@ class Animals:
     @ensure(lambda result: isinstance(result, AnimalWisdom),
             "Must return an AnimalWisdom instance")
     def load_from_jsonl(self, jsonl_path: Path) -> AnimalWisdom:
-        """Load animal quotes from a JSONL file.
+        """Load and validate animal quotes from a JSONL (JSON Lines) file.
+        
+        Reads a file where each line contains a JSON object with quote data. The method
+        performs comprehensive validation, skips malformed entries with helpful warnings,
+        and returns a structured collection of quotes ready for indexing and search.
+        
+        Expected JSONL Format:
+            Each line should be a JSON object with these fields:
+            - "text": The actual quote content (required)
+            - "author": Who said or wrote the quote (required)  
+            - "category": Thematic classification like "Wisdom", "Humor" (required)
         
         Args:
-            jsonl_path: Path to the JSONL file containing animal quotes.
-            
+            jsonl_path: Path to your JSONL file containing animal quotes.
+                Can be a string path or pathlib.Path object.
+        
         Returns:
-            AnimalWisdom instance containing all loaded quotes.
-            
+            AnimalWisdom object containing all successfully loaded quotes with
+            convenient methods for filtering and analysis.
+        
         Raises:
-            FileNotFoundError: If the JSONL file doesn't exist.
-            InvalidPointsError: If the file format is invalid or corrupted.
+            FileNotFoundError: When the specified file doesn't exist at the given path.
+            InvalidPointsError: When no valid quotes are found in the file, indicating
+                format issues or empty content.
+        
+        Example:
+            ```python
+            # Load quotes from file
+            quotes_path = Path("data/animal_wisdom.jsonl")
+            wisdom = animals.load_from_jsonl(quotes_path)
+            
+            print(f"Loaded {len(wisdom)} quotes")
+            print(f"Categories: {wisdom.get_categories()}")
+            print(f"Authors: {wisdom.get_authors()}")
+            
+            # Access individual quotes
+            for quote in wisdom.quotes[:3]:
+                print(f'"{quote.text}" - {quote.author}')
+            ```
+        
+        File Format Example:
+            ```
+            {"text": "Dogs are not our whole life, but they make our lives whole.", "author": "Roger Caras", "category": "Pets and Companionship"}
+            {"text": "The greatness of a nation can be judged by the way its animals are treated.", "author": "Mahatma Gandhi", "category": "Ethics and Compassion"}
+            ```
+        
+        Note:
+            - Empty lines in the file are automatically skipped
+            - Malformed JSON lines generate warnings but don't stop the process
+            - The loaded quotes are stored in self.wisdom for later use
+            - All text fields are automatically stripped of whitespace
         """
         jsonl_path = Path(jsonl_path)
         
@@ -280,16 +261,49 @@ class Animals:
     @require(lambda self: self.wisdom is not None,
              "Animal wisdom must be loaded before indexing")
     def index_all_quotes(self) -> List[str]:
-        """Index all loaded quotes into the vector database.
+        """Transform all loaded quotes into searchable vector embeddings.
         
-        Creates embeddings for each quote and stores them as points in the
-        Qdrant collection with appropriate metadata.
+        This method takes your loaded quotes and creates high-dimensional vector
+        representations that enable semantic search. The process uses advanced
+        sentence transformers to understand the meaning and context of each quote,
+        not just keyword matching.
+        
+        The indexing process:
+        1. Extracts text content from each quote
+        2. Generates semantic embeddings using the configured model
+        3. Stores vectors in the database with rich metadata
+        4. Creates searchable points for instant retrieval
         
         Returns:
-            List of point IDs that were indexed.
-            
+            List of unique point IDs for each indexed quote. These IDs can be used
+            for direct retrieval, debugging, or managing specific quotes.
+        
         Raises:
-            InvalidPointsError: If quotes cannot be embedded or indexed.
+            InvalidPointsError: When indexing fails due to embedding errors,
+                database issues, or missing quote data.
+        
+        Example:
+            ```python
+            # Load quotes first
+            wisdom = animals.load_from_jsonl("quotes.jsonl")
+            
+            # Index for semantic search
+            point_ids = animals.index_all_quotes()
+            print(f"Successfully indexed {len(point_ids)} quotes")
+            
+            # Now you can search semantically
+            results = animals.search("loyalty and friendship")
+            ```
+        
+        Performance Notes:
+            - Batch processing is used for efficiency with large collections
+            - Indexing time scales with collection size and model complexity
+            - Typical speed: ~100-500 quotes per second depending on hardware
+            - GPU acceleration automatically used if available
+        
+        Note:
+            You must call load_from_jsonl() before indexing. The method will
+            fail gracefully if no quotes are loaded, providing clear error messages.
         """
         if not self.wisdom:
             raise InvalidPointsError(
@@ -321,14 +335,42 @@ class Animals:
     #  Collection Management
     # ----------------------------------------------------------------------------------------
     def recreate_collection(self) -> None:
-        """Delete and recreate an empty animals collection.
+        """Completely reset your quote collection with a fresh, empty database.
         
-        This method will:
-        1. Delete the existing collection if it exists
-        2. Create a new empty collection with the same parameters
-        3. Clear the loaded wisdom data
+        This is a powerful cleanup method that removes all existing quotes and
+        creates a brand new collection. Use this when you need to start over,
+        fix corruption issues, or completely change your quote dataset.
         
-        This is useful for starting fresh or clearing corrupted collections.
+        What this method does:
+        1. Safely deletes the existing collection if it exists
+        2. Creates a new empty collection with optimal settings
+        3. Clears all loaded quote data from memory
+        4. Prepares the system for fresh data loading
+        
+        Raises:
+            InvalidPointsError: If the recreation process fails due to database
+                connection issues or permission problems.
+        
+        Example:
+            ```python
+            # Reset everything and start fresh
+            animals.recreate_collection()
+            
+            # Now load new data
+            new_wisdom = animals.load_from_jsonl("updated_quotes.jsonl")
+            animals.index_all_quotes()
+            ```
+        
+        Warning:
+            This operation is irreversible! All existing quotes in the collection
+            will be permanently deleted. Make sure you have backups of important
+            data before calling this method.
+        
+        Use Cases:
+            - Switching to a completely different quote dataset
+            - Fixing corrupted vector data
+            - Changing embedding models (requires reindexing)
+            - Cleaning up test data before production deployment
         """
         try:
             # Delete existing collection if it exists
@@ -359,13 +401,34 @@ class Animals:
     #  Load and Index
     # ----------------------------------------------------------------------------------------
     def load_and_index(self, jsonl_path: Path) -> tuple[AnimalWisdom, List[str]]:
-        """Convenience method to load and index quotes in one call.
+        """One-step solution: load quotes from file and make them instantly searchable.
+        
+        This convenience method combines loading and indexing in a single call,
+        perfect for getting up and running quickly. It handles the complete
+        pipeline from raw JSONL file to searchable vector database.
         
         Args:
-            jsonl_path: Path to the JSONL file containing animal quotes.
-            
+            jsonl_path: Path to your JSONL file containing animal quotes.
+        
         Returns:
-            Tuple containing the loaded AnimalWisdom and list of indexed point IDs.
+            A tuple containing:
+            - AnimalWisdom: Your loaded and validated quote collection
+            - List[str]: Point IDs for all indexed quotes
+        
+        Example:
+            ```python
+            # Complete setup in one line
+            wisdom, point_ids = animals.load_and_index("my_quotes.jsonl")
+            
+            print(f"Ready to search {len(wisdom)} quotes!")
+            
+            # Immediately start searching
+            results = animals.search("courage and bravery")
+            ```
+        
+        Note:
+            This method is equivalent to calling load_from_jsonl() followed by
+            index_all_quotes(), but more convenient for common workflows.
         """
         wisdom = self.load_from_jsonl(jsonl_path)
         point_ids = self.index_all_quotes()
@@ -387,20 +450,78 @@ class Animals:
               score_threshold: Optional[float] = None,
               author: Optional[str] = None,
               category: Optional[str] = None) -> List[models.ScoredPoint]:
-        """Search for animal quotes using semantic similarity with optional metadata filtering.
+        """Find the most relevant animal quotes using intelligent semantic search.
+        
+        This powerful search method goes beyond simple keyword matching to understand
+        the meaning and context of your query. It finds quotes that are conceptually
+        similar, even if they don't share exact words with your search terms.
         
         Args:
-            query: Text query to search for semantically similar quotes.
-            limit: Maximum number of results to return.
-            score_threshold: Minimum similarity score threshold.
-            author: Optional filter to only return quotes by this author.
-            category: Optional filter to only return quotes in this category.
-            
+            query: Your search question or topic. Use natural language like
+                "what do animals teach us about love?" or "quotes about courage".
+            limit: Maximum number of results to return (default: 10).
+                Higher values give more options but may include less relevant results.
+            score_threshold: Minimum similarity score (0.0-1.0). Only quotes with
+                similarity above this threshold will be returned. Use 0.7+ for
+                highly relevant results, 0.5+ for broader matches.
+            author: Filter results to only include quotes by this specific author.
+                Case-insensitive matching (e.g., "Gandhi" matches "Mahatma Gandhi").
+            category: Filter results to only include quotes from this category.
+                Case-insensitive matching (e.g., "wisdom" matches "Wisdom and Philosophy").
+        
         Returns:
-            List of scored points sorted by similarity, optionally filtered by metadata.
-            
+            List of ScoredPoint objects, each containing:
+            - score: Similarity score (higher = more relevant)
+            - payload: Quote metadata (content, author, category)
+            Results are automatically sorted by relevance (highest scores first).
+        
         Raises:
-            InvalidPointsError: If search cannot be performed.
+            InvalidPointsError: When search fails due to database issues or
+                invalid query parameters.
+        
+        Example:
+            ```python
+            # Basic semantic search
+            results = animals.search("loyalty and friendship")
+            
+            # Precise search with high threshold
+            results = animals.search(
+                "courage in difficult times",
+                limit=5,
+                score_threshold=0.8
+            )
+            
+            # Search within specific author's quotes
+            gandhi_quotes = animals.search(
+                "compassion",
+                author="Mahatma Gandhi",
+                limit=3
+            )
+            
+            # Browse by category
+            wisdom_quotes = animals.search(
+                "life lessons",
+                category="Wisdom and Philosophy"
+            )
+            
+            # Process results
+            for result in results:
+                print(f"Score: {result.score:.3f}")
+                print(f"Quote: {result.payload['content']}")
+                print(f"Author: {result.payload['author']}")
+                print("---")
+            ```
+        
+        Search Tips:
+            - Use descriptive phrases rather than single keywords
+            - Try different phrasings if you don't find what you're looking for
+            - Lower the score_threshold to see more diverse results
+            - Combine filters to narrow down to specific types of quotes
+        
+        Performance:
+            - Search is typically very fast (< 100ms for most collections)
+            - Larger collections may take slightly longer but remain responsive
+            - Filtering by author/category happens after vector search for efficiency
         """
         try:
             # Use SemanticSearch for the core search functionality
@@ -439,10 +560,44 @@ class Animals:
     #  Get Collection Stats
     # ----------------------------------------------------------------------------------------
     def get_collection_stats(self) -> Dict[str, Any]:
-        """Get statistics about the animals collection.
+        """Get comprehensive statistics and insights about your quote collection.
+        
+        Provides a detailed overview of your collection's size, content diversity,
+        and database status. Perfect for monitoring, debugging, or presenting
+        collection metrics to users.
         
         Returns:
-            Dictionary containing collection statistics.
+            Dictionary containing detailed statistics:
+            - collection_name: Name of your quote collection
+            - collection_exists: Whether the database collection exists
+            - point_count: Total quotes stored in the database
+            - loaded_quotes: Number of quotes currently loaded in memory
+            - categories: List of all unique quote categories (sorted)
+            - authors: List of all unique authors (sorted)
+        
+        Example:
+            ```python
+            stats = animals.get_collection_stats()
+            
+            print(f"Collection: {stats['collection_name']}")
+            print(f"Total quotes in database: {stats['point_count']}")
+            print(f"Quotes loaded in memory: {stats['loaded_quotes']}")
+            print(f"Categories ({len(stats['categories'])}): {stats['categories']}")
+            print(f"Authors ({len(stats['authors'])}): {stats['authors'][:5]}...")
+            
+            # Check if ready for search
+            if stats['collection_exists'] and stats['point_count'] > 0:
+                print("✅ Ready for semantic search!")
+            else:
+                print("❌ Need to load and index quotes first")
+            ```
+        
+        Use Cases:
+            - Verify successful data loading and indexing
+            - Display collection overview in user interfaces
+            - Debug database connectivity issues
+            - Monitor collection growth over time
+            - Validate data integrity after operations
         """
         stats = {
             "collection_name": self.collection_name,
@@ -467,10 +622,38 @@ class Animals:
     #  Additional SemanticSearch Integration
     # ----------------------------------------------------------------------------------------
     def consistency_check(self) -> bool:
-        """Check if the collection parameters are consistent with the embedder.
+        """Verify that your database collection is properly configured and ready to use.
+        
+        Performs a comprehensive health check to ensure your collection's vector
+        dimensions, distance metrics, and other parameters match your embedding model.
+        This prevents subtle bugs that could cause poor search results or errors.
         
         Returns:
-            True if collection is consistent with embedder requirements.
+            True if everything is properly configured and ready for search operations.
+            False indicates configuration mismatches that need attention.
+        
+        Example:
+            ```python
+            if animals.consistency_check():
+                print("✅ Collection is healthy and ready!")
+                results = animals.search("your query here")
+            else:
+                print("❌ Configuration issues detected")
+                print("Consider recreating the collection:")
+                animals.recreate_collection()
+            ```
+        
+        What's Checked:
+            - Vector dimensions match between collection and embedder
+            - Distance metric compatibility
+            - Collection existence and accessibility
+            - Basic connectivity to the vector database
+        
+        Use Cases:
+            - Troubleshooting search performance issues
+            - Validating setup after configuration changes
+            - Health checks in production systems
+            - Debugging after model or database updates
         """
         return self.semantic_search.consistency_check()
     
@@ -621,12 +804,47 @@ Please answer the user's question using the provided quotes and following the gu
     def display_search_results(self, results: List[models.ScoredPoint], 
                               search_description: str, 
                               max_text_length: int = 120) -> None:
-        """Display search results in a formatted table using rich.Table.
+        """Present search results in a beautiful, easy-to-read table format.
+        
+        Creates an elegant visual display of your search results using the Rich library
+        for colorful, well-formatted output. Perfect for interactive applications,
+        demos, or any time you want to show results in a professional way.
         
         Args:
-            results: List of ScoredPoint objects from search results.
-            search_description: Description of the search to display.
-            max_text_length: Maximum length for quote text before truncation.
+            results: Your search results from the search() method. Each result
+                contains the quote text, author, category, and relevance score.
+            search_description: A descriptive title for the search that will be
+                displayed at the top of the table (e.g., "Quotes about loyalty").
+            max_text_length: Maximum characters to display for each quote before
+                truncating with "..." (default: 120). Keeps table readable.
+        
+        Example:
+            ```python
+            # Search and display results beautifully
+            results = animals.search("courage and bravery", limit=5)
+            animals.display_search_results(
+                results, 
+                "Quotes about Courage and Bravery",
+                max_text_length=100
+            )
+            ```
+        
+        Output Features:
+            - 🎨 Color-coded columns for easy scanning
+            - 📊 Relevance scores prominently displayed
+            - ✂️ Smart text truncation to maintain readability
+            - 📱 Responsive layout that works in various terminal sizes
+            - 🚫 Graceful handling of empty results
+        
+        Fallback Behavior:
+            If the Rich library isn't available, automatically falls back to
+            simple text output that works in any environment.
+        
+        Use Cases:
+            - Interactive demos and presentations
+            - Development and debugging sessions
+            - Educational tools showing search capabilities
+            - Command-line applications with rich output
         """
         try:
             from rich.console import Console
@@ -809,18 +1027,66 @@ Please answer the user's question using the provided quotes and following the gu
                 author: Optional[str] = None,
                 category: Optional[str] = None,
                 model: str = "gpt-4o") -> AnimalWisdomResponse:
-        """Ask the LLM a question about animals using RAG.
+        """Ask AI thoughtful questions about animals and get structured, insightful answers.
+        
+        This method combines the power of semantic search with advanced AI reasoning
+        to provide comprehensive answers about animal wisdom, behavior, and human-animal
+        relationships. The AI draws from your quote collection to give contextual,
+        well-sourced responses.
         
         Args:
-            user_query: The user's question about animals
-            limit: Maximum number of search results to include
-            score_threshold: Minimum similarity score threshold
-            author: Optional filter to only return quotes by this author
-            category: Optional filter to only return quotes in this category
-            model: OpenAI model to use (default: gpt-4o)
-            
+            user_query: Your question about animals. Can be philosophical ("What do
+                animals teach us about love?"), practical ("How do pets help humans?"),
+                or exploratory ("What wisdom comes from observing nature?").
+            limit: Number of relevant quotes to provide as context (default: 5).
+                More quotes give richer context but may slow response time.
+            score_threshold: Only use quotes above this similarity score (0.0-1.0).
+                Higher values ensure more relevant context for better answers.
+            author: Focus the answer on quotes from this specific author only.
+            category: Limit context to quotes from this category only.
+            model: OpenAI model to use. "gpt-4o" (default) provides the most
+                thoughtful responses, "gpt-3.5-turbo" is faster and cheaper.
+        
         Returns:
-            Structured response from the LLM about animal wisdom
+            AnimalWisdomResponse containing:
+            - answer: Comprehensive, thoughtful response to your question
+            - key_insights: 2-5 main themes or takeaways from the analysis
+            - recommended_quotes: Most relevant quotes with proper attribution
+            - follow_up_questions: Suggested related questions to explore further
+        
+        Example:
+            ```python
+            # Ask a philosophical question
+            response = animals.ask_llm(
+                "What can animals teach us about resilience and survival?"
+            )
+            
+            # Display the structured response
+            animals.display_llm_response(response, "resilience question")
+            
+            # Access specific parts
+            print("Main Answer:")
+            print(response.answer)
+            
+            print("\\nKey Insights:")
+            for insight in response.key_insights:
+                print(f"- {insight}")
+            
+            # Ask follow-up questions
+            for question in response.follow_up_questions:
+                print(f"Next: {question}")
+            ```
+        
+        Question Ideas:
+            - "How do animals demonstrate unconditional love?"
+            - "What survival strategies can humans learn from animals?"
+            - "How do different cultures view human-animal relationships?"
+            - "What role do animals play in teaching empathy?"
+        
+        Note:
+            Requires OpenAI API key in environment. The AI uses your indexed quotes
+            as primary sources, ensuring answers are grounded in your collection
+            rather than general knowledge alone.
         """
         try:
             # Create RAG context
@@ -996,32 +1262,105 @@ Please answer the user's question using the provided quotes and following the gu
             category: Optional[str] = None,
             model: str = "gpt-4o",
             response_type: str = "structured") -> Dict[str, Any]:
-        """Complete RAG pipeline: search + LLM response in a single method call.
+        """🚀 Complete AI-powered question answering in one powerful method call.
         
-        This is a facade method that encapsulates the entire RAG workflow:
-        1. Perform semantic search for relevant quotes
-        2. Generate RAG context from search results
-        3. Get LLM response (structured or simple)
-        4. Return both the response and search results
+        This is your one-stop solution for getting intelligent answers about animals.
+        It automatically searches your quote collection, finds the most relevant content,
+        and generates comprehensive AI responses with full transparency into the process.
+        
+        Perfect for building chatbots, educational tools, or research applications where
+        you need both the AI answer and access to the underlying source material.
+        
+        The Complete RAG Pipeline:
+        1. 🔍 Semantic search finds relevant quotes from your collection
+        2. 📝 Context generation creates optimized prompts for the AI
+        3. 🤖 AI reasoning produces thoughtful, grounded responses
+        4. 📊 Full transparency with all intermediate results returned
         
         Args:
-            user_query: The user's question about animals
-            limit: Maximum number of search results to include
-            score_threshold: Minimum similarity score threshold
-            author: Optional filter to only return quotes by this author
-            category: Optional filter to only return quotes in this category
-            model: OpenAI model to use (default: gpt-4o)
-            response_type: Type of LLM response - "structured" or "simple"
-            
+            user_query: Your question about animals. Use natural, conversational
+                language like "How do animals show love?" or "What can pets teach
+                children about responsibility?"
+            limit: Number of quotes to use as context (default: 5). More context
+                can improve answer quality but increases cost and response time.
+            score_threshold: Minimum relevance score for quotes (0.0-1.0). Higher
+                values ensure only highly relevant quotes are used as context.
+            author: Limit context to quotes from this author only. Great for
+                exploring specific perspectives or philosophies.
+            category: Focus on quotes from this category only. Useful for domain-
+                specific questions like "Ethics" or "Pet Care".
+            model: OpenAI model for AI responses. "gpt-4o" gives the best quality,
+                "gpt-3.5-turbo" is faster and more economical.
+            response_type: Format of AI response:
+                - "structured": Rich AnimalWisdomResponse with insights and follow-ups
+                - "simple": Plain text response for basic use cases
+        
         Returns:
-            Dictionary containing:
-            - "llm_response": The LLM response (AnimalWisdomResponse or str)
-            - "search_results": List of search results (ScoredPoint objects)
-            - "rag_context": The generated RAG context string
-            - "query_info": Dictionary with query metadata
-            
+            Complete results dictionary containing:
+            - llm_response: AI answer (structured object or simple string)
+            - search_results: List of relevant quotes found (with scores)
+            - rag_context: Full prompt sent to AI (for debugging/transparency)
+            - query_info: Metadata about the query and processing parameters
+        
         Raises:
-            InvalidPointsError: If any step in the RAG pipeline fails
+            InvalidPointsError: When any step fails (search, context generation,
+                or AI response). Error messages indicate which step failed.
+        
+        Example:
+            ```python
+            # Complete RAG in one call
+            result = animals.rag(
+                "What do animals teach us about unconditional love?",
+                limit=7,
+                score_threshold=0.6,
+                response_type="structured"
+            )
+            
+            # Access the AI response
+            ai_answer = result["llm_response"]
+            print("AI Answer:", ai_answer.answer)
+            
+            # See what quotes were used
+            quotes_used = result["search_results"]
+            print(f"Based on {len(quotes_used)} relevant quotes")
+            
+            # Inspect the full context (for debugging)
+            full_prompt = result["rag_context"]
+            
+            # Get query metadata
+            info = result["query_info"]
+            print(f"Model: {info['model']}, Results: {info['results_count']}")
+            ```
+        
+        Advanced Usage:
+            ```python
+            # Domain-specific question
+            ethics_result = animals.rag(
+                "How should humans treat wild animals?",
+                category="Ethics and Compassion",
+                limit=10
+            )
+            
+            # Author-focused inquiry
+            gandhi_result = animals.rag(
+                "What did Gandhi believe about animals?",
+                author="Mahatma Gandhi",
+                response_type="simple"
+            )
+            ```
+        
+        Use Cases:
+            - Educational Q&A systems about animals and nature
+            - Research tools for exploring animal-human relationships
+            - Content generation for blogs, articles, or presentations
+            - Interactive chatbots with grounded, source-backed responses
+            - Philosophical exploration of animal wisdom and ethics
+        
+        Performance Tips:
+            - Start with limit=5 for good balance of quality and speed
+            - Use score_threshold=0.7+ for highly focused questions
+            - Choose "simple" response_type for faster, lower-cost interactions
+            - Cache results for frequently asked questions
         """
         try:
             # Step 1: Perform semantic search
