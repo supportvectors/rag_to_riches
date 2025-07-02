@@ -145,10 +145,10 @@ This project serves as both a **production framework** and an **educational reso
 
 ### 📖 Documentation Navigation
 
-- **[API Reference](apidocs/)**: Complete class and method documentation
+- **[API Reference](apidocs/index.md)**: Complete class and method documentation
 - **[Package Guides](corpus/index.md)**: Detailed package overviews
 - **[Examples](examples/index.md)**: Working code samples
-- **[Notebooks](notebooks/examples/)**: Interactive tutorials
+- **[Notebooks](notebooks/examples/index.md)**: Interactive tutorials
 
 ### 🤝 Contributing
 

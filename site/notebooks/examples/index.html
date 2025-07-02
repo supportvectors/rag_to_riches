@@ -1,0 +1,1419 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="An intuitive, fast-paced introduction to Retrieval Augmented Generation (RAG)" name="description"/>
+<meta content="SupportVectors" name="author"/>
+<link href="https://supportvectors.ai/rag-to-riches/notebooks/examples/" rel="canonical"/>
+<link href="../../exceptions/" rel="prev"/>
+<link href="lesson-1/" rel="next"/>
+<link href="../../images/favicon.ico" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.14" name="generator"/>
+<title>Interactive Notebooks - SupportVectors Rag to Riches</title>
+<link href="../../assets/stylesheets/main.342714a4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Lora:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Lora";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../stylesheets/supportvectors.css" rel="stylesheet"/>
+<link href="../../css/ansi-colours.css" rel="stylesheet"/>
+<link href="../../css/jupyter-cells.css" rel="stylesheet"/>
+<link href="../../css/pandas-dataframe.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="gray" data-md-color-primary="light-blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#interactive-notebooks">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="SupportVectors Rag to Riches" class="md-header__button md-logo" data-md-component="logo" href="../.." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../../images/overlapping_logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            SupportVectors Rag to Riches
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Interactive Notebooks
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="gray" data-md-color-media="" data-md-color-primary="light-blue" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="SupportVectors Rag to Riches" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="SupportVectors Rag to Riches">
+<img alt="logo" src="../../images/overlapping_logo.png"/>
+</a>
+    SupportVectors Rag to Riches
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    RAG to Riches: Advanced Retrieval-Augmented Generation Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Apidocs
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Apidocs
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/animals/">
+<span class="md-ellipsis">
+    Animals
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/embedded_vectordb/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/semantic_search/">
+<span class="md-ellipsis">
+    SemanticSearch
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../apidocs/simple_text_embedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    Corpus
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            Corpus
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../corpus/">
+<span class="md-ellipsis">
+    Corpus Package: Data Models and Content Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../corpus/AnimalQuote/">
+<span class="md-ellipsis">
+    AnimalQuote Class: Individual Quote Data Model
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../corpus/AnimalWisdom/">
+<span class="md-ellipsis">
+    AnimalWisdom Class: Quote Collection Management
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../corpus/Animals/">
+<span class="md-ellipsis">
+    Animals Class: Complete RAG System
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/">
+<span class="md-ellipsis">
+    Examples Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Exceptions
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Exceptions
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../exceptions/">
+<span class="md-ellipsis">
+    Exceptions Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Notebooks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Notebooks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_6_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Examples
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_6_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_1">
+<span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Interactive Notebooks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Interactive Notebooks
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#available-notebooks">
+<span class="md-ellipsis">
+      📚 Available Notebooks
+    </span>
+</a>
+<nav aria-label="📚 Available Notebooks" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#beginner-level">
+<span class="md-ellipsis">
+      🎯 Beginner Level
+    </span>
+</a>
+<nav aria-label="🎯 Beginner Level" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lesson-1ipynb-rag-fundamentals">
+<span class="md-ellipsis">
+      lesson-1.ipynb - RAG Fundamentals
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lesson-2ipynb-building-your-first-rag-application">
+<span class="md-ellipsis">
+      lesson-2.ipynb - Building Your First RAG Application
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#specialized-topics">
+<span class="md-ellipsis">
+      🔍 Specialized Topics
+    </span>
+</a>
+<nav aria-label="🔍 Specialized Topics" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#semantic-searchipynb-deep-dive-into-semantic-search">
+<span class="md-ellipsis">
+      semantic-search.ipynb - Deep Dive into Semantic Search
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#search-corpusipynb-corpus-management-and-search">
+<span class="md-ellipsis">
+      search-corpus.ipynb - Corpus Management and Search
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-concepts">
+<span class="md-ellipsis">
+      🧠 Advanced Concepts
+    </span>
+</a>
+<nav aria-label="🧠 Advanced Concepts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supportvectors-commonipynb-advanced-rag-patterns">
+<span class="md-ellipsis">
+      supportvectors-common.ipynb - Advanced RAG Patterns
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-started">
+<span class="md-ellipsis">
+      🚀 Getting Started
+    </span>
+</a>
+<nav aria-label="🚀 Getting Started" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+<span class="md-ellipsis">
+      Prerequisites
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup-instructions">
+<span class="md-ellipsis">
+      Setup Instructions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-path">
+<span class="md-ellipsis">
+      Learning Path
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#notebook-features">
+<span class="md-ellipsis">
+      📋 Notebook Features
+    </span>
+</a>
+<nav aria-label="📋 Notebook Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#interactive-code-cells">
+<span class="md-ellipsis">
+      Interactive Code Cells
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rich-media-content">
+<span class="md-ellipsis">
+      Rich Media Content
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practical-examples">
+<span class="md-ellipsis">
+      Practical Examples
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#technical-requirements">
+<span class="md-ellipsis">
+      🛠️ Technical Requirements
+    </span>
+</a>
+<nav aria-label="🛠️ Technical Requirements" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-requirements">
+<span class="md-ellipsis">
+      System Requirements
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#python-packages">
+<span class="md-ellipsis">
+      Python Packages
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-files">
+<span class="md-ellipsis">
+      Data Files
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-objectives">
+<span class="md-ellipsis">
+      🎯 Learning Objectives
+    </span>
+</a>
+<nav aria-label="🎯 Learning Objectives" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fundamental-skills">
+<span class="md-ellipsis">
+      Fundamental Skills
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-capabilities">
+<span class="md-ellipsis">
+      Advanced Capabilities
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practical-experience">
+<span class="md-ellipsis">
+      Practical Experience
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#additional-resources">
+<span class="md-ellipsis">
+      📖 Additional Resources
+    </span>
+</a>
+<nav aria-label="📖 Additional Resources" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentation-links">
+<span class="md-ellipsis">
+      Documentation Links
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#external-resources">
+<span class="md-ellipsis">
+      External Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#community-and-support">
+<span class="md-ellipsis">
+      Community and Support
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tips-for-success">
+<span class="md-ellipsis">
+      💡 Tips for Success
+    </span>
+</a>
+<nav aria-label="💡 Tips for Success" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#before-you-start">
+<span class="md-ellipsis">
+      Before You Start
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#while-learning">
+<span class="md-ellipsis">
+      While Learning
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#after-completion">
+<span class="md-ellipsis">
+      After Completion
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="lesson-1/">
+<span class="md-ellipsis">
+    Lesson 1
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="lesson-2/">
+<span class="md-ellipsis">
+    Lesson 2
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="search-corpus/">
+<span class="md-ellipsis">
+    Search corpus
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="semantic-search/">
+<span class="md-ellipsis">
+    Semantic search
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="supportvectors-common/">
+<span class="md-ellipsis">
+    Supportvectors common
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Project guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Project guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_7_1" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+<span class="md-ellipsis">
+    Tips and tricks
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_1_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_7_1">
+<span class="md-nav__icon md-icon"></span>
+            Tips and tricks
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../project-guide/tips-and-tricks/cuda-hell/">
+<span class="md-ellipsis">
+    Some tips and tricks to deal with the CUDA hell
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    Search
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            Search
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../search/">
+<span class="md-ellipsis">
+    Search Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    Search basics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            Search basics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../search_basics/">
+<span class="md-ellipsis">
+    Search Basics Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    Start simply
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            Start simply
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../start_simply/">
+<span class="md-ellipsis">
+    Start Simply Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_11" type="checkbox"/>
+<label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="0">
+<span class="md-ellipsis">
+    Utils
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_11_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_11">
+<span class="md-nav__icon md-icon"></span>
+            Utils
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../utils/">
+<span class="md-ellipsis">
+    Utils Package
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_12" type="checkbox"/>
+<label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="0">
+<span class="md-ellipsis">
+    Vectordb
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_12_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_12">
+<span class="md-nav__icon md-icon"></span>
+            Vectordb
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vectordb/">
+<span class="md-ellipsis">
+    Vector Database Package: Embeddings and Storage
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vectordb/EmbeddedVectorDB/">
+<span class="md-ellipsis">
+    EmbeddedVectorDB Class
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vectordb/SimpleTextEmbedder/">
+<span class="md-ellipsis">
+    SimpleTextEmbedder Class
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#available-notebooks">
+<span class="md-ellipsis">
+      📚 Available Notebooks
+    </span>
+</a>
+<nav aria-label="📚 Available Notebooks" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#beginner-level">
+<span class="md-ellipsis">
+      🎯 Beginner Level
+    </span>
+</a>
+<nav aria-label="🎯 Beginner Level" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lesson-1ipynb-rag-fundamentals">
+<span class="md-ellipsis">
+      lesson-1.ipynb - RAG Fundamentals
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lesson-2ipynb-building-your-first-rag-application">
+<span class="md-ellipsis">
+      lesson-2.ipynb - Building Your First RAG Application
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#specialized-topics">
+<span class="md-ellipsis">
+      🔍 Specialized Topics
+    </span>
+</a>
+<nav aria-label="🔍 Specialized Topics" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#semantic-searchipynb-deep-dive-into-semantic-search">
+<span class="md-ellipsis">
+      semantic-search.ipynb - Deep Dive into Semantic Search
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#search-corpusipynb-corpus-management-and-search">
+<span class="md-ellipsis">
+      search-corpus.ipynb - Corpus Management and Search
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-concepts">
+<span class="md-ellipsis">
+      🧠 Advanced Concepts
+    </span>
+</a>
+<nav aria-label="🧠 Advanced Concepts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supportvectors-commonipynb-advanced-rag-patterns">
+<span class="md-ellipsis">
+      supportvectors-common.ipynb - Advanced RAG Patterns
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#getting-started">
+<span class="md-ellipsis">
+      🚀 Getting Started
+    </span>
+</a>
+<nav aria-label="🚀 Getting Started" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prerequisites">
+<span class="md-ellipsis">
+      Prerequisites
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setup-instructions">
+<span class="md-ellipsis">
+      Setup Instructions
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-path">
+<span class="md-ellipsis">
+      Learning Path
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#notebook-features">
+<span class="md-ellipsis">
+      📋 Notebook Features
+    </span>
+</a>
+<nav aria-label="📋 Notebook Features" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#interactive-code-cells">
+<span class="md-ellipsis">
+      Interactive Code Cells
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rich-media-content">
+<span class="md-ellipsis">
+      Rich Media Content
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practical-examples">
+<span class="md-ellipsis">
+      Practical Examples
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#technical-requirements">
+<span class="md-ellipsis">
+      🛠️ Technical Requirements
+    </span>
+</a>
+<nav aria-label="🛠️ Technical Requirements" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-requirements">
+<span class="md-ellipsis">
+      System Requirements
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#python-packages">
+<span class="md-ellipsis">
+      Python Packages
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-files">
+<span class="md-ellipsis">
+      Data Files
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-objectives">
+<span class="md-ellipsis">
+      🎯 Learning Objectives
+    </span>
+</a>
+<nav aria-label="🎯 Learning Objectives" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fundamental-skills">
+<span class="md-ellipsis">
+      Fundamental Skills
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-capabilities">
+<span class="md-ellipsis">
+      Advanced Capabilities
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practical-experience">
+<span class="md-ellipsis">
+      Practical Experience
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#additional-resources">
+<span class="md-ellipsis">
+      📖 Additional Resources
+    </span>
+</a>
+<nav aria-label="📖 Additional Resources" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#documentation-links">
+<span class="md-ellipsis">
+      Documentation Links
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#external-resources">
+<span class="md-ellipsis">
+      External Resources
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#community-and-support">
+<span class="md-ellipsis">
+      Community and Support
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tips-for-success">
+<span class="md-ellipsis">
+      💡 Tips for Success
+    </span>
+</a>
+<nav aria-label="💡 Tips for Success" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#before-you-start">
+<span class="md-ellipsis">
+      Before You Start
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#while-learning">
+<span class="md-ellipsis">
+      While Learning
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#after-completion">
+<span class="md-ellipsis">
+      After Completion
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="interactive-notebooks">Interactive Notebooks<a class="headerlink" href="#interactive-notebooks" title="Permanent link">¶</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>Welcome to the interactive learning materials for RAG to Riches! This collection of Jupyter notebooks provides hands-on experience with the framework, from basic concepts to advanced implementations. Each notebook is designed to be educational, with clear explanations, working code, and practical exercises.</p>
+<h2 id="available-notebooks">📚 Available Notebooks<a class="headerlink" href="#available-notebooks" title="Permanent link">¶</a></h2>
+<h3 id="beginner-level">🎯 Beginner Level<a class="headerlink" href="#beginner-level" title="Permanent link">¶</a></h3>
+<h4 id="lesson-1ipynb-rag-fundamentals"><a href="lesson-1/"><code>lesson-1.ipynb</code></a> - RAG Fundamentals<a class="headerlink" href="#lesson-1ipynb-rag-fundamentals" title="Permanent link">¶</a></h4>
+<p><strong>Duration:</strong> ~45 minutes | <strong>Difficulty:</strong> Beginner</p>
+<p>Learn the core concepts of Retrieval-Augmented Generation through practical examples.</p>
+<p><strong>What you'll learn:</strong>
+- Vector embeddings and similarity search basics
+- Setting up your first RAG pipeline
+- Document indexing and retrieval
+- Generating AI responses with context
+- Understanding the retrieval-generation workflow</p>
+<p><strong>Prerequisites:</strong> Basic Python knowledge</p>
+<p><strong>Key Topics:</strong>
+- Introduction to vector databases
+- Text embedding generation
+- Semantic search fundamentals
+- Basic question-answering</p>
+<h4 id="lesson-2ipynb-building-your-first-rag-application"><a href="lesson-2/"><code>lesson-2.ipynb</code></a> - Building Your First RAG Application<a class="headerlink" href="#lesson-2ipynb-building-your-first-rag-application" title="Permanent link">¶</a></h4>
+<p><strong>Duration:</strong> ~60 minutes | <strong>Difficulty:</strong> Beginner-Intermediate</p>
+<p>Build a complete RAG application from scratch using the RAG to Riches framework.</p>
+<p><strong>What you'll learn:</strong>
+- Using the Animals corpus for domain-specific RAG
+- Advanced search techniques and filtering
+- Response formatting and display
+- Error handling and debugging</p>
+<p><strong>Prerequisites:</strong> Completion of Lesson 1</p>
+<p><strong>Key Topics:</strong>
+- Domain-specific corpus management
+- Advanced semantic search
+- Structured response generation
+- Performance optimization basics</p>
+<h3 id="specialized-topics">🔍 Specialized Topics<a class="headerlink" href="#specialized-topics" title="Permanent link">¶</a></h3>
+<h4 id="semantic-searchipynb-deep-dive-into-semantic-search"><a href="semantic-search/"><code>semantic-search.ipynb</code></a> - Deep Dive into Semantic Search<a class="headerlink" href="#semantic-searchipynb-deep-dive-into-semantic-search" title="Permanent link">¶</a></h4>
+<p><strong>Duration:</strong> ~90 minutes | <strong>Difficulty:</strong> Intermediate</p>
+<p>Comprehensive exploration of semantic search capabilities and optimization techniques.</p>
+<p><strong>What you'll learn:</strong>
+- Advanced embedding models and selection
+- Vector database optimization
+- Search result ranking and filtering
+- Performance benchmarking
+- Custom search strategies</p>
+<p><strong>Prerequisites:</strong> Understanding of vector embeddings</p>
+<p><strong>Key Topics:</strong>
+- Embedding model comparison
+- Vector database configuration
+- Search optimization techniques
+- Metadata filtering and hybrid search
+- Performance analysis and tuning</p>
+<h4 id="search-corpusipynb-corpus-management-and-search"><a href="search-corpus/"><code>search-corpus.ipynb</code></a> - Corpus Management and Search<a class="headerlink" href="#search-corpusipynb-corpus-management-and-search" title="Permanent link">¶</a></h4>
+<p><strong>Duration:</strong> ~30 minutes | <strong>Difficulty:</strong> Intermediate</p>
+<p>Focused exploration of corpus management and search functionality.</p>
+<p><strong>What you'll learn:</strong>
+- Corpus loading and indexing strategies
+- Search across different data types
+- Metadata management and filtering
+- Corpus statistics and analysis</p>
+<p><strong>Prerequisites:</strong> Basic RAG knowledge</p>
+<p><strong>Key Topics:</strong>
+- Data loading patterns
+- Indexing optimization
+- Search result analysis
+- Corpus health monitoring</p>
+<h3 id="advanced-concepts">🧠 Advanced Concepts<a class="headerlink" href="#advanced-concepts" title="Permanent link">¶</a></h3>
+<h4 id="supportvectors-commonipynb-advanced-rag-patterns"><a href="supportvectors-common/"><code>supportvectors-common.ipynb</code></a> - Advanced RAG Patterns<a class="headerlink" href="#supportvectors-commonipynb-advanced-rag-patterns" title="Permanent link">¶</a></h4>
+<p><strong>Duration:</strong> ~75 minutes | <strong>Difficulty:</strong> Advanced</p>
+<p>Explore advanced patterns and techniques used in production RAG systems.</p>
+<p><strong>What you'll learn:</strong>
+- Design patterns for RAG applications
+- Advanced context management
+- Multi-modal search capabilities
+- Production deployment considerations</p>
+<p><strong>Prerequisites:</strong> Solid understanding of RAG fundamentals</p>
+<p><strong>Key Topics:</strong>
+- Architecture patterns (Facade, Strategy, Observer)
+- Context optimization strategies
+- Multi-modal embeddings
+- Scalability and performance
+- Production best practices</p>
+<h2 id="getting-started">🚀 Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">¶</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h3>
+<p>Before starting with the notebooks, ensure you have:</p>
+<ol>
+<li><strong>Python Environment</strong> (3.12+)</li>
+<li><strong>RAG to Riches Framework</strong> installed (<code>uv sync</code>)</li>
+<li><strong>Jupyter Lab/Notebook</strong> (<code>pip install jupyterlab</code>)</li>
+<li><strong>API Keys</strong> configured (OpenAI, etc. - see <code>sample.env</code>)</li>
+</ol>
+<h3 id="setup-instructions">Setup Instructions<a class="headerlink" href="#setup-instructions" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p><strong>Clone the Repository</strong>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/asifqamar/rag_to_riches.git
+<span class="nb">cd</span><span class="w"> </span>rag_to_riches
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Install Dependencies</strong>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>sync
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Configure Environment</strong>
+<div class="highlight"><pre><span></span><code>cp<span class="w"> </span>sample.env<span class="w"> </span>.env
+<span class="c1"># Edit .env with your API keys</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Start Jupyter</strong>
+<div class="highlight"><pre><span></span><code>jupyter<span class="w"> </span>lab<span class="w"> </span>docs/notebooks/examples/
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="learning-path">Learning Path<a class="headerlink" href="#learning-path" title="Permanent link">¶</a></h3>
+<p>We recommend following this sequence for optimal learning:</p>
+<div class="mermaid">graph TD
+    A[lesson-1.ipynb<br/>RAG Fundamentals] --&gt; B[lesson-2.ipynb<br/>First RAG App]
+    B --&gt; C[search-corpus.ipynb<br/>Corpus Management]
+    C --&gt; D[semantic-search.ipynb<br/>Deep Dive Search]
+    D --&gt; E[supportvectors-common.ipynb<br/>Advanced Patterns]
+
+    F[Choose Your Path] --&gt; G[Focus on Search<br/>semantic-search.ipynb]
+    F --&gt; H[Focus on Applications<br/>lesson-2.ipynb]
+    F --&gt; I[Focus on Architecture<br/>supportvectors-common.ipynb]
+
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+</div>
+<h2 id="notebook-features">📋 Notebook Features<a class="headerlink" href="#notebook-features" title="Permanent link">¶</a></h2>
+<h3 id="interactive-code-cells">Interactive Code Cells<a class="headerlink" href="#interactive-code-cells" title="Permanent link">¶</a></h3>
+<p>All notebooks include:
+- <strong>Executable code examples</strong> - Run and modify real code
+- <strong>Step-by-step explanations</strong> - Understand each concept
+- <strong>Visual outputs</strong> - See results with charts and formatted displays
+- <strong>Exercises</strong> - Practice what you've learned</p>
+<h3 id="rich-media-content">Rich Media Content<a class="headerlink" href="#rich-media-content" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Mermaid diagrams</strong> - Architecture and flow visualizations</li>
+<li><strong>Performance plots</strong> - Understand timing and optimization</li>
+<li><strong>Rich console output</strong> - Beautiful formatted results</li>
+<li><strong>Images and screenshots</strong> - Visual learning aids</li>
+</ul>
+<h3 id="practical-examples">Practical Examples<a class="headerlink" href="#practical-examples" title="Permanent link">¶</a></h3>
+<p>Each notebook includes:
+- <strong>Real-world scenarios</strong> - Applicable use cases
+- <strong>Complete code samples</strong> - Copy-paste ready implementations
+- <strong>Troubleshooting sections</strong> - Common issues and solutions
+- <strong>Extension ideas</strong> - Ways to build upon the examples</p>
+<h2 id="technical-requirements">🛠️ Technical Requirements<a class="headerlink" href="#technical-requirements" title="Permanent link">¶</a></h2>
+<h3 id="system-requirements">System Requirements<a class="headerlink" href="#system-requirements" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>RAM:</strong> 8GB minimum, 16GB recommended</li>
+<li><strong>Storage:</strong> 2GB free space for models and data</li>
+<li><strong>GPU:</strong> Optional but recommended for large models</li>
+</ul>
+<h3 id="python-packages">Python Packages<a class="headerlink" href="#python-packages" title="Permanent link">¶</a></h3>
+<p>All required packages are included in the project dependencies:
+- <code>sentence-transformers</code> - Text embeddings
+- <code>qdrant-client</code> - Vector database
+- <code>openai</code> - LLM integration
+- <code>rich</code> - Beautiful console output
+- <code>jupyter</code> - Notebook environment</p>
+<h3 id="data-files">Data Files<a class="headerlink" href="#data-files" title="Permanent link">¶</a></h3>
+<p>The notebooks use sample data included in the repository:
+- <code>data/corpus/animals/animals.jsonl</code> - Animal wisdom quotes
+- Sample images for multimodal examples
+- Pre-computed embeddings for faster startup</p>
+<h2 id="learning-objectives">🎯 Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">¶</a></h2>
+<p>By completing these notebooks, you will:</p>
+<h3 id="fundamental-skills">Fundamental Skills<a class="headerlink" href="#fundamental-skills" title="Permanent link">¶</a></h3>
+<ul>
+<li>Understand vector embeddings and semantic search</li>
+<li>Build and deploy RAG applications</li>
+<li>Optimize search performance and relevance</li>
+<li>Handle different data types and formats</li>
+</ul>
+<h3 id="advanced-capabilities">Advanced Capabilities<a class="headerlink" href="#advanced-capabilities" title="Permanent link">¶</a></h3>
+<ul>
+<li>Design scalable RAG architectures</li>
+<li>Implement custom search strategies</li>
+<li>Optimize for production deployment</li>
+<li>Debug and troubleshoot RAG systems</li>
+</ul>
+<h3 id="practical-experience">Practical Experience<a class="headerlink" href="#practical-experience" title="Permanent link">¶</a></h3>
+<ul>
+<li>Work with real datasets and use cases</li>
+<li>Use professional development practices</li>
+<li>Apply design patterns and best practices</li>
+<li>Build production-ready applications</li>
+</ul>
+<h2 id="additional-resources">📖 Additional Resources<a class="headerlink" href="#additional-resources" title="Permanent link">¶</a></h2>
+<h3 id="documentation-links">Documentation Links<a class="headerlink" href="#documentation-links" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong><a href="../../apidocs/">API Reference</a></strong> - Complete class and method documentation</li>
+<li><strong><a href="../../corpus/">Package Guides</a></strong> - Detailed component documentation</li>
+<li><strong><a href="../../examples/">Examples Collection</a></strong> - Additional code examples</li>
+</ul>
+<h3 id="external-resources">External Resources<a class="headerlink" href="#external-resources" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong><a href="https://www.sbert.net/">Sentence Transformers Documentation</a></strong> - Embedding models</li>
+<li><strong><a href="https://qdrant.tech/">Qdrant Documentation</a></strong> - Vector database</li>
+<li><strong><a href="https://platform.openai.com/docs/">OpenAI API Documentation</a></strong> - LLM integration</li>
+</ul>
+<h3 id="community-and-support">Community and Support<a class="headerlink" href="#community-and-support" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong><a href="https://github.com/asifqamar/rag_to_riches">GitHub Repository</a></strong> - Source code and issues</li>
+<li><strong><a href="https://github.com/asifqamar/rag_to_riches/discussions">Discussions</a></strong> - Community Q&amp;A</li>
+<li><strong><a href="https://github.com/asifqamar/rag_to_riches/issues">Issues</a></strong> - Bug reports and feature requests</li>
+</ul>
+<h2 id="tips-for-success">💡 Tips for Success<a class="headerlink" href="#tips-for-success" title="Permanent link">¶</a></h2>
+<h3 id="before-you-start">Before You Start<a class="headerlink" href="#before-you-start" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Set aside dedicated time</strong> - Each notebook needs focused attention</li>
+<li><strong>Have your environment ready</strong> - Test your setup before diving in</li>
+<li><strong>Read through first</strong> - Skim the notebook to understand the flow</li>
+</ol>
+<h3 id="while-learning">While Learning<a class="headerlink" href="#while-learning" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Run every code cell</strong> - Don't just read, execute and experiment</li>
+<li><strong>Modify the examples</strong> - Change parameters and see what happens</li>
+<li><strong>Take notes</strong> - Document your insights and questions</li>
+</ol>
+<h3 id="after-completion">After Completion<a class="headerlink" href="#after-completion" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Try the exercises</strong> - Apply what you've learned</li>
+<li><strong>Build something new</strong> - Use the patterns in your own projects</li>
+<li><strong>Share your experience</strong> - Help others in the community</li>
+</ol>
+<hr/>
+<p><em>Start your hands-on journey with RAG to Riches - from concepts to implementation!</em> </p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+<script src="../../javascripts/mathjax.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>
