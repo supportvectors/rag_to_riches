@@ -2558,7 +2558,249 @@
 </code></pre></div>
 <p>Search for quotes and create RAG context in one convenient method.</p>
 <h2 id="source-code">Source Code<a class="headerlink" href="#source-code" title="Permanent link">&para;</a></h2>
-<p>Source code in <code>src/rag_to_riches/corpus/animals.py</code></p>
+<details class="abstract">
+<summary>View Complete Source Code</summary>
+<p>Click to expand and view the complete source implementation of the Animals class.</p>
+<div class="highlight"><span class="filename">src/rag_to_riches/corpus/animals.py</span><pre><span></span><code><span class="c1"># =============================================================================</span>
+<span class="c1">#  Filename: animals.py</span>
+<span class="c1">#</span>
+<span class="c1">#  Short Description: Animal quotes corpus loader with Pydantic models for Qdrant vectorization.</span>
+<span class="c1">#</span>
+<span class="c1">#  Creation date: 2025-01-06</span>
+<span class="c1">#  Author: Asif Qamar</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">uuid4</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">icontract</span><span class="w"> </span><span class="kn">import</span> <span class="n">require</span><span class="p">,</span> <span class="n">ensure</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">ConfigDict</span><span class="p">,</span> <span class="n">model_validator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qdrant_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.vectordb.embedded_vectordb</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmbeddedVectorDB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.vectordb.embedder</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleTextEmbedder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoadingError</span><span class="p">,</span> <span class="n">ValidationError</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AnimalQuote</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Individual animal quote data model with validation and vector conversion.&quot;&quot;&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span>
+        <span class="n">str_strip_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">extra</span><span class="o">=</span><span class="s2">&quot;forbid&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">animal</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                       <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Animal name (1-100 characters)&quot;</span><span class="p">)</span>
+    <span class="n">quote</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                      <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Wisdom quote (10-1000 characters)&quot;</span><span class="p">)</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                                  <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Quote category (optional, max 50 chars)&quot;</span><span class="p">)</span>
+
+    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;after&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_content_quality</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;AnimalQuote&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure quote has meaningful content.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quote</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Quote must contain at least 3 words&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_point_struct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedder</span><span class="p">:</span> <span class="n">SimpleTextEmbedder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">models</span><span class="o">.</span><span class="n">PointStruct</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert to Qdrant PointStruct with embedding.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            embedder: Text embedder for vector generation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            PointStruct ready for vector database storage.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create searchable content by combining animal and quote</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">animal</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">quote</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Prepare metadata</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;animal&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">animal</span><span class="p">,</span>
+            <span class="s2">&quot;quote&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">quote</span><span class="p">,</span>
+            <span class="s2">&quot;content_type&quot;</span><span class="p">:</span> <span class="s2">&quot;animal_quote&quot;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span>
+
+        <span class="k">return</span> <span class="n">embedder</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AnimalWisdom</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Collection of animal quotes with validation and loading capabilities.&quot;&quot;&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">validate_assignment</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">quotes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AnimalQuote</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span>
+                                    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;List of animal quotes&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_jsonl</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s1">&#39;AnimalWisdom&#39;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load animal quotes from JSONL file with validation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_path: Path to JSONL file containing quotes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AnimalWisdom instance with loaded and validated quotes.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DataLoadingError: If file cannot be loaded or data is invalid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="n">DataLoadingError</span><span class="p">(</span>
+                    <span class="n">file_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
+                    <span class="n">issue</span><span class="o">=</span><span class="s2">&quot;File not found&quot;</span><span class="p">,</span>
+                    <span class="n">suggestion</span><span class="o">=</span><span class="s2">&quot;Check the file path&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">quotes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">line_num</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                            <span class="n">quote</span> <span class="o">=</span> <span class="n">AnimalQuote</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+                            <span class="n">quotes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">quote</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">DataLoadingError</span><span class="p">(</span>
+                                <span class="n">file_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
+                                <span class="n">issue</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Invalid data on line </span><span class="si">{</span><span class="n">line_num</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                                <span class="n">suggestion</span><span class="o">=</span><span class="s2">&quot;Check JSON format and data validation&quot;</span>
+                            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">quotes</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">DataLoadingError</span><span class="p">(</span>
+                    <span class="n">file_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">),</span>
+                    <span class="n">issue</span><span class="o">=</span><span class="s2">&quot;No valid quotes found in file&quot;</span><span class="p">,</span>
+                    <span class="n">suggestion</span><span class="o">=</span><span class="s2">&quot;Ensure the file contains valid JSONL data&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">quotes</span><span class="p">)</span><span class="si">}</span><span class="s2"> animal quotes from </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">quotes</span><span class="o">=</span><span class="n">quotes</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">DataLoadingError</span><span class="p">:</span>
+            <span class="k">raise</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DataLoadingError</span><span class="p">(</span>
+                <span class="n">file_path</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">file_path</span><span class="p">),</span>
+                <span class="n">issue</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Unexpected error: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">suggestion</span><span class="o">=</span><span class="s2">&quot;Check file accessibility and format&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_point_structs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedder</span><span class="p">:</span> <span class="n">SimpleTextEmbedder</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">models</span><span class="o">.</span><span class="n">PointStruct</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert all quotes to PointStruct objects for vector storage.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            embedder: Text embedder for vector generation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of PointStruct objects ready for vector database.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">quote</span><span class="o">.</span><span class="n">to_point_struct</span><span class="p">(</span><span class="n">embedder</span><span class="p">)</span> <span class="k">for</span> <span class="n">quote</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">quotes</span><span class="p">]</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Animals</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Powerful, intelligent corpus loader for animal quotes with RAG capabilities.&quot;&quot;&quot;</span>
+
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">vector_db</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vector_db</span><span class="p">,</span> <span class="n">EmbeddedVectorDB</span><span class="p">),</span>
+             <span class="s2">&quot;Vector DB must be an EmbeddedVectorDB instance&quot;</span><span class="p">)</span>
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">collection_name</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">collection_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">collection_name</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;Collection name must be a non-empty string&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vector_db</span><span class="p">:</span> <span class="n">EmbeddedVectorDB</span><span class="p">,</span> <span class="n">collection_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">embedder</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SimpleTextEmbedder</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the Animals corpus loader.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vector_db: Vector database instance for storage.</span>
+<span class="sd">            collection_name: Name of the collection for animal quotes.</span>
+<span class="sd">            embedder: Optional text embedder (default: all-MiniLM-L6-v2).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span> <span class="o">=</span> <span class="n">vector_db</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span> <span class="o">=</span> <span class="n">collection_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span> <span class="o">=</span> <span class="n">embedder</span> <span class="ow">or</span> <span class="n">SimpleTextEmbedder</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wisdom</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Ensure collection exists with proper parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_collection</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initialized Animals corpus for collection &#39;</span><span class="si">{</span><span class="n">collection_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)),</span>
+             <span class="s2">&quot;File path must be a string or Path object&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_corpus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load animal quotes from JSONL file into the vector database.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_path: Path to JSONL file. If None, uses default from config.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            DataLoadingError: If corpus cannot be loaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">file_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Use default path from configuration</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;corpus_path&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="s2">&quot;animals&quot;</span> <span class="o">/</span> <span class="s2">&quot;animals.jsonl&quot;</span>
+
+        <span class="c1"># Load and validate the wisdom corpus</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wisdom</span> <span class="o">=</span> <span class="n">AnimalWisdom</span><span class="o">.</span><span class="n">load_from_jsonl</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+        <span class="c1"># Convert to point structures and upsert to vector database</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wisdom</span><span class="o">.</span><span class="n">to_point_structs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span><span class="o">.</span><span class="n">upsert_points</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">,</span> <span class="n">points</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2"> animal quotes into collection &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">query</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;Query must be a non-empty string&quot;</span><span class="p">)</span>
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;Limit must be a positive integer&quot;</span><span class="p">)</span>
+    <span class="nd">@ensure</span><span class="p">(</span><span class="k">lambda</span> <span class="n">result</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="s2">&quot;Must return a list&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> 
+              <span class="n">score_threshold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">models</span><span class="o">.</span><span class="n">ScoredPoint</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for animal quotes using semantic similarity.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            query: Search query text.</span>
+<span class="sd">            limit: Maximum number of results to return.</span>
+<span class="sd">            score_threshold: Minimum similarity score threshold.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of scored points containing similar animal quotes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Embed the query</span>
+        <span class="n">query_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">query</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+        <span class="c1"># Search in vector database</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span><span class="o">.</span><span class="n">search_points</span><span class="p">(</span>
+            <span class="n">collection_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">,</span>
+            <span class="n">query_vector</span><span class="o">=</span><span class="n">query_point</span><span class="o">.</span><span class="n">vector</span><span class="p">,</span>
+            <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
+            <span class="n">score_threshold</span><span class="o">=</span><span class="n">score_threshold</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Search for &#39;</span><span class="si">{</span><span class="n">query</span><span class="p">[:</span><span class="mi">50</span><span class="p">]</span><span class="si">}</span><span class="s2">...&#39; returned </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> results&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_collection</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure collection exists with correct parameters.&quot;&quot;&quot;</span>
+        <span class="n">required_vector_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_vector_size</span><span class="p">()</span>
+        <span class="n">required_distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_distance_metric</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span><span class="o">.</span><span class="n">ensure_collection</span><span class="p">(</span>
+            <span class="n">collection_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">,</span>
+            <span class="n">vector_size</span><span class="o">=</span><span class="n">required_vector_size</span><span class="p">,</span>
+            <span class="n">distance</span><span class="o">=</span><span class="n">required_distance</span>
+        <span class="p">)</span>
+
+    <span class="c1"># ... Additional methods: get_random_quote, display_search_results,</span>
+    <span class="c1"># count_quotes, get_statistics, etc.</span>
+</code></pre></div>
+</details>
 <hr />
 <p><em>The Animals class represents the culmination of modern RAG system design - combining semantic search, AI reasoning, and beautiful presentation into a single, powerful interface.</em> </p>
 

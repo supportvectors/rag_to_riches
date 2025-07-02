@@ -2549,7 +2549,192 @@
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Indexed with custom IDs: </span><span class="si">{</span><span class="n">indexed_ids</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="source-code">Source Code<a class="headerlink" href="#source-code" title="Permanent link">&para;</a></h2>
-<p>Source code in <code>src/rag_to_riches/search/semantic_search.py</code></p>
+<details class="abstract">
+<summary>View Complete Source Code</summary>
+<p>Click to expand and view the complete source implementation of the SemanticSearch class.</p>
+<div class="highlight"><span class="filename">src/rag_to_riches/search/semantic_search.py</span><pre><span></span><code><span class="c1"># =============================================================================</span>
+<span class="c1">#  Filename: semantic_search.py</span>
+<span class="c1">#</span>
+<span class="c1">#  Short Description: High-level semantic search interface combining embedders and vector database.</span>
+<span class="c1">#</span>
+<span class="c1">#  Creation date: 2025-01-06</span>
+<span class="c1">#  Author: Asif Qamar</span>
+<span class="c1"># =============================================================================</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">icontract</span><span class="w"> </span><span class="kn">import</span> <span class="n">require</span><span class="p">,</span> <span class="n">ensure</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qdrant_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.vectordb.embedded_vectordb</span><span class="w"> </span><span class="kn">import</span> <span class="n">EmbeddedVectorDB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.vectordb.embedder</span><span class="w"> </span><span class="kn">import</span> <span class="n">Embedder</span><span class="p">,</span> <span class="n">create_embedder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rag_to_riches.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CollectionParameterMismatchError</span><span class="p">,</span>
+    <span class="n">InvalidPointsError</span><span class="p">,</span>
+    <span class="n">CollectionNotFoundError</span>
+<span class="p">)</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SemanticSearch</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;High-level semantic search interface combining embedders and vector database.</span>
+
+<span class="sd">    This class provides a unified interface for indexing and searching text and images</span>
+<span class="sd">    using embeddings stored in a Qdrant vector database. It automatically handles</span>
+<span class="sd">    collection setup, parameter validation, and provides both individual and batch</span>
+<span class="sd">    operations for efficient content management.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">embedder</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">embedder</span><span class="p">,</span> <span class="n">Embedder</span><span class="p">),</span> <span class="s2">&quot;Embedder must be an Embedder instance&quot;</span><span class="p">)</span>
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">vector_db</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vector_db</span><span class="p">,</span> <span class="n">EmbeddedVectorDB</span><span class="p">),</span> 
+             <span class="s2">&quot;Vector DB must be an EmbeddedVectorDB instance&quot;</span><span class="p">)</span>
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">collection_name</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">collection_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">collection_name</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;Collection name must be a non-empty string&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">embedder</span><span class="p">:</span> <span class="n">Embedder</span><span class="p">,</span> <span class="n">vector_db</span><span class="p">:</span> <span class="n">EmbeddedVectorDB</span><span class="p">,</span> 
+                 <span class="n">collection_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the semantic search system.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            embedder: Embedder instance for converting content to vectors.</span>
+<span class="sd">            vector_db: Vector database instance for storage and retrieval.</span>
+<span class="sd">            collection_name: Name of the collection to work with.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span> <span class="o">=</span> <span class="n">embedder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span> <span class="o">=</span> <span class="n">vector_db</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span> <span class="o">=</span> <span class="n">collection_name</span>
+
+        <span class="c1"># Ensure collection exists with correct parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_collection_setup</span><span class="p">()</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Initialized SemanticSearch for collection &#39;</span><span class="si">{</span><span class="n">collection_name</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
+                   <span class="sa">f</span><span class="s2">&quot;with </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">embedder</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;Text must be a non-empty string&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">index_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">point_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Index a text document into the collection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text: Text content to index (must be non-empty).</span>
+<span class="sd">            metadata: Optional metadata to store with the text.</span>
+<span class="sd">            point_id: Optional custom ID for the point.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The ID of the indexed point.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            InvalidPointsError: If text cannot be embedded or indexed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Use embedder to create a point with vector and metadata</span>
+            <span class="n">point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span> <span class="n">point_id</span><span class="o">=</span><span class="n">point_id</span><span class="p">)</span>
+
+            <span class="c1"># Upsert the point to the vector database</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span><span class="o">.</span><span class="n">upsert_points</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">,</span> <span class="p">[</span><span class="n">point</span><span class="p">])</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Indexed text document with ID: </span><span class="si">{</span><span class="n">point</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">point</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPointsError</span><span class="p">(</span>
+                <span class="n">issue</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Failed to index text: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">points_count</span><span class="o">=</span><span class="mi">1</span>
+            <span class="p">)</span>
+
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">query_text</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">query_text</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">query_text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;Query text must be a non-empty string&quot;</span><span class="p">)</span>
+    <span class="nd">@require</span><span class="p">(</span><span class="k">lambda</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span>
+             <span class="s2">&quot;Limit must be a positive integer&quot;</span><span class="p">)</span>
+    <span class="nd">@ensure</span><span class="p">(</span><span class="k">lambda</span> <span class="n">result</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="s2">&quot;Must return a list&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">search_with_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                        <span class="n">score_threshold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">models</span><span class="o">.</span><span class="n">ScoredPoint</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Search for similar content using text query.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            query_text: Text query to search for (must be non-empty).</span>
+<span class="sd">            limit: Maximum number of results to return.</span>
+<span class="sd">            score_threshold: Minimum similarity score threshold (0.0-1.0).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of scored points sorted by similarity.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            InvalidPointsError: If query cannot be processed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Embed the query text</span>
+            <span class="n">query_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">query_text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="n">query_vector</span> <span class="o">=</span> <span class="n">query_point</span><span class="o">.</span><span class="n">vector</span>
+
+            <span class="c1"># Perform vector search</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span><span class="o">.</span><span class="n">search_points</span><span class="p">(</span>
+                <span class="n">collection_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">,</span>
+                <span class="n">query_vector</span><span class="o">=</span><span class="n">query_vector</span><span class="p">,</span>
+                <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
+                <span class="n">score_threshold</span><span class="o">=</span><span class="n">score_threshold</span>
+            <span class="p">)</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Text search for &#39;</span><span class="si">{</span><span class="n">query_text</span><span class="p">[:</span><span class="mi">50</span><span class="p">]</span><span class="si">}</span><span class="s2">...&#39; returned </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> results&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">results</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidPointsError</span><span class="p">(</span>
+                <span class="n">issue</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Failed to search with text: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">points_count</span><span class="o">=</span><span class="mi">1</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">consistency_check</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure that the vector size and distance metric of the collection is compatible with the embedder.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if collection parameters match embedder requirements.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            CollectionNotFoundError: If collection doesn&#39;t exist.</span>
+<span class="sd">            CollectionParameterMismatchError: If parameters don&#39;t match.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span><span class="o">.</span><span class="n">collection_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">CollectionNotFoundError</span><span class="p">(</span>
+                <span class="n">collection_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">,</span>
+                <span class="n">operation</span><span class="o">=</span><span class="s2">&quot;consistency_check&quot;</span><span class="p">,</span>
+                <span class="n">available_collections</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span><span class="o">.</span><span class="n">list_collections</span><span class="p">()</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Get collection info and check parameters</span>
+        <span class="n">collection_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span><span class="o">.</span><span class="n">get_collection_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">)</span>
+        <span class="n">expected_vector_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_vector_size</span><span class="p">()</span>
+        <span class="n">expected_distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_distance_metric</span><span class="p">()</span>
+
+        <span class="n">actual_vector_size</span> <span class="o">=</span> <span class="n">collection_info</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">vectors</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">actual_distance</span> <span class="o">=</span> <span class="n">collection_info</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">vectors</span><span class="o">.</span><span class="n">distance</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">actual_vector_size</span> <span class="o">!=</span> <span class="n">expected_vector_size</span> <span class="ow">or</span> 
+            <span class="n">actual_distance</span> <span class="o">!=</span> <span class="n">expected_distance</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">CollectionParameterMismatchError</span><span class="p">(</span>
+                <span class="n">collection_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">,</span>
+                <span class="n">expected_vector_size</span><span class="o">=</span><span class="n">expected_vector_size</span><span class="p">,</span>
+                <span class="n">actual_vector_size</span><span class="o">=</span><span class="n">actual_vector_size</span><span class="p">,</span>
+                <span class="n">expected_distance</span><span class="o">=</span><span class="n">expected_distance</span><span class="p">,</span>
+                <span class="n">actual_distance</span><span class="o">=</span><span class="n">actual_distance</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ensure_collection_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensure collection exists with correct parameters.&quot;&quot;&quot;</span>
+        <span class="n">required_vector_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_vector_size</span><span class="p">()</span>
+        <span class="n">required_distance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedder</span><span class="o">.</span><span class="n">get_distance_metric</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vector_db</span><span class="o">.</span><span class="n">ensure_collection</span><span class="p">(</span>
+            <span class="n">collection_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">collection_name</span><span class="p">,</span>
+            <span class="n">vector_size</span><span class="o">=</span><span class="n">required_vector_size</span><span class="p">,</span>
+            <span class="n">distance</span><span class="o">=</span><span class="n">required_distance</span>
+        <span class="p">)</span>
+
+    <span class="c1"># ... Additional methods: index_image, search_with_image, index_all_text, </span>
+    <span class="c1"># index_all_images, and other batch operations</span>
+</code></pre></div>
+</details>
 <hr />
 <p><em>The SemanticSearch class provides a high-level interface for semantic search operations, abstracting the complexity of vector embeddings and database operations into simple, intuitive methods.</em> </p>
 
