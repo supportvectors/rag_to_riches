@@ -13,6 +13,8 @@
 import warnings
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex
 from rich import print
+from dotenv import load_dotenv
+load_dotenv()
 
 # Suppress specific numpy warnings that are common with llama-index when using dot products
 warnings.filterwarnings("ignore", message=".*encountered in dot.*", category=RuntimeWarning)

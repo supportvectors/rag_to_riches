@@ -43,3 +43,7 @@ videos/
 audio/
 
 *.zip
+*.sqlite
+*.sqlite
+/qdrant_db
+data/starter/chap03.pdf
