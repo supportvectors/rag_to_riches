@@ -42,6 +42,8 @@ def main():
         return
     
     try:
+        # recreate the collection to clear it
+        animals_loader.recreate_collection()
         # Load and index all quotes in one call
         wisdom, point_ids = animals_loader.load_and_index(jsonl_path)
         
