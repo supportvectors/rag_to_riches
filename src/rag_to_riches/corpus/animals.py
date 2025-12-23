@@ -1348,7 +1348,7 @@ Please answer the user's question using the provided quotes and following the gu
         score_threshold: Optional[float] = None,
         author: Optional[str] = None,
         category: Optional[str] = None,
-        model: str = "gpt-4o",
+        model: KnownModelName | str = "openai/gpt-4o",
         response_type: Literal["structured"] = "structured",
     ) -> RagResultStructured: ...
 
@@ -1360,7 +1360,7 @@ Please answer the user's question using the provided quotes and following the gu
         score_threshold: Optional[float] = None,
         author: Optional[str] = None,
         category: Optional[str] = None,
-        model: str = "gpt-4o",
+        model: KnownModelName | str = "openai/gpt-4o",
         response_type: Literal["simple"] = "simple",
     ) -> RagResultSimple: ...
 
@@ -1368,7 +1368,7 @@ Please answer the user's question using the provided quotes and following the gu
             score_threshold: Optional[float] = None,
             author: Optional[str] = None,
             category: Optional[str] = None,
-            model: str = "gpt-4o",
+            model: KnownModelName | str = "openai/gpt-4o",
             response_type: ResponseType = "structured") -> RagResult:
         """🚀 Complete AI-powered question answering in one powerful method call.
         
