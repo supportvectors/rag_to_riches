@@ -9,22 +9,38 @@
 
 import json
 from pathlib import Path
-from typing import List, Optional, Dict, Any, Union
-from uuid import uuid4
+from typing import (
+    List,
+    Optional,
+    Any,
+    TypeAlias,
+    Literal,
+    TypedDict,
+    overload,
+)
 from icontract import require, ensure
 from pydantic import BaseModel, Field, ConfigDict, field_validator
 from qdrant_client import models
 from loguru import logger
 
-# Import instructor and OpenAI for LLM integration
+# import instructor for LLM integration
+# NOTE: quality-of-life change, but probably not needed
 import instructor
-from openai import OpenAI
+# NOTE: literal type, contains model names that `instructor` can auto-infer
+# provider from
+from instructor.models import KnownModelName
+# NOTE: this is used to get rid of the overload type error that occurs when calling
+# client.create or client.chat.completions.create, allowing proper type on response
+from openai.types.chat import ChatCompletionMessageParam, ChatCompletionUserMessageParam
 
 from rag_to_riches.vectordb.embedded_vectordb import EmbeddedVectorDB
 from rag_to_riches.vectordb.embedder import SimpleTextEmbedder
 from rag_to_riches.search.semantic_search import SemanticSearch
 from rag_to_riches.exceptions import InvalidPointsError
 from rag_to_riches.corpus.data_models import AnimalQuote, AnimalWisdom
+
+
+ResponseType: TypeAlias = Literal["structured", "simple"]
 
 
 #============================================================================================
@@ -82,6 +98,41 @@ class Animals:
         wisdom: Loaded collection of animal quotes (None until loaded)
         semantic_search: Underlying search engine for similarity queries
     """
+
+    # ----------------------------------------------------------------------------------------
+    #  Typed Response Objects
+    # ----------------------------------------------------------------------------------------
+    class CollectionStats(TypedDict):
+        collection_name: str
+        collection_exists: bool
+        point_count: int
+        loaded_quotes: int
+        categories: List[str]
+        authors: List[str]
+
+    class RagQueryInfo(TypedDict):
+        user_query: str
+        limit: int
+        score_threshold: Optional[float]
+        author_filter: Optional[str]
+        category_filter: Optional[str]
+        model: str
+        response_type: ResponseType
+        results_count: int
+
+    class RagResultStructured(TypedDict):
+        llm_response: "Animals.AnimalWisdomResponse"
+        search_results: List[models.ScoredPoint]
+        rag_context: str
+        query_info: "Animals.RagQueryInfo"
+
+    class RagResultSimple(TypedDict):
+        llm_response: str
+        search_results: List[models.ScoredPoint]
+        rag_context: str
+        query_info: "Animals.RagQueryInfo"
+
+    RagResult: TypeAlias = RagResultStructured | RagResultSimple
     
     # ----------------------------------------------------------------------------------------
     #  Constructor
@@ -559,7 +610,7 @@ class Animals:
     # ----------------------------------------------------------------------------------------
     #  Get Collection Stats
     # ----------------------------------------------------------------------------------------
-    def get_collection_stats(self) -> Dict[str, Any]:
+    def get_collection_stats(self) -> CollectionStats:
         """Get comprehensive statistics and insights about your quote collection.
         
         Provides a detailed overview of your collection's size, content diversity,
@@ -599,7 +650,7 @@ class Animals:
             - Monitor collection growth over time
             - Validate data integrity after operations
         """
-        stats = {
+        stats: Animals.CollectionStats = {
             "collection_name": self.collection_name,
             "collection_exists": self.semantic_search.vector_db.collection_exists(self.collection_name),
             "point_count": 0,
@@ -1026,7 +1077,7 @@ Please answer the user's question using the provided quotes and following the gu
                 score_threshold: Optional[float] = None,
                 author: Optional[str] = None,
                 category: Optional[str] = None,
-                model: str = "gpt-4o") -> AnimalWisdomResponse:
+                model: str | KnownModelName = "openai/gpt-4o") -> AnimalWisdomResponse:
         """Ask AI thoughtful questions about animals and get structured, insightful answers.
         
         This method combines the power of semantic search with advanced AI reasoning
@@ -1044,8 +1095,9 @@ Please answer the user's question using the provided quotes and following the gu
                 Higher values ensure more relevant context for better answers.
             author: Focus the answer on quotes from this specific author only.
             category: Limit context to quotes from this category only.
-            model: OpenAI model to use. "gpt-4o" (default) provides the most
-                thoughtful responses, "gpt-3.5-turbo" is faster and cheaper.
+            model: Language model to use for response generation. This supports all models
+                that are supported by instructor. (See `instructor.models.KnownModelName` for
+                supported models and providers).
         
         Returns:
             AnimalWisdomResponse containing:
@@ -1099,15 +1151,33 @@ Please answer the user's question using the provided quotes and following the gu
             )
             
             # Create instructor-patched client
-            client = instructor.from_openai(OpenAI())
+            try:
+                client = instructor.from_provider(
+                    model = model,
+                    # `instructor.from_provider` defaults to an async client
+                    async_client = False
+                )
+            # instructor's from_provider raises ImportError if provider sdk not installed
+            # (eg. anthropic)
+            # im only raising this here because im not sure if it would be appropriate to raise
+            # during invocation time
+            except (ImportError, ValueError) as e:
+                # not sure if i should raise custom error here, using valueerror for now
+                raise ValueError(f"Failed to auto-infer instructor client for model: {model}")
+
+            # build messages
+            # this is used to avoid instructor's overload type error
+            message : ChatCompletionMessageParam = ChatCompletionUserMessageParam(
+                content = rag_context,
+                role = "user"
+            )
+            messages : List[ChatCompletionMessageParam] = [message]
             
             # Get structured response from LLM
             response = client.chat.completions.create(
-                model=model,
                 response_model=self.AnimalWisdomResponse,
-                messages=[
-                    {"role": "user", "content": rag_context}
-                ]
+                messages=messages,
+                max_retries=3,
             )
             
             logger.info(f"LLM response generated for query: '{user_query[:50]}...'")
@@ -1123,13 +1193,15 @@ Please answer the user's question using the provided quotes and following the gu
     @require(lambda user_query: isinstance(user_query, str) and len(user_query.strip()) > 0,
              "User query must be a non-empty string")
     def ask_llm_simple(self, user_query: str, limit: int = 3, 
-                      model: str = "gpt-4o") -> str:
+                      model: str | KnownModelName = "openai/gpt-4o") -> str:
         """Get a simple text response from the LLM about animals.
         
         Args:
             user_query: The user's question about animals
             limit: Maximum number of search results to include
-            model: OpenAI model to use (default: gpt-4o)
+            model: Language model to use for response generation. This supports all models
+                that are supported by instructor. (See `instructor.models.KnownModelName` for
+                supported models and providers).
             
         Returns:
             Simple text response from the LLM
@@ -1141,20 +1213,32 @@ Please answer the user's question using the provided quotes and following the gu
                 limit=limit
             )
             
-            # Create OpenAI client
-            client = OpenAI()
+            # Create instructor-patched client
+            client = instructor.from_provider(
+                model = model,
+                # `instructor.from_provider` defaults to an async client
+                async_client = False
+            )
+
+            # build messages
+            # this is used to avoid instructor's overload type error
+            message : ChatCompletionMessageParam = ChatCompletionUserMessageParam(
+                content = rag_context,
+                role = "user"
+            )
+            messages : List[ChatCompletionMessageParam] = [message]
             
             # Get simple response from LLM
             response = client.chat.completions.create(
+                response_model=str,
                 model=model,
-                messages=[
-                    {"role": "user", "content": rag_context}
-                ],
-                max_tokens=500,
-                temperature=0.7
+                messages=messages,
+                max_retries=3,
             )
             
-            answer = response.choices[0].message.content
+            # response is type str already
+            answer = response
+
             logger.info(f"Simple LLM response generated for query: '{user_query[:50]}...'")
             return answer
             
@@ -1256,12 +1340,36 @@ Please answer the user's question using the provided quotes and following the gu
     @require(lambda user_query: isinstance(user_query, str) and len(user_query.strip()) > 0,
              "User query must be a non-empty string")
     @require(lambda limit: isinstance(limit, int) and limit > 0, "Limit must be a positive integer")
+    @overload
+    def rag(
+        self,
+        user_query: str,
+        limit: int = 5,
+        score_threshold: Optional[float] = None,
+        author: Optional[str] = None,
+        category: Optional[str] = None,
+        model: str = "gpt-4o",
+        response_type: Literal["structured"] = "structured",
+    ) -> RagResultStructured: ...
+
+    @overload
+    def rag(
+        self,
+        user_query: str,
+        limit: int = 5,
+        score_threshold: Optional[float] = None,
+        author: Optional[str] = None,
+        category: Optional[str] = None,
+        model: str = "gpt-4o",
+        response_type: Literal["simple"] = "simple",
+    ) -> RagResultSimple: ...
+
     def rag(self, user_query: str, limit: int = 5, 
             score_threshold: Optional[float] = None,
             author: Optional[str] = None,
             category: Optional[str] = None,
             model: str = "gpt-4o",
-            response_type: str = "structured") -> Dict[str, Any]:
+            response_type: ResponseType = "structured") -> RagResult:
         """🚀 Complete AI-powered question answering in one powerful method call.
         
         This is your one-stop solution for getting intelligent answers about animals.
@@ -1398,7 +1506,7 @@ Please answer the user's question using the provided quotes and following the gu
                 raise ValueError(f"Invalid response_type: {response_type}. Must be 'structured' or 'simple'")
             
             # Step 4: Prepare query info
-            query_info = {
+            query_info: Animals.RagQueryInfo = {
                 "user_query": user_query,
                 "limit": limit,
                 "score_threshold": score_threshold,
@@ -1410,7 +1518,7 @@ Please answer the user's question using the provided quotes and following the gu
             }
             
             # Step 5: Return complete RAG result
-            result = {
+            result: Animals.RagResult = {
                 "llm_response": llm_response,
                 "search_results": search_results,
                 "rag_context": rag_context,

@@ -11,7 +11,8 @@ import pytest
 import tempfile
 import json
 from pathlib import Path
-from typing import List
+from typing import List, Generator
+import uuid
 
 from rag_to_riches.corpus.animals import Animals
 from rag_to_riches.corpus.data_models import AnimalQuote, AnimalWisdom
@@ -166,7 +167,7 @@ class TestAnimals:
     """Test suite for Animals corpus loader."""
     
     @pytest.fixture
-    def temp_jsonl_file(self) -> Path:
+    def temp_jsonl_file(self) -> Generator[Path, None, None]:
         """Create a temporary JSONL file with test data."""
         temp_file = tempfile.NamedTemporaryFile(mode='w', suffix='.jsonl', delete=False)
         
@@ -180,9 +181,13 @@ class TestAnimals:
         # Cleanup
         Path(temp_file.name).unlink()
     
-    @pytest.fixture
+    @pytest.fixture(scope="session")
     def vector_db(self) -> EmbeddedVectorDB:
-        """Create a test vector database."""
+        """Create a test vector database.
+        
+        This is kept session-scoped to avoid multiple Qdrant clients
+        concurrently accessing the same embedded DB path during the test run.
+        """
         return EmbeddedVectorDB()
     
     @pytest.fixture
@@ -194,15 +199,16 @@ class TestAnimals:
     def animals_loader(self, vector_db: EmbeddedVectorDB, 
                       embedder: SimpleTextEmbedder) -> Animals:
         """Create Animals loader instance."""
+        collection_name = f"test_animals_{uuid.uuid4().hex}"
         return Animals(
             vector_db=vector_db,
             embedder=embedder,
-            collection_name="test_animals"
+            collection_name=collection_name
         )
     
     def test_animals_initialization(self, animals_loader: Animals):
         """Test Animals class initialization."""
-        assert animals_loader.collection_name == "test_animals"
+        assert animals_loader.collection_name.startswith("test_animals")
         assert animals_loader.wisdom is None
         assert isinstance(animals_loader.embedder, SimpleTextEmbedder)
         assert isinstance(animals_loader.semantic_search.vector_db, EmbeddedVectorDB)
@@ -240,7 +246,7 @@ class TestAnimals:
         """Test getting collection statistics."""
         # Test stats before loading
         stats = animals_loader.get_collection_stats()
-        assert stats["collection_name"] == "test_animals"
+        assert stats["collection_name"] == animals_loader.collection_name
         assert stats["collection_exists"] is True
         assert stats["loaded_quotes"] == 0
         
@@ -264,7 +270,7 @@ class TestAnimals:
         assert isinstance(results, list)
         assert len(results) <= 5
         # Should find the George Orwell quote about animal equality
-        assert any("equal" in result.payload.get("content", "").lower() for result in results)
+        assert any("equal" in result.payload.get("content", "").lower() for result in results) # type: ignore
     
     def test_search_with_author_filter(self, animals_loader: Animals, temp_jsonl_file: Path):
         """Test search with author filtering."""
@@ -277,7 +283,7 @@ class TestAnimals:
         assert isinstance(results, list)
         # All results should be by George Orwell
         for result in results:
-            assert result.payload.get("author", "") == "George Orwell"
+            assert result.payload.get("author", "") == "George Orwell" # type: ignore
     
     def test_search_with_category_filter(self, animals_loader: Animals, temp_jsonl_file: Path):
         """Test search with category filtering."""
@@ -290,7 +296,7 @@ class TestAnimals:
         assert isinstance(results, list)
         # All results should be in the specified category
         for result in results:
-            assert result.payload.get("category", "") == "Wisdom and Philosophy"
+            assert result.payload.get("category", "") == "Wisdom and Philosophy" # type: ignore
     
     def test_search_with_score_threshold(self, animals_loader: Animals, temp_jsonl_file: Path):
         """Test search with score threshold."""

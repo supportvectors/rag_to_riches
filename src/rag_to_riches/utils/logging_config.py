@@ -9,12 +9,12 @@
 
 from loguru import logger
 import sys
-from typing import Literal
+from typing import Literal, Optional, TypeAlias
 
-LogLevel = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+LogLevel: TypeAlias = Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 
 def configure_logging(level: LogLevel = "INFO", 
-                     format_string: str = None,
+                     format_string: Optional[str] = None,
                      colorize: bool = True) -> None:
     """
     Configure loguru logging for cleaner output in notebooks and applications.
