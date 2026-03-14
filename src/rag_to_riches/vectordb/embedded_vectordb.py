@@ -395,7 +395,7 @@ class EmbeddedVectorDB:
         
         search_params = {
             "collection_name": collection_name,
-            "query_vector": query_vector,
+            "query": query_vector,
             "limit": limit,
         }
 
@@ -407,7 +407,8 @@ class EmbeddedVectorDB:
         # `query_points`, which is not part of the public API and would raise an
         # `AttributeError` at runtime.  Switching to `search` ensures
         # compatibility with supported versions of the client.
-        results = self.client.search(**search_params)
+        response =self.client.query_points(**search_params)
+        results = response.points
         logger.info(f"Found {len(results)} points in collection '{collection_name}'")
         return results
 
