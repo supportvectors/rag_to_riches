@@ -8,9 +8,39 @@ This tutorial comprises a small corpus of animal quotes, over which we build an 
 - **VectorDB (Qdrant)** to index the vectors for approximate k-nn search
 - **Generator (LLM with a system prompt)** to create a coherent answer to the user's question with the given search results
 
-## 🎯 RAG Flow Overview
+## 📦 One-Time Load & Index Flow
 
-The complete RAG pipeline follows this flow (see `animal-rag-flow.png` for a visual diagram):
+Before you can query the RAG system, you need to load and index your quotes (one-time setup):
+
+```
+┌─────────────────────┐
+│ Initialize Components│  ← VectorDB, Embedder, Animals class
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Load from JSONL     │  ← Read and validate quotes from file
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Generate Embeddings │  ← Convert each quote text to vector
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Index into Qdrant   │  ← Store vectors with metadata in DB
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│ Ready for Search    │  ← Quotes are now searchable
+└─────────────────────┘
+```
+
+## 🎯 Real-Time RAG Query Flow
+
+Once your quotes are indexed, you can query the RAG system in real-time:
 
 ```
 ┌─────────────┐

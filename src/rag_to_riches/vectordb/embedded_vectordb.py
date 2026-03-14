@@ -7,21 +7,18 @@
 #  Author: Asif Qamar
 # =============================================================================
 
-from pathlib import Path
 from typing import List, Optional
 from icontract import require, ensure, invariant
 from qdrant_client import QdrantClient, models
 from rag_to_riches import config
 from rag_to_riches.exceptions import (
-    VectorDatabasePathNotFoundError,
     CollectionAlreadyExistsError,
     CollectionNotFoundError,
     InvalidVectorSizeError,
     InvalidDistanceMetricError,
-    InvalidPointsError,
 )
 from loguru import logger
-
+import os
 #============================================================================================
 #  Class: EmbeddedVectorDB
 #============================================================================================
@@ -54,11 +51,7 @@ class EmbeddedVectorDB:
             self.client = QdrantClient(url="localhost", port=6333)
             logger.info("Connected to embedded vector database at localhost:6333")
         else:
-            if not Path(path).exists():
-                raise VectorDatabasePathNotFoundError(
-                    path=path,
-                    suggestion="Create the directory or update your configuration"
-                )
+            os.makedirs(path, exist_ok=True)
             self.client = QdrantClient(path=path)
             logger.info(f"Connected to embedded vector database at {path}")
 
