@@ -44,12 +44,16 @@ class EmbeddedVectorDB:
             VectorDatabasePathNotFoundError: If the vector database path doesn't exist.
         """
         path = config["vector_db"]["path"]
+        if "port" in config["vector_db"]:
+            port = config["vector_db"]["port"]
+        else:
+            port = 6333
         logger.info(f"Connecting to vector database at {path}")
         if path == "localhost":
             # If the path is "localhost", we are using the default Qdrant
             # instance running on the same machine.
-            self.client = QdrantClient(url="localhost", port=6333)
-            logger.info("Connected to embedded vector database at localhost:6333")
+            self.client = QdrantClient(url="localhost", port=port)
+            logger.info(f"Connected to embedded vector database at localhost:{port}")
         else:
             os.makedirs(path, exist_ok=True)
             self.client = QdrantClient(path=path)
