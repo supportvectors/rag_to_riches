@@ -7,21 +7,18 @@
 #  Author: Asif Qamar
 # =============================================================================
 
-from pathlib import Path
 from typing import List, Optional
 from icontract import require, ensure, invariant
 from qdrant_client import QdrantClient, models
 from rag_to_riches import config
 from rag_to_riches.exceptions import (
-    VectorDatabasePathNotFoundError,
     CollectionAlreadyExistsError,
     CollectionNotFoundError,
     InvalidVectorSizeError,
     InvalidDistanceMetricError,
-    InvalidPointsError,
 )
 from loguru import logger
-
+import os
 #============================================================================================
 #  Class: EmbeddedVectorDB
 #============================================================================================
@@ -47,18 +44,18 @@ class EmbeddedVectorDB:
             VectorDatabasePathNotFoundError: If the vector database path doesn't exist.
         """
         path = config["vector_db"]["path"]
+        if "port" in config["vector_db"]:
+            port = config["vector_db"]["port"]
+        else:
+            port = 6333
         logger.info(f"Connecting to vector database at {path}")
         if path == "localhost":
             # If the path is "localhost", we are using the default Qdrant
             # instance running on the same machine.
-            self.client = QdrantClient(url="localhost", port=6333)
-            logger.info("Connected to embedded vector database at localhost:6333")
+            self.client = QdrantClient(url="localhost", port=port)
+            logger.info(f"Connected to embedded vector database at localhost:{port}")
         else:
-            if not Path(path).exists():
-                raise VectorDatabasePathNotFoundError(
-                    path=path,
-                    suggestion="Create the directory or update your configuration"
-                )
+            os.makedirs(path, exist_ok=True)
             self.client = QdrantClient(path=path)
             logger.info(f"Connected to embedded vector database at {path}")
 
@@ -402,7 +399,7 @@ class EmbeddedVectorDB:
         
         search_params = {
             "collection_name": collection_name,
-            "query_vector": query_vector,
+            "query": query_vector,
             "limit": limit,
         }
 
@@ -414,7 +411,8 @@ class EmbeddedVectorDB:
         # `query_points`, which is not part of the public API and would raise an
         # `AttributeError` at runtime.  Switching to `search` ensures
         # compatibility with supported versions of the client.
-        results = self.client.search(**search_params)
+        response =self.client.query_points(**search_params)
+        results = response.points
         logger.info(f"Found {len(results)} points in collection '{collection_name}'")
         return results
 

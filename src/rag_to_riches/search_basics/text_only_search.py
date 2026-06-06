@@ -67,9 +67,9 @@ query_text = "The cows were grazing in the meadow"
 print(f"Query text: {query_text}")
 query_embedding = model.encode(query_text)
 print(query_embedding.shape)
-results = client.search(
+results = client.query_points(
     collection_name=collection_name,
-    query_vector=query_embedding.tolist(),
+    query=query_embedding.tolist(),
     limit=3
 )
 
