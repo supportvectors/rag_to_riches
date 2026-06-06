@@ -100,6 +100,8 @@ search_results = client.query_points(
 
 print("\nSearch results:")
 for result in search_results.points:
+    if result.payload is None:
+        continue
     print(f"ID: {result.id}, Score: {result.score:.4f}, Type: {result.payload['type']}")
     if result.payload['type'] == 'image':
         print(f"  Description: {result.payload['description']}")
@@ -115,6 +117,8 @@ reverse_results = client.query_points(
 )
 
 for result in reverse_results.points:
+    if result.payload is None:
+        continue
     print(f"ID: {result.id}, Score: {result.score:.4f}, Type: {result.payload['type']}")
     if result.payload['type'] == 'text':
         print(f"  Content: {result.payload['content']}")

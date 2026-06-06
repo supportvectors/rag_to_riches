@@ -36,5 +36,5 @@ vector_db:
     vector_size: 768
 
 paths:
-  data: /Users/chandarl/data
+  data: /Users/asifqamar/github/rag_to_riches
   

@@ -36,7 +36,7 @@ def main():
     animals = Animals(vector_db=vector_db, embedder=embedder)
     
     # User query
-    query = "What do animals teach us about love?"
+    query = "What makes golden retrievers so special?"
     
     print(f"\n📝 Query: '{query}'")
     

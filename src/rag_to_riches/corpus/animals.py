@@ -9,10 +9,9 @@
 
 import json
 from pathlib import Path
-from typing import List, Optional, Dict, Any, Union
-from uuid import uuid4
+from typing import List, Optional, Dict, Any
 from icontract import require, ensure
-from pydantic import BaseModel, Field, ConfigDict, field_validator
+from pydantic import BaseModel, Field, field_validator
 from qdrant_client import models
 from loguru import logger
 
@@ -1176,8 +1175,7 @@ Please answer the user's question using the provided quotes and following the gu
             from rich.console import Console
             from rich.panel import Panel
             from rich.text import Text
-            from rich.columns import Columns
-            
+
             console = Console()
             
             # Display the main answer
