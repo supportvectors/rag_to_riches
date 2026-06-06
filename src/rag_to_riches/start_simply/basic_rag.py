@@ -30,3 +30,8 @@ response = query_engine.query("What are some key features of ancient Indian civi
 print('\n'*10)
 print('*'*100, '\n'*3, response.response, '\n'*3, '*'*100)
 
+response = query_engine.query("What is self-attention in a transformer model?")
+
+print('\n'*10)
+print('*'*100, '\n'*3, response.response, '\n'*3, '*'*100)
+
