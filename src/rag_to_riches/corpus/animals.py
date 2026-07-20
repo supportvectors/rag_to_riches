@@ -14,7 +14,7 @@ from icontract import require, ensure
 from pydantic import BaseModel, Field, field_validator
 from qdrant_client import models
 from loguru import logger
-
+import os
 # Import instructor and OpenAI for LLM integration
 import instructor
 from openai import OpenAI
@@ -1025,7 +1025,9 @@ Please answer the user's question using the provided quotes and following the gu
                 score_threshold: Optional[float] = None,
                 author: Optional[str] = None,
                 category: Optional[str] = None,
-                model: str = "gpt-4o") -> AnimalWisdomResponse:
+                model: str = "gpt-4o",
+                base_url: Optional[str] = None,
+                api_key: Optional[str] = None) -> AnimalWisdomResponse:
         """Ask AI thoughtful questions about animals and get structured, insightful answers.
         
         This method combines the power of semantic search with advanced AI reasoning
@@ -1098,7 +1100,10 @@ Please answer the user's question using the provided quotes and following the gu
             )
             
             # Create instructor-patched client
-            client = instructor.from_openai(OpenAI())
+            if base_url and api_key:
+                client = instructor.from_openai(OpenAI(base_url=base_url, api_key=api_key))
+            else:
+                client = instructor.from_openai(OpenAI())
             
             # Get structured response from LLM
             response = client.chat.completions.create(
@@ -1122,7 +1127,9 @@ Please answer the user's question using the provided quotes and following the gu
     @require(lambda user_query: isinstance(user_query, str) and len(user_query.strip()) > 0,
              "User query must be a non-empty string")
     def ask_llm_simple(self, user_query: str, limit: int = 3, 
-                      model: str = "gpt-4o") -> str:
+                      model: str = "gpt-4o",
+                      base_url: Optional[str] = None,
+                      api_key: Optional[str] = None) -> str:
         """Get a simple text response from the LLM about animals.
         
         Args:
@@ -1141,7 +1148,10 @@ Please answer the user's question using the provided quotes and following the gu
             )
             
             # Create OpenAI client
-            client = OpenAI()
+            if base_url and api_key:
+                client = OpenAI(base_url=base_url, api_key=api_key)
+            else:
+                client = OpenAI()
             
             # Get simple response from LLM
             response = client.chat.completions.create(
@@ -1258,8 +1268,10 @@ Please answer the user's question using the provided quotes and following the gu
             score_threshold: Optional[float] = None,
             author: Optional[str] = None,
             category: Optional[str] = None,
-            model: str = "gpt-4o",
-            response_type: str = "structured") -> Dict[str, Any]:
+            model: Optional[str] = None,
+            response_type: str = "structured",
+            base_url: Optional[str] = None,
+            api_key: Optional[str] = None) -> Dict[str, Any]:
         """🚀 Complete AI-powered question answering in one powerful method call.
         
         This is your one-stop solution for getting intelligent answers about animals.
@@ -1361,6 +1373,12 @@ Please answer the user's question using the provided quotes and following the gu
             - Cache results for frequently asked questions
         """
         try:
+            if model is None:
+                model = os.getenv("OPENAI_MODEL", "gpt-4o")
+            if base_url is None:
+                base_url = os.getenv("OPENAI_BASE_URL", None)
+            if api_key is None:
+                api_key = os.getenv("OPENAI_API_KEY", None)
             # Step 1: Perform semantic search
             search_results = self.search(
                 query=user_query,
@@ -1384,13 +1402,17 @@ Please answer the user's question using the provided quotes and following the gu
                     score_threshold=score_threshold,
                     author=author,
                     category=category,
-                    model=model
+                    model=model,
+                    base_url=base_url,
+                    api_key=api_key
                 )
             elif response_type.lower() == "simple":
                 llm_response = self.ask_llm_simple(
                     user_query=user_query,
                     limit=limit,
-                    model=model
+                    model=model,
+                    base_url=base_url,
+                    api_key=api_key
                 )
             else:
                 raise ValueError(f"Invalid response_type: {response_type}. Must be 'structured' or 'simple'")
